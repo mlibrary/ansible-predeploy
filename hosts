@@ -1,0 +1,8 @@
+[reinette]
+reinette
+
+[webservers]
+reinette
+
+[development]
+localhost ansible_connection=local
