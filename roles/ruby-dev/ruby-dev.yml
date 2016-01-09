@@ -5,7 +5,7 @@
     rbenv_dir: /usr/local/rbenv
     ruby_build_git: git://github.com/sstephenson/ruby-build.git
     rbenv_profile: /etc/profile.d/rbenv.sh
-    version: 2.2.1
+    ruby_version: 2.2.1
 
   tasks:
     - name: install ruby development package dependencies
@@ -37,6 +37,7 @@
       file:
         path: "{{rbenv_dir}}"
         mode: "o+rsXx"
+        recurse: true
 
     - name: create rbenv profile
       template:
@@ -48,3 +49,36 @@
 
     - name: rehash rbenv
       shell: ". {{rbenv_profile}} && rbenv init - && rbenv rehash"
+
+    - name: create plugins directory
+      file:
+        path: "{{rbenv_dir}}/plugins"
+        state: directory
+
+    - name: download ruby-build from git
+      git:
+        accept_hostkey: true
+        repo: "{{ruby_build_git}}"
+        dest: "{{rbenv_dir}}/plugins/ruby_build"
+
+    - name: set ruby_build permissions
+      file:
+        path: "{{rbenv_dir}}/plugins"
+        mode: "o+rsXx"
+        recurse: true
+
+    - name: check if ruby is installed
+      stat:
+        path: "{{rbenv_dir}}/versions/{{ruby_version}}"
+      register: ruby_installed
+
+    - name: install ruby
+      shell: ". {{rbenv_profile}} && rbenv install {{ruby_version}}"
+      when: ruby_installed.stat.exists == False
+
+    - name: rehash again
+      shell: ". {{rbenv_profile}} && rbenv init - && rbenv rehash"
+
+    - name: set global ruby version
+      shell: ". {{rbenv_profile}} && rbenv global {{ruby_version}}"
+
