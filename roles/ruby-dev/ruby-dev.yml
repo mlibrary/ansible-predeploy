@@ -82,3 +82,6 @@
     - name: set global ruby version
       shell: ". {{rbenv_profile}} && rbenv global {{ruby_version}}"
 
+    - name: install bundler
+      shell: ". {{rbenv_profile}} && gem install bundler"
+
