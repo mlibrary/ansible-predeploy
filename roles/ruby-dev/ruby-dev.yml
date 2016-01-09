@@ -45,3 +45,6 @@
         group: root
         mode: "u=rw,go=rx"
         dest: "{{rbenv_profile}}"
+
+    - name: rehash rbenv
+      shell: ". {{rbenv_profile}} && rbenv init - && rbenv rehash"
