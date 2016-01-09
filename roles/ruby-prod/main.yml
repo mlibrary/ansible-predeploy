@@ -1,0 +1,30 @@
+- hosts: production
+  become: true
+  vars:
+    brightbox: ppa:brightbox/ruby-ng
+
+  tasks:
+    - name: add the brightbox repo
+      apt_repository:
+        repo: "{{brightbox}}"
+        state: present
+
+    - name: install ruby
+      apt:
+        name: "{{item}}"
+        state: latest
+      with_items:
+        - ruby2.2
+        - ruby2.2-dev
+        - ruby-switch
+
+    - name: set ruby to 2.2
+      command: "ruby-switch --set ruby2.2"
+
+    - name: install gems
+      gem:
+        name: "{{item}}"
+        state: latest
+      with_items:
+        - bundler
+        - rake
