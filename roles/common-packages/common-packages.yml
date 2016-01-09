@@ -1,0 +1,15 @@
+- hosts: all
+  become: true
+  vars:
+  tasks:
+    - name: install the packages
+      apt:
+        pkg: "{{item}}"
+        state: installed
+      with_items:
+        - vim
+        - aptitude
+        - build-essential
+        - wget
+        - curl
+        - openssh-server
