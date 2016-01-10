@@ -1,0 +1,6 @@
+- hosts: all
+  become: true
+  tasks:
+    - name: set hostname
+      hostname:
+        name: {{hostname}}

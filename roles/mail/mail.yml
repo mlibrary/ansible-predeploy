@@ -1,0 +1,17 @@
+- hosts: production
+  become: true
+  tasks:
+    - name: lets get mail from root
+      apt:
+        name: exim4
+        state: latest
+
+    - name: set the email address in /etc/aliases
+      lineinfile:
+        create: true
+        dest: /etc/aliases
+        line: "root: {{hostname}}@{{email_domain}}"
+        state: present
+        insertafter: EOF
+
+

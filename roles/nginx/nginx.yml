@@ -1,0 +1,22 @@
+- hosts: production
+  become: true
+  tasks:
+    - name: Add nginx ppa
+      apt_repository:
+        repo: ppa:nginx/development
+        state: present
+
+    - name: Install nginx
+      apt:
+        pkg: nginx-full
+        state: installed
+
+    - name: Disable default site
+      file:
+        dest: /etc/nginx/sites-enabled/default
+        state: absent
+
+    - name: Start nginx
+      service:
+        name: nginx
+        state: restarted

@@ -1,0 +1,33 @@
+- hosts: all
+  become: true
+  tasks:
+    - name: install ufw
+      apt:
+        name: ufw
+        state: latest
+
+    - name: default deny
+      ufw:
+        state: enabled
+        policy: deny
+        logging: on
+
+    - name: allow outgoing
+      ufw:
+        rule: allow
+        direction: outgoing
+
+    - name: allow ssh
+      ufw:
+        rule: allow
+        port: 22
+        proto: tcp
+
+    - name: loopback
+      ufw:
+        rule: allow
+        interface: lo
+
+    - name: reload ufw when we're done
+      ufw:
+        state: reloaded
