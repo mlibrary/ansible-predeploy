@@ -21,6 +21,16 @@
     - name: set ruby to 2.2
       command: "ruby-switch --set ruby2.2"
 
+    - name: disable documentation
+      lineinfile:
+        create: yes
+        state: present
+        dest: /etc/gemrc
+        insertafter: EOF
+        line: "gem: --no-ri --no-rdoc"
+        mode: 0644
+        owner: root
+
     - name: install gems
       gem:
         name: "{{item}}"
