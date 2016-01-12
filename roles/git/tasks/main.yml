@@ -1,0 +1,10 @@
+- name: install git
+  apt:
+    pkg: "{{item}}"
+    state: installed
+  with_items:
+    - git
+    - git-core
+    - git-man
+- name: set global git editor
+  command: git config --global core.editor {{git_editor}}

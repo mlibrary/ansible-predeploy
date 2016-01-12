@@ -1,0 +1,9 @@
+- name: create and modify user
+  user:
+    name: "{{username}}"
+    password: "{% verbatim %}{{ password }}{% endverbatim %}"
+    shell: /bin/bash
+    group: "{{group}}"
+    groups: "{{additional_groups}}"
+    append: yes
+    uid: "{{uid}}"

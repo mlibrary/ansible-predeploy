@@ -1,0 +1,34 @@
+- name: add the brightbox repo
+  apt_repository:
+    repo: "{{brightbox}}"
+    state: present
+
+- name: install ruby
+  apt:
+    name: "{{item}}"
+    state: latest
+  with_items:
+    - ruby2.2
+    - ruby2.2-dev
+    - ruby-switch
+
+- name: set ruby to 2.2
+  command: "ruby-switch --set ruby2.2"
+
+- name: disable documentation
+  lineinfile:
+    create: yes
+    state: present
+    dest: /etc/gemrc
+    insertafter: EOF
+    line: "gem: --no-ri --no-rdoc"
+    mode: 0644
+    owner: root
+
+- name: install gems
+  gem:
+    name: "{{item}}"
+    state: latest
+  with_items:
+    - bundler
+    - rake
