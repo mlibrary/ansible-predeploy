@@ -1,0 +1,14 @@
+- hosts: production
+  become: yes
+  roles:
+    - ubuntu-upgrade
+    - hostname
+    - user
+    - common-packages
+    - git
+    - mail
+    - ntp
+    - mysql
+    - nginx
+    - ruby-prod
+    - firewall
