@@ -7,7 +7,7 @@
   ufw:
     state: enabled
     policy: deny
-    logging: on
+    logging: "on"
 
 - name: allow outgoing
   ufw:

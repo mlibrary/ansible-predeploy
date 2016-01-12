@@ -2,7 +2,7 @@
   become: yes
   roles:
     - hostname
-    - user
-    - common-packages
-    - git
-    - ruby-dev
+#    - user
+#    - common-packages
+#    - git
+#    - ruby-dev

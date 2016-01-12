@@ -1,5 +1,5 @@
 - name: generate a password for root
-  shell: "cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1"
+  shell: openssl rand -base64 32 | tr -dc A-Za-z0-9
   register: mysql_root_password
 
 - name: Install mysql
@@ -28,11 +28,13 @@
     group: root
 
 - name: secure mysql installation
-  shell: "{{item}}"
+  shell:
+    free_form: "{{item}}"
+    executable: /bin/bash
   with_items:
-    - mysql -u root -p{{mysql_root_password}} -e "UPDATE mysql.user SET Password=PASSWORD('{{mysql_root_password}}') WHERE User='root'"
-    - mysql -u root -p{{mysql_root_password}} -e "DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1')"
-    - mysql -u root -p{{mysql_root_password}} -e "DELETE FROM mysql.user WHERE User=''"
-    - mysql -u root -p{{mysql_root_password}} -e "DELETE FROM mysql.db WHERE Db='test' OR Db='test\_%'"
-    - mysql -u root -p{{mysql_root_password}} -e "FLUSH PRIVILEGES"
+    - mysql -u root -p{{mysql_root_password.stdout}} -e "UPDATE mysql.user SET Password=PASSWORD('{{mysql_root_password.stdout}}') WHERE User='root'"
+    - mysql -u root -p{{mysql_root_password.stdout}} -e "DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1')"
+    - mysql -u root -p{{mysql_root_password.stdout}} -e "DELETE FROM mysql.user WHERE User=''"
+    - mysql -u root -p{{mysql_root_password.stdout}} -e "DELETE FROM mysql.db WHERE Db='test' OR Db='test\_%'"
+    - mysql -u root -p{{mysql_root_password.stdout}} -e "FLUSH PRIVILEGES"
 

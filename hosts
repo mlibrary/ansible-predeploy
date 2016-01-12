@@ -1,11 +1,8 @@
 [reinette]
 reinette
 
-[webservers]
-reinette
-
 [production]
 reinette
 
 [development]
-127.0.0.1 ansible_connection=local
+localhost ansible_connection=local

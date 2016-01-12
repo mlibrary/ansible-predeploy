@@ -7,7 +7,7 @@
     state: latest
 
 - name: run ntpdate
-  command: ntpdate -s pool.ntp.org
+  shell: "ntpdate -s pool.ntp.org || /bin/true"
 
 - name: install ntp
   apt:
