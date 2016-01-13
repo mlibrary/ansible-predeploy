@@ -1,48 +1,14 @@
 - hosts: production
   become: yes
+  remote_user: malakai
   vars:
-#  pre_tasks:
-#    - name: modify the root user
-#      user:
-#        name: root
-#        password: herpderp
-#        shell: /bin/bash
-#        groups: root
-#        home: /root
-#        state: present
-#
-#    - name: create user malakai
-#      user:
-#        name: malakai
-#        password: openup
-#        group: users
-#        home: /home/malakai
-#        shell: /bin/bash
-#        #uid: 1337
-#
-#
-#    - name: Add public key for malakai
-#      authorized_key:
-#        user: malakai
-#        key: "{{ item }}"
-#        state: present
-#      with_items: user.me.public_keys
-#
-#    - name: add malakai to sudoers
-#      lineinfile:
-#        dest: /etc/sudoers
-#        state: present
-#        insertafter: EOF
-#        line: "malakai ALL=(ALL) NOPASSWD: ALL"
-#        validate: "visudo -cf %s"
   roles:
-#    - ubuntu-upgrade
 #    - hostname
 #    - common-packages
 #    - git
 #    - mail
 #    - ntp
-    - mysql
-    - nginx
-    - ruby-prod
+#    - mysql
+#    - nginx
+#    - ruby-prod
     - firewall

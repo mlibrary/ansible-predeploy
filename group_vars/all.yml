@@ -1,16 +1,4 @@
 user:
   me:
     public_keys:
-      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCpiYrZtbgxck6RO6mK3Ovz9/GaTpFBxoVOImeYQM0K/5XV/euf5sIebG
-        JXfrjdBApwSL9WwhX2QIoLgpAeZXGtaGs2JSMmbPaKxFVMbnAxoKA4HigASZTL1MpgSDwVh/qnWavop2SIM3A1GOzoB+Xf
-        DY13499thD29X0lXTe6uK13tS/hg9swhL83VYH/hFMoTWRQ2SRDA3XAEZq15qBb8mFdeNG+r4aKlLm76p8VPWpKeTg2iFx
-        jQWhwjCfUZgAX1MOiHZX+Sur48FEW5SKHVHS83q5UfPBA2+e2p+kkLMP9epEj/BHI8FH0c94LSk2bfgnHfvRESyC+u7LhK
-        mCxB malakai@ubuntu
-      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC8ROLt59jbZCdb9gV6RvpYkdjf1YNpv6sPsv8aX4R4phhcMRETNce3O6
-        X3I3fsBowgqOa15N7Y/1M1a1IxRcLTxEzTh+j0C+U3PsmrbIlZANCDk5T5t8FzwHwM4/859YJmot6wN1U+qhdAOqEseYumYO
-        nj0DS1RYUokBN/YyozonoIBVOZasKqJWGKJIHDDOU/av6YWUAcG2PV4OiTDCsy0Kbio5jwzlPH15BG0I5v1Nme6/6hx26HYC
-        kd7vW9ZUKGp51Ysl103C9plu7vGhRZB6a4Mk0U3AgOKEXG7y/ye+0K37um6QcuE74E1mfP0vEwVfc8BWrFFKREOpcRDXpqCj
-        buw5IO4fgsT8PRjlLtt2HGiGGgv2f39ZSGbHfTGQTW32vHB7wIknupMf9EsSvaCvNZdPiBupY5Ch8BOcBAXXOtWFFB6I3Io0
-        fW15x9bNNhI8+PmBKpqmU2YKjqy1anePIuvItcmg0BSyPeGaKM7WUfQg+y3YlOAJOhX15U1RnV1SytdsPe/SqZJKNPG7R5Vq
-        kVUGiRduwxgFjC6HEHrByxm3QuNiKcqzQAxC15i8WKfJOAkdDR378h2p9HQYJ4H6P7LSQLS+KmKO1Bilxhozh7XE0Ok6aCu4E
-        /q4VHWS5bAOSvUvqatcDiqMbnjmFJEia6UnuF3h5BkVF8iQHrrQ== bhock@umich.edu
+     - "{{ lookup('file', 'files/ssh/id_rsa-reinette.pub') }}"
