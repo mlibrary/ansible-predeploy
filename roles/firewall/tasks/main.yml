@@ -5,26 +5,24 @@
 
 - name: default deny
   ufw:
-    state: enabled
+    state: disabled
     policy: deny
-    logging: "on"
+    logging: "off"
 
 - name: allow outgoing
   ufw:
+    state: disabled
     rule: allow
-    direction: outgoing
+    direction: out
 
 - name: allow ssh
   ufw:
+    state: disabled
     rule: allow
     port: 22
     proto: tcp
 
-- name: loopback
+- name: reload ufw
   ufw:
-    rule: allow
-    interface: lo
+    state: enabled
 
-- name: reload ufw when we're done
-  ufw:
-    state: reloaded
