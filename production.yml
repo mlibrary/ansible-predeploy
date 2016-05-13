@@ -1,14 +1,20 @@
 - hosts: production
   become: yes
   remote_user: malakai
+  vars_files:
+    - vars/mysql.yml
   vars:
+  pre_tasks:
+    - name: generate a password for root
+      shell: openssl rand -base64 32 | tr -dc A-Za-z0-9
+      register: password_for_mysql_root
   roles:
-#    - hostname
-#    - common-packages
-#    - git
-#    - mail
-#    - ntp
-#    - mysql
-#    - nginx
-#    - ruby-prod
+    - hostname
+    - common-packages
+    - git
+    - mail
+    - ntp
+    - geerlingguy.mysql
+    - nginx
+    - ruby-prod
     - firewall

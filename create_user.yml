@@ -24,7 +24,7 @@
         user: malakai
         key: "{{ item }}"
         state: present
-      with_items: user.me.public_keys
+      with_items: "{{user.me.public_keys}}"
 
     - name: add malakai to sudoers
       lineinfile:

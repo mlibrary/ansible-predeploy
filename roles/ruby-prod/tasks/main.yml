@@ -8,12 +8,12 @@
     name: "{{item}}"
     state: latest
   with_items:
-    - ruby2.2
-    - ruby2.2-dev
+    - ruby2.3
+    - ruby2.3-dev
     - ruby-switch
 
-- name: set ruby to 2.2
-  command: "ruby-switch --set ruby2.2"
+- name: set ruby to 2.3
+  command: "ruby-switch --set ruby2.3"
 
 - name: disable documentation
   lineinfile:

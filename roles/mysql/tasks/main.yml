@@ -1,6 +1,6 @@
 - name: generate a password for root
   shell: openssl rand -base64 32 | tr -dc A-Za-z0-9
-  register: mysql_root_password
+  register: password_for_mysql_root
 
 - name: Install mysql
   apt:
@@ -11,13 +11,13 @@
     - mysql-server
     - libmysqlclient-dev
 
+- name: run mysql_install_db
+  command: mysql_install_db
+
 - name: start mysqld service
   service:
     name: mysql
     state: restarted
-
-- name: run mysql_install_db
-  command: mysql_install_db
 
 - name: create /root/.my.cnf
   template:
