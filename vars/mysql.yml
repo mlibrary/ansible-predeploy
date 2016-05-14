@@ -8,7 +8,7 @@ mysql_packages:
   - mysql-server
   - python-mysqldb
   - libmysqlclient-dev
-mysql_log: syslog
-mysql_log_error: syslog
+mysql_log: ""
+mysql_log_error: /var/log/mysql/mysql.err
 mysql_syslog_tag: mysqld
 mysql_slow_query_log_enabled: no
