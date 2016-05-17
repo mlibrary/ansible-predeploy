@@ -1,0 +1,20 @@
+[Unit]
+Description={{name}} Server
+After=network.target mysqld.target
+Requires={{name}}-queues.target
+PropagatesReloadTo={{name}}-queues.target
+
+[Service]
+Type=simple
+User={{user.name}}
+Group={{group.name}}
+WorkingDirectory={{basepath}}/{{name}}/current
+Environment=RAILS_ENV=production
+Environment=RBENV_ROOT={{rbenv_root}}
+ExecStart={{rbenv_root}}/bin/rbenv exec bundle exec puma -C config/puma.rb
+ExecReload={{rbenv_root}}/bin/rbenv exec bundle exec pumactl restart
+TimeoutStartSec=20s
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
