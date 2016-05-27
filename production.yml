@@ -10,11 +10,12 @@
       register: password_for_mysql_root
   roles:
     - hostname
+    - kamaln7.swapfile # vars/swap.yml
     - common-packages
     - git
     - mail
     - ntp
-    - geerlingguy.mysql
+    - geerlingguy.mysql # var/mysql.yml
     - nginx
     - ruby-prod
     - firewall
