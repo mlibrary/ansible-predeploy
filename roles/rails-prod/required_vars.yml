@@ -1,7 +1,7 @@
 ---
 name: app's name, all one word
+url: app's url
 basepath: e.g. /var, if you wanted /var/appname
-rbenv_root: location of rbenv folder e.g /l/local/rbenv
 num_queues: 0 to disable, otherwise integer
 group:
   gid: group gid
@@ -10,7 +10,12 @@ user:
   uid: app user uid
   name: app username
   public_keys:
+    - actual
+    - public
+    - keys
 deploy_user:
   uid: deploy user uid
   public_keys:
+    - ditto
+    - etc
   github_private_key: local file path of the github private key

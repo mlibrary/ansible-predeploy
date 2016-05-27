@@ -8,10 +8,9 @@ ReloadPropagatedFrom={{name}}-queues.target
 Type=simple
 User={{user.name}}
 Group={{group.name}}
-WorkingDirectory={{basepath}}/{{name}}/current
+WorkingDirectory={{app_path}}/current
 Environment=RAILS_ENV=production
-Environment=RBENV_ROOT={{rbenv_root}}
-ExecStart={{rbenv_root}}/bin/rbenv exec bundle exec rake jobs:work
+ExecStart=bundle exec rake jobs:work
 TimeoutStartSec=4
 Restart=on-failure
 

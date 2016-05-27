@@ -6,11 +6,10 @@ After=network.target mysqld.target
 Type=simple
 User={{user.name}}
 Group={{group.name}}
-WorkingDirectory={{basepath}}/{{name}}/current
+WorkingDirectory={{app_path}}/current
 Environment=RAILS_ENV=production
-Environment=RBENV_ROOT={{rbenv_root}}
-ExecStart={{rbenv_root}}/bin/rbenv exec bundle exec puma -C config/puma.rb
-ExecReload={{rbenv_root}}/bin/rbenv exec bundle exec pumactl restart
+ExecStart=bundle exec puma -C config/puma.rb
+ExecReload=bundle exec pumactl restart
 TimeoutStartSec=20s
 Restart=on-failure
 

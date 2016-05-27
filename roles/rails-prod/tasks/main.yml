@@ -1,104 +1,31 @@
-- name: Create the app's system group
-  group:
-    gid: "{{group.gid}}"
-    name: "{{group.name}}"
-    state: present
-
-- name: Create the app's system user
-  user:
-    uid: "{{user.uid}}"
-    name: "{{user.name}}"
-    group: "{{group.name}}"
-    comment: "{{name}} user"
-    createhome: yes
-    shell: /bin/bash
-    system: yes
-
-- name: Add public keys for app user
-  authorized_key:
-    user: "{{user.name}}"
-    key: "{{item}}"
-    state: present
-  with_items: "{{user.public_keys}}"
-
-- name: Create the deploy system user
-  user:
-    uid: "{{deploy_user.uid}}"
-    name: "{{user.name}}deploy"
-    group: "{{group.name}}"
-    comment: "{{name}} deploy user"
-    createhome: yes
-    shell: /bin/bash
-    system: yes
-
-- name: Add public keys for deploy user
-  authorized_key:
-    user: "{{deploy_user.name}}"
-    key: "{{item}}"
-    state: present
-  with_items: "{{deploy_user.public_keys}}"
-
-- name: Upload github private key for deploy user
-  copy:
-    src: "{{deploy_user.github_private_key}}"
-    dest: "/home/{{deploy_user.name}}/.ssh"
-    mode: 0600
-    owner: "{{deploy_user.name}}"
-    group: "{{group.name}}"
-
-- name: Allow deploy user to restart the service
-  lineinfile:
-    dest: /etc/sudoers
-    state: present
-    insertafter: EOF
-    line: "{{deploy_user.name}} ALL=(ALL) NOPASSWD: systemctl restart {{name}}"
-    validate: "visudo -cf %s"
+- include: pre.yml
+- include: user.yml
+- include: db.yml
 
 - name: Create the project directory
   file:
     state: directory
-    path: "{{basepath}}/{{name}}"
+    path: "{{app_path}}"
     owner: "{{user.name}}"
     group: "{{group.name}}"
-    mode: 775
+    mode: 0775
 
-- name: Create the database
-  mysql_db:
-    name: "{{name}}"
-    state: present
+- name: Create shared files directory
+  file:
+    state: directory
+    path: "{{app_path}}/shared/config"
+    owner: "{{user.name}}deploy"
+    group: "{{group.name}}"
 
-- name: Generate DB password for app user
-  shell: openssl rand -base64 32 | tr -dc A-Za-z0-9
-  register: user_db_password
+- name: Install the shared database.yml
+  template:
+    src: database.yml.j2
+    dest: "{{app_path}}/shared/config/database.yml"
+    force: yes
+    owner: "{{user.name}}deploy"
+    group: "{{group.name}}"
+    mode: u=rw,g=r,o-rwx
 
-- include: my.cnf.yml
-  vars:
-    user: "{{user.name}}"
-    password: "{{user_db_password}}"
-    dest: "/home/{{user.name}}/.my.cnf"
-
-- name: Create the app DB user
-  mysql_user:
-    name: "{{user.name}}"
-    password: "{{user_db_password}}"
-    host: localhost
-    priv: "{{name}}.*:DELETE,EXECUTE,INSERT,LOCK_TABLES,SELECT,UPDATE"
-
-- name: Generate DB password for app deploy user
-  shell: openssl rand -base64 32 | tr -dc A-Za-z0-9
-  register: deploy_user_db_password
-
-- include: my.cnf.yml
-  vars:
-    user: "{{deploy_user.name}}"
-    password: "{{deploy_user_db_password}}"
-    dest: "/home/{{deploy_user.name}}/.my.cnf"
-
-- name: Create the app DB deploy user
-  mysql_user:
-    name: "{{deploy_user.name}}"
-    host: localhost
-    priv: "{{name}}.*:ALL"
-
+- include: nginx.yml
 - include: systemd.yml
 
