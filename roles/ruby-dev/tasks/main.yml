@@ -1,0 +1,77 @@
+- name: install ruby development package dependencies
+  apt:
+    pkg: "{{item}}"
+    state: installed
+  with_items:
+    - autoconf
+    - bison
+    - build-essential
+    - libssl-dev
+    - git
+    - libyaml-dev
+    - libreadline6-dev
+    - zlib1g-dev
+    - libsqlite3-dev
+    - libncurses5-dev
+    - libffi-dev
+    - libgdbm3
+    - libgdbm-dev
+
+- name: download rbenv from git
+  git:
+    accept_hostkey: true
+    repo: "{{rbenv_git}}"
+    dest: "{{rbenv_dir}}"
+
+- name: set rbenv permissions
+  file:
+    path: "{{rbenv_dir}}"
+    mode: "o+rsXx"
+    recurse: true
+
+- name: create rbenv profile
+  template:
+    src: rbenv.sh.j2
+    owner: root
+    group: root
+    mode: "u=rw,go=rx"
+    dest: "{{rbenv_profile}}"
+
+- name: rehash rbenv
+  shell: ". {{rbenv_profile}} && rbenv init - && rbenv rehash"
+
+- name: create plugins directory
+  file:
+    path: "{{rbenv_dir}}/plugins"
+    state: directory
+
+- name: download ruby-build from git
+  git:
+    accept_hostkey: true
+    repo: "{{ruby_build_git}}"
+    dest: "{{rbenv_dir}}/plugins/ruby_build"
+
+- name: set ruby_build permissions
+  file:
+    path: "{{rbenv_dir}}/plugins"
+    mode: "o+rsXx"
+    recurse: true
+
+- name: check if ruby is installed
+  stat:
+    path: "{{rbenv_dir}}/versions/{{ruby_version}}"
+  register: ruby_installed
+
+- name: install ruby
+  shell: ". {{rbenv_profile}} && rbenv install {{ruby_version}}"
+  when: ruby_installed.stat.exists == False
+
+- name: rehash again
+  shell: ". {{rbenv_profile}} && rbenv init - && rbenv rehash"
+
+- name: set global ruby version
+  shell: ". {{rbenv_profile}} && rbenv global {{ruby_version}}"
+
+- name: install bundler
+  shell: ". {{rbenv_profile}} && gem install bundler"
+

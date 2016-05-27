@@ -1,0 +1,8 @@
+- hosts: development
+  become: yes
+  roles:
+    - hostname
+#    - user
+#    - common-packages
+#    - git
+#    - ruby-dev

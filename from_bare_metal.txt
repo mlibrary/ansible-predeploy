@@ -1,0 +1,24 @@
+# This section is about upgrading from ubuntu 13 to 14.
+sed -i -re 's/([a-z]{2}\.)?archive.ubuntu.com|security.ubuntu.com/old-releases.ubuntu.com/g' /etc/apt/sources.list
+apt-get update
+do-release-update
+# y enter y y
+# yes to everything
+reboot
+apt-get update
+do-release-update
+# yes to most questions, but
+# do not allow ssh to disable root login.
+
+# On the target machine
+apt-get install python -y
+
+# Install missing roles
+ansible-galaxy install -r requirements.txt
+
+# Create user, secure root
+ansible-playbook create_user.yml --limit=targethost --ask-pass
+
+# Do everything else
+ansible playbook production.yml|development.yml --limit=targethost
+
