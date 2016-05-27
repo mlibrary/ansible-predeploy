@@ -3,6 +3,7 @@
   remote_user: malakai
   vars_files:
     - vars/mysql.yml
+    - vars/swap.yml
   vars:
   pre_tasks:
     - name: generate a password for root
@@ -19,3 +20,20 @@
     - nginx
     - ruby-prod
     - firewall
+    - role: rails-prod
+      name: tephue
+      url: tephue.com
+      basepath: /var
+      num_queues: 0
+      group:
+        gid: 200
+        name: tephue
+      user:
+        uid: 1400
+        name: tephue
+        public_keys: "{{user.me.public_keys}}"
+      deploy_user:
+        uid: 1401
+        public_keys: "{{user.me.public_keys}}"
+        github_private_key: /home/malakai/.ssh/id-rsa_github
+
