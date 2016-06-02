@@ -1,5 +1,0 @@
-rbenv_git: git://github.com/sstephenson/rbenv.git
-rbenv_dir: /usr/local/rbenv
-ruby_build_git: git://github.com/sstephenson/ruby-build.git
-rbenv_profile: /etc/profile.d/rbenv.sh
-ruby_version: 2.2.1
