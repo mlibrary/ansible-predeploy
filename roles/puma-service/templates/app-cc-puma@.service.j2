@@ -1,0 +1,33 @@
+# Service template for Curation Concerns applications run with Puma web server.
+# This template is not stand alone and instances will require a drop-in .conf file 
+# e.g. app-cc-puma@myapp-production.service.d/production.conf
+
+[Unit]
+Description=%i Application
+After=network.target
+Requires=resque-pool@%i.service
+
+[Service]
+Type=simple
+
+# Values that need to be overridden by a drop-in conf file
+# User=overridme
+# Group=overridme
+# WorkingDirectory=/override/or/fail
+# PIDFile=/override/or/fail/pidfile.pid
+# Environment="MYAPP_HOST=www.example.com"
+# Environment="MINTER_FILE=/override/or/fail/minter-state"
+
+# Common ruby environment config
+Environment="RAILS_ENV=production"
+Environment="RBENV_ROOT=/usr/local/rbenv"
+Environment="REDIS_NS=%i"
+
+ExecStart=/usr/local/rbenv/bin/rbenv exec bundle exec puma -C config/puma.rb
+
+TimeoutStartSec=20
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

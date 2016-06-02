@@ -1,0 +1,11 @@
+# Production config for myapp app.
+# %i should be myapp-production
+[Service]
+User=myapp
+Group=myapp
+
+WorkingDirectory=/hydra/myapp-production/app/current
+PIDFile=/hydra/myapp-production/app/shared/log/myapp-puma.pid
+
+Environment="MYAPP_HOST=prodserver.organization.org"
+Environment="MINER_FILE=/var/myapp-production/minter-state"

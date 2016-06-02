@@ -1,0 +1,9 @@
+# Production config for resque-pool supporting myapp app.
+# %i should be myapp-production
+[Service]
+User=myapp
+Group=myapp
+WorkingDirectory=/hydra/myapp-production/app/current
+PIDFile=/hydra/myapp/app/shared/log/resque.pid
+
+ExecStart=/usr/local/rbenv/bin/rbenv exec bundle exec resque-pool --daemon -p "/hydra/%i/app/shared/log/resque.pid" --environment production
