@@ -1,0 +1,3 @@
+rbenv_root: /l/local/rbenv
+rbenv_path: /l/local/rbenv/bin/rbenv 
+ruby_version: 2.3.0
