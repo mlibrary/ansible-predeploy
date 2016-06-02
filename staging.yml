@@ -15,8 +15,3 @@
         uid: 1400
         name: tephue
         public_keys: "{{user.me.public_keys}}"
-      deploy_user:
-        uid: 1401
-        public_keys: "{{user.me.public_keys}}"
-        github_private_key: /home/malakai/.ssh/id-rsa_github
-
