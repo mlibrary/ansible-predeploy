@@ -1,2 +1,0 @@
-ssh apt-get install python -y
-ansible-playbook create_user.yml development.yml|production.yml --limit=targethost
