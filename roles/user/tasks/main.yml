@@ -1,0 +1,27 @@
+---
+- name: Create the app's system group
+  group:
+    gid: "{{group_gid}}"
+    name: "{{app_name}}"
+    state: present
+    system: no
+
+- name: Create the app's system user
+  user:
+    uid: "{{user_uid}}"
+    name: "{{app_name}}"
+    group: "{{app_name}}"
+    comment: "{{app_name}} user"
+    createhome: yes
+    home: "/var/{{app_name}}"
+    shell: /bin/bash
+    system: yes
+
+- name: Add deployment users to app group
+  user:
+    name: "{{item}}"
+    append: yes
+    groups: "{{app_name}}"
+  with_items: "{{ deploy_users }}"
+
+
