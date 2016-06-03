@@ -1,11 +1,14 @@
-# Service template for Curation Concerns applications run with Puma web server.
+# Service template for applications run with Puma web server.
 # This template is not stand alone and instances will require a drop-in .conf file 
-# e.g. app-cc-puma@myapp-production.service.d/production.conf
+# e.g. app-cc-puma@myapp-production.service.d/drop-in.conf
 
 [Unit]
 Description=%i Application
 After=network.target
-Requires=resque-pool@%i.service
+{# Require resque-pool service for apps that have it as a dependency #}
+{% if puma_svc_resque_dependency %} 
+Requires=resque-pool@%i.service 
+{% endif %}
 
 [Service]
 Type=simple
@@ -15,15 +18,13 @@ Type=simple
 # Group=overridme
 # WorkingDirectory=/override/or/fail
 # PIDFile=/override/or/fail/pidfile.pid
-# Environment="MYAPP_HOST=www.example.com"
-# Environment="MINTER_FILE=/override/or/fail/minter-state"
 
 # Common ruby environment config
 Environment="RAILS_ENV=production"
-Environment="RBENV_ROOT=/usr/local/rbenv"
+Environment="RBENV_ROOT={{ puma_svc_rbenv_home }}"
 Environment="REDIS_NS=%i"
 
-ExecStart=/usr/local/rbenv/bin/rbenv exec bundle exec puma -C config/puma.rb
+ExecStart={{ puma_svc_rbenv_home }}/bin/rbenv exec bundle exec puma -C config/puma.rb
 
 TimeoutStartSec=20
 Restart=on-failure

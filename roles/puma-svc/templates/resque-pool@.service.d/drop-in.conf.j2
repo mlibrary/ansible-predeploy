@@ -1,0 +1,10 @@
+# Drop in configuration for resque pool service
+# %i should be appname-target e.g. umdr-staging or heliotrope-production
+[Service]
+User={{ puma_svc_app_name }}
+Group={{ puma_svc_app_name }}
+
+WorkingDirectory={{ puma_svc_deploy_dir }}/current
+PIDFile={{ puma_svc_deploy_dir }}/shared/log/{{ puma_svc_app_name }}-resque.pid
+
+ExecStart={{ rbenv_home }}/bin/rbenv exec bundle exec resque-pool --daemon -p {{ puma_svc_deploy_dir}}/shared/log/resque-pool.pid --environment production

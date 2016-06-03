@@ -1,0 +1,14 @@
+# Production config for resque-pool supporting umrdr app.
+# %i should be umrdr-staging
+[Service]
+User=umrdr
+Group=umrdr
+WorkingDirectory=/hydra-dev/umrdr-staging/app/current
+PIDFile=/hydra-dev/umrdr-staging/app/shared/log/resque-pool.pid
+
+ExecStart=/l/local/rbenv/bin/rbenv exec bundle exec resque-pool --daemon -p /hydra-dev/umrdr-staging/app/shared/log/resque-pool.pid --environment production
+
+# Drop in configs do not use %i ? Investigate.
+# WorkingDirectory=/hydra-dev/%i/app/current
+# PIDFile=/hydra-dev/%i/app/shared/log/resque-pool.pid
+# ExecStart=/l/local/rbenv/bin/rbenv exec bundle exec resque-pool --daemon -p /hydra-dev/%i/app/shared/log/resque-pool.pid --environment production

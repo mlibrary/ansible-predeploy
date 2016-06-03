@@ -1,0 +1,35 @@
+---
+- name: Check required varaibles
+  assert: { that: "item is defined" }
+  with_items:
+    - puma_svc_rbenv_home
+    - puma_svc_deploy_dir
+    - puma_svc_app_name
+    - puma_svc_app_stage
+
+- name: Install puma service
+  become: yes
+  template:
+    src:   app-puma@.service.j2 
+    dest:  /etc/systemd/system/app-puma@{{puma_svc_app_name}}-{{puma_svc_app_stage}}.service
+    owner: root
+    group: root
+    mode:  u=rwx,g=rx,o=rx
+
+- name: Create puma service config directory
+  become: yes
+  file:
+    path:  /etc/systemd/system/app-puma@{{puma_svc_app_name}}-{{puma_svc_app_stage}}.service.d
+    state: directory
+
+- name: Install puma service drop-in config
+  become: yes
+  template:
+    src:   app-puma@.service.d/drop-in.conf.j2 
+    dest:  /etc/systemd/system/app-puma@{{puma_svc_app_name}}-{{puma_svc_app_stage}}.service.d/{{puma_svc_app_stage}}.conf
+    owner: root
+    group: root
+    mode:  u=rwx,g=rx,o=rx
+
+- include: resque.yml
+  when:  puma_svc_resque_dependency
