@@ -1,5 +1,0 @@
-user:
-  me:
-    public_keys:
-     - "{{ lookup('file', 'files/ssh/id_rsa-reinette.pub') }}"
-     - "{{ lookup('file', 'files/ssh/id_rsa-malakai@hatchker-personal.pub') }}"

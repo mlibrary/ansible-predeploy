@@ -1,4 +1,0 @@
-swapfile_use_dd: False
-swapfile_size: 1GB
-swapfile_swappiness: 5
-swapfile_location: /swapfile
