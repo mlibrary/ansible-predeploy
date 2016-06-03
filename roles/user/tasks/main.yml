@@ -13,7 +13,7 @@
     group: "{{user_group}}"
     comment: "{{user_comment}}"
     createhome: yes
-    home: "/var/{{user_name}}"
+    home: "{{user_home}}"
     shell: /bin/bash
     system: yes
 
