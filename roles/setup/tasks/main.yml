@@ -1,0 +1,7 @@
+---
+
+# These include statements must not rely on their order.
+# I prefer alphabetical.
+
+- include: db.yml
+- include: user.yml

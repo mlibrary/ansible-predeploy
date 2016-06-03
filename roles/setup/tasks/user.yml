@@ -1,0 +1,9 @@
+---
+
+- set_fact:
+  user_group: "{{app_name}}"
+  user_name: "{{app_name}}"
+  user_home: "/var/{{app_name}}"
+  user_uid: "{{user_uid}}"
+  user_gid: "{{user_gid}}"
+  user_deploy_users: "{{deploy_users}}"
