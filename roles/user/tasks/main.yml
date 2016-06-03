@@ -1,19 +1,19 @@
 ---
 - name: Create the app's system group
   group:
-    gid: "{{group_gid}}"
-    name: "{{app_name}}"
+    gid: "{{user_gid}}"
+    name: "{{user_group}}"
     state: present
     system: no
 
 - name: Create the app's system user
   user:
     uid: "{{user_uid}}"
-    name: "{{app_name}}"
-    group: "{{app_name}}"
-    comment: "{{app_name}} user"
+    name: "{{user_name}}"
+    group: "{{user_group}}"
+    comment: "{{user_comment}}"
     createhome: yes
-    home: "/var/{{app_name}}"
+    home: "{{user_home}}"
     shell: /bin/bash
     system: yes
 
@@ -21,7 +21,7 @@
   user:
     name: "{{item}}"
     append: yes
-    groups: "{{app_name}}"
-  with_items: "{{ deploy_users }}"
+    groups: "{{user_group}}"
+  with_items: "{{ user_deploy_users }}"
 
 
