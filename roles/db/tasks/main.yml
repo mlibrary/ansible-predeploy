@@ -1,0 +1,30 @@
+- name: Create the database
+  mysql_db:
+    name: "{{db_name}}"
+    state: present
+
+- name: Generate DB password for app user
+  shell: openssl rand -base64 32 | tr -dc A-Za-z0-9
+  register: db_user_password
+
+- include: my.cnf.yml
+  vars:
+    user: "{{db_user_name}}"
+    password: "{{db_user_password}}"
+    dest: "{{db_user_home}}/.my.cnf"
+    
+- name: Create the app DB user
+  mysql_user:
+    name: "{{db_user_name}}"
+    password: "{{db_user_password}}"
+    host: localhost
+    priv: "{{db_name}}.*:DELETE,EXECUTE,INSERT,LOCK_TABLES,SELECT,UPDATE"
+    
+- name: Grant privileges to deploy users
+  mysql_user:
+    name: "{{item}}"
+    append_priv: yes
+    priv: "{{db_name}}.*:ALL"
+  with_items: "{{db_deploy_users}}"
+
+    
