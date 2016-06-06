@@ -16,7 +16,7 @@
         - role: user
           user_group: "{{app_name}}"
           user_name: "{{app_name}}"
-          user_home: /var/local
+          user_home: "/var/local/{{app_name}}"
           user_uid: 12313
           user_gid: 2923
           user_deploy_users:
