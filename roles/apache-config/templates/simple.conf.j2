@@ -1,0 +1,43 @@
+<VirtualHost *:80>
+  ServerName {{apache_server_name}}
+  RewriteEngine On
+  RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [L,R=permanent]
+</VirtualHost>
+
+
+<VirtualHost *:443>
+  ServerName {{apache_server_name}}
+  ServerAdmin {{apache_server_admin}}
+  DocumentRoot {{apache_public_dir}}
+  
+  ErrorLog {{apache_error_log}}
+  CustomLog {{apache_error_log}} combined
+  LogLevel info
+  
+  <Directory {{apache_public_dir}}>
+    Options Indexes FollowSymLinks MultiViews
+    AllowOverride None
+    Order allow,deny
+    allow from all
+  </Directory>
+  
+  RequestHeader set X_FORWARDED_PROTO 'https'
+  
+  ProxyPass / {{apache_proxy_host}}:{{apache_proxy_port}}/
+  ProxyPassReverse / {{apache_proxy_host}}:{{apache_proxy_port}}/
+  
+  SSLEngine on
+  SSLProtocol all -SSLv2 -SSLv3
+  SSLCipherSuite ALL:!NULL:!LOW:!MEDIUM:!EXP:!ADH
+  SSLVerifyClient none
+  #SSLOptions +StrictRequire
+  SSLCertificateFile {{apache_ssl_crt}}
+  SSLCertificateKeyFile {{apache_ss_key}}
+  SSLCACertificatePath /etc/ssl/chain
+</VirtualHost>
+
+
+
+
+
+

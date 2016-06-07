@@ -1,0 +1,159 @@
+################################################################################################################
+# Public access macro
+<Macro access_all>
+  <Location />
+    Order Allow,Deny
+    Allow from all
+    Deny from env=badrobot
+  </Location>
+</Macro>
+
+
+################################################################################################################
+# Access whitelist macro
+<Macro access_whitelist>
+  <Location />
+    Order Deny,Allow
+    Deny from all
+    {% for ip in apache_whitelisted_ips %}
+    Allow from {{ ip }}
+    {% endfor %}
+  </Location>
+</Macro>
+
+
+################################################################################################################
+# Macro to assign logging options
+# $instance is the instance name, e.g. "production" or "staging"  ????
+<Macro logging $instance>
+    ErrorLog              "| /usr/bin/rotatelogs ${APACHE_LOG_DIR}/$instance/error_log-%Y%m%d 86400 -300" 
+    CustomLog             "| /usr/bin/rotatelogs ${APACHE_LOG_DIR}/$instance/access_log-%Y%m%d 86400 -300" combined
+</Macro>
+
+
+################################################################################################################
+# Common CoSign options
+<Macro cosign_common $cosign_service $ssl_key $ssl_crt>
+  CosignProtected               On
+  CosignHostname                weblogin.umich.edu
+  CosignValidReference          ^https?:\/\/[^/]+.umich\.edu(\/.*)?
+  CosignValidationErrorRedirect http://weblogin.umich.edu/cosign/validation_error.html
+  CosignCheckIP               never
+  CosignRedirect              https://weblogin.umich.edu/
+  CosignNoAppendRedirectPort  On
+  CosignPostErrorRedirect     https://weblogin.umich.edu/post_error.html
+  CosignService               $cosign_service
+  CosignCrypto                /etc/ssl/private/$ssl_key /etc/ssl/certs/$ssl_crt /etc/ssl/certs
+  
+  <Location /cosign/valid>
+    SetHandler cosign
+    CosignProtected Off
+    Allow from all
+    Satisfy any
+  </Location>
+  
+  <Location /robots.txt>
+    CosignProtected Off
+    Allow from all
+    Satisfy any
+  </Location>
+  
+  # Do not rewrite cosign session initiation.
+  RewriteEngine On
+  RewriteCond   %{REQUEST_URI}  !^/cosign/valid
+</Macro>
+???? ansible breaks when you attempt to use an undefined variable, so we would need to
+????  only insert this if e.g. apache_uses_cosign=yes
+???? The above macro is common to all sites, at least on nectar.
+
+
+################################################################################################################
+# Macro to support cosign
+<Macro {{apache_app_name}}_cosign>
+  Use cosign $instance.{{apache_full_domain}} {{apache_ssl_key}} {{apache_ssl_crt}}
+  CosignAllowPublicAccess On
+  
+  <LocationMatch "^/data/">   ???? I don't think this is correct
+      CosignRequireFactor {{apache_cosign_factor}} 
+  </LocationMatch>
+
+  <Location /data/login>
+     CosignAllowPublicAccess Off
+  </Location>
+</Macro>
+???? see note below common cosign macro
+
+
+################################################################################################################
+# Macro some common options 
+# $instance is the instance name, e.g. "production" or "staging"  ????
+# $access_macro is a macro containing the access profile for the site
+<Macro {{apache_app_name}}_common $instance $access_macro>
+  ServerName $instance.{{apache_full_domain}}
+  {% for apache_alias in apache_aliases %}
+  ServerAlias $instance.{{apache_alias}}
+  {% endfor %}
+  Use logging $instance
+  LogLevel info
+  DocumentRoot {{apache_doc_root_basepath}}/$instance/web
+  Use $access_macro
+</Macro>
+
+
+################################################################################################################
+# Rewrite rules for static root paths  ???? What does this do exactly?
+# $instance is the instance name, e.g. "production" or "staging"  ????
+<Macro {{apache_app_name}}_static_root $instance>
+  RewriteEngine on
+  # Do not rewrite static content requests for files that exist
+  RewriteCond   %{DOCUMENT_ROOT}/%{REQUEST_URI} !-f
+  
+  # Serve static assets through apache
+  RewriteCond {{apache_doc_root_basepath}}/$instance/app/shared/public/$1 -f
+  RewriteRule ^/(.*)$  {{apache_doc_root_basepath}}/$instance/app/shared/public/$1 [L]  
+  
+  ????
+  Can we expect only these rewrite rules, or should we allow arbitrary specifiction
+  of rules?  It gets a little wonky with conditions, but we could expect an array of e.g.
+  { cond: foo, regex: bar, dest: baz }
+  ????
+
+  # Proxy access to app through unix socket
+  RewriteRule ^(/.*)$ unix:/tmp/$instance.socket|http://$instance.hydra.lib.umich.edu$1 [P,NE]  
+  ???? need the config for host:ports, which we'll use in all envs.
+</Macro>
+
+
+
+################################################################################################################
+# Macro to setup a single vhost
+# $instance is the instance name, e.g. "production" or "staging"  ????
+# $access_macro is a macro containing the access profile for the site
+<Macro {{apache_app_name}}_vhost $instance $access_macro>\
+  <VirtualHost *:80>
+    Use {{apache_app_name}}_common $instance $access_macro
+    RewriteEngine on
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}$1 [L,R]
+  </VirtualHost>
+  
+  <VirtualHost *:443>
+    Use {{apache_app_name}}_common $instance $access_macro
+    Use ssl {{apache_ssl_key}} {{apache_ssl_crt}}
+  
+    RequestHeader set X-Remote-User     "expr=%{REMOTE_USER}"
+    RequestHeader set X-Forwarded-Proto 'https'
+    RequestHeader unset X-Forwarded-For
+    
+    Header set "Strict-Transport-Security" "max-age=3600"
+    
+    Use {{apache_app_name}}_static_root $instance
+  
+  </VirtualHost>
+</Macro>
+
+################################################################################################################
+
+Use {{apache_app_name}}_vhost {{apache_site.instance}} access_{{apache_site.access}}
+
+????
+$instance use is sort of wonky, it's unclear how we handle dpn.hathitrust.org vs staging.dpn.hathitrust.org, etc.
