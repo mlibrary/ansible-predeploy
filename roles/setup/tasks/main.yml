@@ -4,4 +4,6 @@
 # I prefer alphabetical.
 
 - include: db.yml
+- include: puma-svc.yml
 - include: user.yml
+

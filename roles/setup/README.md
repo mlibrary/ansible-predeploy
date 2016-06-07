@@ -20,6 +20,13 @@ assumed that this is intentional.
 * user_gid
 * deploy_users
 
+## Puma Service Role
+* app_name
+* app_stage
+* dependency_resque
+* rbenv_home
+* deploy_root
+
 # Development
 
 1. Create a file `tasks/<rolename>.yml`

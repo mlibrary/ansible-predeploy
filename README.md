@@ -22,6 +22,7 @@ app_hosts:
 db_hosts:
 solr_host:
 apache_hosts:
+deploy_root: /hydra-dev
 ```
 
 Get app gid and uid from ITS' UUID api/tool.
