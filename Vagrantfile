@@ -50,7 +50,7 @@ Vagrant.configure(2) do |config|
     ansible.extra_vars = {
       ruby_ver: '2.3.0'
     }
-    ansible.playbook = "vagrant.yml"
+    ansible.playbook = "playbook.vagrant.yml"
   end
 
   # Create a private network, which allows host-only access to the machine

@@ -15,7 +15,7 @@
     - deploy_users:
       - vagrant
       - grosscol
-      - bhockey
+      - otherguy
     - dependency_mysql: no
     - dependency_solr: no
     - dependency_resque: no
