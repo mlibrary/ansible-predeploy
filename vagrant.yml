@@ -8,8 +8,10 @@
     #leave blank; don't need ssh keys for vagrant instance.
     - keys_to_add:
     - app_name: demo-app
+    - app_stage: staging
     - user_gid:  123456
     - user_uid:  987654
+    - deploy_root: /hydra-dev
     - deploy_users:
       - vagrant
       - grosscol
@@ -17,6 +19,9 @@
     - dependency_mysql: no
     - dependency_solr: no
     - dependency_resque: no
+    - rbenv_home: /l/local/rbenv
   roles:
+    - { role: vmock, tags: ["testing", "vagrant"] }
     - { role: setup }
     - { role: user }
+    - { role: puma-svc }

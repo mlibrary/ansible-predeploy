@@ -38,9 +38,10 @@
   when:  puma_svc_resque_dependency
 
 - name: Allow deploy user to restart the puma-app service
+  become: yes
   lineinfile:
     dest: /etc/sudoers
     state: present
     insertafter: EOF
-    line: %{{puma_svc_app_group}} ALL=(root) NOPASSWD: /bin/systemctl restart app-puma@{{puma_svc_name}}.service
+    line: "%{{puma_svc_app_group}} ALL=(root) NOPASSWD: /bin/systemctl restart app-puma@{{puma_svc_name}}.service"
     validate: "visudo -cf %s"
