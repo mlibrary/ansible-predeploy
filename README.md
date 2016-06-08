@@ -32,6 +32,7 @@ Get app gid and uid from ITS' UUID api/tool.
 
 
 ### Testing with Vagrant using virtual box provider
+1. install external ansible roles `ansible-galaxy install -r external_roles.yml`
 1. install vagrant
 2. install virtual-box
 3. run `vagrant up` from project directory
