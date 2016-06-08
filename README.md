@@ -10,7 +10,8 @@ Required information:
 
 ```yaml
 app_name: myapp
-app_gid:  012344
+user_gid:  123456
+user_uid:  987654
 deploy_users:
   - user1
   - user2
@@ -20,4 +21,11 @@ dependency_resque: no
 ```
 
 Get app gid and uid from ITS' UUID api/tool.
+
+
+### Testing with Vagrant using virtual box provider
+
+
+
+
 

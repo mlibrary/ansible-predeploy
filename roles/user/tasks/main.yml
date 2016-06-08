@@ -1,5 +1,6 @@
 ---
 - name: Create the app's system group
+  become: yes
   group:
     gid: "{{user_gid}}"
     name: "{{user_group}}"
@@ -7,6 +8,7 @@
     system: no
 
 - name: Create the app's system user
+  become: yes
   user:
     uid: "{{user_uid}}"
     name: "{{user_name}}"
@@ -18,6 +20,7 @@
     system: yes
 
 - name: Add deployment users to app group
+  become: yes
   user:
     name: "{{item}}"
     append: yes

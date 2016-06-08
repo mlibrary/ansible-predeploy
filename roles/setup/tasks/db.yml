@@ -1,7 +1,7 @@
 ---
 
 - set_fact:
-  db_name: "{{app_name}}"
-  db_user_name: "{{app_name}}"
-  db_user_home: "/var/{{app_name}}"
-  db_deploy_users: "{{deploy_users}}"
+    db_name: "{{app_name}}"
+    db_user_name: "{{app_name}}"
+    db_user_home: "/var/{{app_name}}"
+    db_deploy_users: "{{deploy_users}}"
