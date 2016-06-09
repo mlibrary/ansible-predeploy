@@ -7,7 +7,7 @@
   vars:
     #leave blank; don't need ssh keys for vagrant instance.
     - keys_to_add:
-    - app_name: demo-app
+    - app_name: demo
     - app_stage: staging
     - user_gid:  123456
     - user_uid:  987654
@@ -19,9 +19,13 @@
     - dependency_mysql: no
     - dependency_solr: no
     - dependency_resque: no
+    - ruby_version: 2.3.0
     - rbenv_home: /l/local/rbenv
+    - rbenv_root: /l/local/rbenv
   roles:
     - { role: vmock, tags: ["testing", "vagrant"] }
+    - { role: zzet.rbenv, tags: ["testing", "vagrant"] }
     - { role: setup }
     - { role: user }
     - { role: puma-svc }
+    - { role: rbenv-version }

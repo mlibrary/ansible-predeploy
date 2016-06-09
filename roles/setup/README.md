@@ -27,6 +27,10 @@ assumed that this is intentional.
 * rbenv_home
 * deploy_root
 
+## Ruby Version Role
+* ruby_version
+* rbenv_root
+
 # Development
 
 1. Create a file `tasks/<rolename>.yml`

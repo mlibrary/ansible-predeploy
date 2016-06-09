@@ -1,4 +1,5 @@
 ---
+
 - name: Create dirs to mock the deploy root mount points
   become: yes
   file:
@@ -10,5 +11,12 @@
   become: yes
   file:
     path:  /hydra-dev
+    state: directory
+    mode: u=rwx,g=rwx,o=rwx
+
+- name: Create dir to mock local filesystem idiosyncracy
+  become: yes
+  file:
+    path:  /l/local
     state: directory
     mode: u=rwx,g=rwx,o=rwx

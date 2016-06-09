@@ -5,5 +5,6 @@
 
 - include: db.yml
 - include: puma-svc.yml
+- include: rbenv_version.yml
 - include: user.yml
 

@@ -47,9 +47,11 @@ Vagrant.configure(2) do |config|
       "vagrant" => ["default"]
     }
     
+    # Force override of rbenv_root at command line so rbenv install puts it in the specified location
     ansible.extra_vars = {
-      ruby_ver: '2.3.0'
+      rbenv_root: "/l/local/rbenv"
     }
+
     ansible.playbook = "playbook.vagrant.yml"
   end
 
