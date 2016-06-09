@@ -21,6 +21,7 @@ assumed that this is intentional.
 * deploy_users
 
 ## Puma Service Role
+
 * app_name
 * app_stage
 * dependency_resque
@@ -28,8 +29,15 @@ assumed that this is intentional.
 * deploy_root
 
 ## Ruby Version Role
+
 * ruby_version
 * rbenv_root
+
+## Solr Core Role
+
+* solr_core
+* solr_home
+* app_repo
 
 # Development
 

@@ -9,6 +9,7 @@
     - keys_to_add:
     - app_name: demo
     - app_stage: staging
+    - app_repo:  https://github.com/mlibrary/umrdr
     - user_gid:  123456
     - user_uid:  987654
     - deploy_root: /hydra-dev
@@ -21,6 +22,8 @@
     - dependency_resque: no
     - ruby_version: 2.3.0
     - rbenv_root: /l/local/rbenv
+    - solr_core: /hydra-dev/solr/cores/umrdr-staging
+    - solr_home: /var/lib/solr/home
   roles:
     - { role: vmock, tags: ["testing", "vagrant"] }
     - { role: zzet.rbenv, tags: ["testing", "vagrant"] }
@@ -28,3 +31,4 @@
     - { role: user }
     - { role: puma-svc }
     - { role: rbenv-ver }
+    - { role: solr-core }

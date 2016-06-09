@@ -14,9 +14,45 @@
     state: directory
     mode: u=rwx,g=rwx,o=rwx
 
+- name: Create dir to mock solr core locations
+  become: yes
+  file:
+    path:  /hydra-dev/solr/cores/
+    state: directory
+    mode:  u=rwx,g=rwx,o=rwx
+
 - name: Create dir to mock local filesystem idiosyncracy
   become: yes
   file:
     path:  /l/local
     state: directory
     mode: u=rwx,g=rwx,o=rwx
+
+- name: Create dir to mock solr directory structure
+  become: yes
+  file:
+    path:  /var/lib/solr6/home
+    state: directory
+    mode:  u=rwx,g=rwx,o=rwx
+
+- name: Create symlink to mock solr directory structure
+  become: yes
+  file:
+    path:  /var/lib/solr
+    src:   /var/lib/solr6
+    state: link
+    mode:  u=rwx,g=rwx,o=rwx
+
+- name: Create solr group
+  become: yes
+  group: 
+    name:  solr
+    state: present
+
+- name: Create solr user
+  become: yes
+  user:
+    name:  solr
+    home:  /var/solr
+    group: solr
+  

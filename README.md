@@ -7,7 +7,8 @@ Currently assumes running as root, but sudoers should allow use of `become: yes`
 `ansible-playbook staging.yml --extra-vars="vars_file=someapp.staging.vars.yml"`
 `ansible-playbook staging.yml --extra-vars="vars_file=someapp.training.vars.yml"`
 
-Required information:
+### Required Information:
+see `roles/setup/README.md`
 
 ```yaml
 ---
@@ -21,6 +22,8 @@ deploy_users:
   - user2
 dependency_mysql: no
 dependency_resque: no
+solr_core_path:
+solr_home:
 app_hosts:
 db_hosts:
 solr_host:

@@ -6,5 +6,6 @@
 - include: db.yml
 - include: puma-svc.yml
 - include: rbenv-ver.yml
+- include: solr-core.yml
 - include: user.yml
 
