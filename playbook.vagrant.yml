@@ -20,7 +20,6 @@
     - dependency_solr: no
     - dependency_resque: no
     - ruby_version: 2.3.0
-    - rbenv_home: /l/local/rbenv
     - rbenv_root: /l/local/rbenv
   roles:
     - { role: vmock, tags: ["testing", "vagrant"] }
@@ -28,4 +27,4 @@
     - { role: setup }
     - { role: user }
     - { role: puma-svc }
-    - { role: rbenv-version }
+    - { role: rbenv-ver }
