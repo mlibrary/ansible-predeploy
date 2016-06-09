@@ -18,7 +18,7 @@ Type=forking
 # ExecStart=/override/or/fail
 
 Environment="RAILS_ENV=production"
-Environment="RBENV_ROOT={{ puma_svc_rbenv_home }}"
+Environment="RBENV_ROOT={{ puma_svc_rbenv_root }}"
 
 # Using --hot-swap is what we ideally want, but it does not seem to be in the stable branch yet?
 #ExecStart=/usr/local/rbenv/bin/rbenv exec bundle exec resque-pool --daemon --hot-swap --environment production

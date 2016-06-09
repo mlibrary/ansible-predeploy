@@ -24,7 +24,7 @@ assumed that this is intentional.
 * app_name
 * app_stage
 * dependency_resque
-* rbenv_home
+* rbenv_root
 * deploy_root
 
 ## Ruby Version Role

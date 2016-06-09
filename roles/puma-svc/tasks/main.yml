@@ -2,7 +2,7 @@
 - name: Check required varaibles
   assert: { that: "item is defined" }
   with_items:
-    - puma_svc_rbenv_home
+    - puma_svc_rbenv_root
     - puma_svc_deploy_dir
     - puma_svc_app_name
     - puma_svc_app_stage

@@ -21,10 +21,10 @@ Type=simple
 
 # Common ruby environment config
 Environment="RAILS_ENV=production"
-Environment="RBENV_ROOT={{ puma_svc_rbenv_home }}"
+Environment="RBENV_ROOT={{ puma_svc_rbenv_root }}"
 Environment="REDIS_NS=%i"
 
-ExecStart={{ puma_svc_rbenv_home }}/bin/rbenv exec bundle exec puma -C config/puma.rb
+ExecStart={{ puma_svc_rbenv_root }}/bin/rbenv exec bundle exec puma -C config/puma.rb
 
 TimeoutStartSec=20
 Restart=on-failure
