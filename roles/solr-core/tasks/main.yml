@@ -23,7 +23,7 @@
   become: yes
   copy:
     content: "name={{solr_core_name}}"
-    dest:    "{{solr_core_path}}/conf/core.properties"
+    dest:    "{{solr_core_path}}/core.properties"
     owner:   solr
     group:   solr
 

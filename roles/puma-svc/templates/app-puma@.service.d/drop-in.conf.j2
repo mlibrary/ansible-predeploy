@@ -7,7 +7,9 @@ Requires=resque-pool@%i.service
 {% endif %}
 
 [Service]
-{% if puma_svc_resque_dependency %} Environment="REDIS_NS=%i" {% endif %}
+{% if puma_svc_resque_dependency %}
+Environment="REDIS_NS=%i"
+{% endif %}
 Environment="RBENV_ROOT={{ puma_svc_rbenv_root }}"
 
 User={{ puma_svc_app_name }}

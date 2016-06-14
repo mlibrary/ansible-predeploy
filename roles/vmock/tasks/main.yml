@@ -5,35 +5,35 @@
   file:
     path:  /hydra
     state: directory
-    mode: u=rwx,g=rwx,o=rwx
+    mode: u=rwx,g=rwx,o=rx
 
 - name: Create dirs to mock the deploy root mount points
   become: yes
   file:
     path:  /hydra-dev
     state: directory
-    mode: u=rwx,g=rwx,o=rwx
+    mode: u=rwx,g=rwx,o=rx
 
 - name: Create dir to mock solr core locations
   become: yes
   file:
     path:  /hydra-dev/solr/cores/
     state: directory
-    mode:  u=rwx,g=rwx,o=rwx
+    mode:  u=rwx,g=rwx,o=rx
 
 - name: Create dir to mock local filesystem idiosyncracy
   become: yes
   file:
     path:  /l/local
     state: directory
-    mode: u=rwx,g=rwx,o=rwx
+    mode: u=rwx,g=rwx,o=rx
 
 - name: Create dir to mock solr directory structure
   become: yes
   file:
     path:  /var/lib/solr6/home
     state: directory
-    mode:  u=rwx,g=rwx,o=rwx
+    mode:  u=rwx,g=rwx,o=rx
 
 - name: Create symlink to mock solr directory structure
   become: yes
@@ -41,7 +41,7 @@
     path:  /var/lib/solr
     src:   /var/lib/solr6
     state: link
-    mode:  u=rwx,g=rwx,o=rwx
+    mode:  u=rwx,g=rwx,o=rx
 
 - name: Create solr group
   become: yes
