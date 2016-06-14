@@ -9,12 +9,12 @@
     group: solr
 
 - name: Check out solr config locally
-  local_action: "command /usr/bin/svn co {{solr_core_repo}}/trunk/solr/config /tmp/{{solr_core_path | basename}}/solr/config"
+  local_action: "command /usr/bin/svn co {{solr_core_repo}}/trunk/solr/config /tmp/{{solr_core_name}}/solr/config"
 
 - name: Populate core conf 
   become: yes
   copy:
-    src:   "/tmp/{{solr_core_path | basename}}/solr/config/"
+    src:   "/tmp/{{solr_core_name}}/solr/config/"
     dest:  "{{solr_core_path}}/conf"
     owner: solr
     group: solr
@@ -22,7 +22,7 @@
 - name: Create core.properties
   become: yes
   copy:
-    content: "name={{solr_core_path | basename}}"
+    content: "name={{solr_core_name}}"
     dest:    "{{solr_core_path}}/conf/core.properties"
     owner:   solr
     group:   solr
@@ -30,6 +30,6 @@
 - name: Create link to core directory in solr home
   become: yes
   file:
-    path:  "{{solr_core_home}}/{{ solr_core_path | basename }}"
+    path:  "{{solr_core_home}}/{{ solr_core_name }}"
     src:   "{{solr_core_path}}"
     state: link

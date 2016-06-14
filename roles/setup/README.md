@@ -23,7 +23,6 @@ assumed that this is intentional.
 ## Puma Service Role
 
 * app_name
-* app_stage
 * dependency_resque
 * rbenv_root
 * deploy_root

@@ -5,5 +5,4 @@
     puma_svc_rbenv_root:        "{{rbenv_root}}"
     puma_svc_app_name:          "{{app_name}}"
     puma_svc_app_group:         "{{app_name}}"
-    puma_svc_app_stage:         "{{app_stage}}"
-    puma_svc_deploy_dir:        "{{deploy_root}}/{{app_name}}-{{app_stage}}/app"
+    puma_svc_deploy_dir:        "{{deploy_root}}/{{app_name}}/app"

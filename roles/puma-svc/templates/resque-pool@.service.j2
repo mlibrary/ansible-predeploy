@@ -5,7 +5,7 @@
 Description=%i Resque-Pool
 After=redis-server.service
 Requires=redis-server.service
-PartOf=app-cc-puma@%i.service
+PartOf=app-puma@%i.service
 
 [Service]
 Type=forking
@@ -16,9 +16,9 @@ Type=forking
 # WorkingDirectory=/override/or/fail
 # PIDFile=/override/or/fail/pidfile.pid
 # ExecStart=/override/or/fail
+# Environment="RBENV_ROOT=/override/or/fail"
 
 Environment="RAILS_ENV=production"
-Environment="RBENV_ROOT={{ puma_svc_rbenv_root }}"
 
 # Using --hot-swap is what we ideally want, but it does not seem to be in the stable branch yet?
 #ExecStart=/usr/local/rbenv/bin/rbenv exec bundle exec resque-pool --daemon --hot-swap --environment production
