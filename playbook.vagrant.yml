@@ -1,32 +1,59 @@
 ---
-- name: provision a vagrant box to test roles and playbooks.
+- name: provision vagrant box to test roles and playbooks
   hosts: vagrant
-  #user: vagrant
   remote_user: vagrant
-  #gather_facts: true
+  roles:
+    - { role: vmock, tags: ["testing", "vagrant"] }
+    - { role: zzet.rbenv, tags: ["testing", "vagrant"] }
+
+- name: Test roles and playbooks.
+  hosts: vagrant
+  remote_user: vagrant
   vars:
     #leave blank; don't need ssh keys for vagrant instance.
     - keys_to_add:
-    - app_name: demo
-    - app_stage: staging
+    - app_name: demo-testing
     - app_repo:  https://github.com/mlibrary/umrdr
-    - user_gid:  123456
-    - user_uid:  987654
+    - app_user_gid:  123000
+    - app_user_uid:  987000
     - deploy_root: /hydra-dev
     - deploy_users:
       - vagrant
       - grosscol
       - otherguy
-    - dependency_mysql: no
-    - dependency_solr: no
     - dependency_resque: no
     - ruby_version: 2.3.0
     - rbenv_root: /l/local/rbenv
-    - solr_core: /hydra-dev/solr/cores/umrdr-staging
+    - solr_core: /hydra-dev/solr/cores/demo-testing
     - solr_home: /var/lib/solr/home
   roles:
-    - { role: vmock, tags: ["testing", "vagrant"] }
-    - { role: zzet.rbenv, tags: ["testing", "vagrant"] }
+    - { role: setup }
+    - { role: user }
+    - { role: puma-svc }
+    - { role: rbenv-ver }
+    - { role: solr-core }
+
+- name: Second test of roles and playbooks.
+  hosts: vagrant
+  remote_user: vagrant
+  vars:
+    #leave blank; don't need ssh keys for vagrant instance.
+    - keys_to_add:
+    - app_name: demo-staging
+    - app_repo:  https://github.com/mlibrary/umrdr
+    - app_user_gid:  1234567
+    - app_user_uid:  9876543
+    - deploy_root: /hydra-dev
+    - deploy_users:
+      - vagrant
+      - thirdperson
+      - fourthperson
+    - dependency_resque: yes
+    - ruby_version: 2.3.0
+    - rbenv_root: /l/local/rbenv
+    - solr_core: /hydra-dev/solr/cores/demo-staging
+    - solr_home: /var/lib/solr/home
+  roles:
     - { role: setup }
     - { role: user }
     - { role: puma-svc }

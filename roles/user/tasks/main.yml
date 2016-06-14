@@ -17,6 +17,7 @@
     createhome: yes
     home: "{{user_home}}"
     shell: /bin/bash
+    state: present
     system: yes
 
 - name: Add deployment users to app group
@@ -25,6 +26,7 @@
     name: "{{item}}"
     append: yes
     groups: "{{user_group}}"
+    state: present
   with_items: "{{ user_deploy_users }}"
 
 

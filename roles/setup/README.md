@@ -16,8 +16,8 @@ assumed that this is intentional.
 ## User Role
 
 * app_name
-* user_uid
-* user_gid
+* app_user_uid
+* app_user_gid
 * deploy_users
 
 ## Puma Service Role
