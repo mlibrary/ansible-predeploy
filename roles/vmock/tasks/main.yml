@@ -15,3 +15,9 @@
     name: mysql-client
     state: present
 
+- name: Install python-mysql package
+  become: yes
+  package:
+    name: python-mysqldb
+    state: present
+
