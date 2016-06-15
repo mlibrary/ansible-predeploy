@@ -33,6 +33,13 @@ deploy_root: /hydra-dev
 
 Get app gid and uid from ITS' UUID api/tool.
 
+## Expected support existing on targer deployment machines.
+all:
+* python
+
+database:
+* python mysqldb module is required
+
 
 ### Testing with Vagrant using virtual box provider
 1. install external ansible roles `ansible-galaxy install -r external_roles.yml`

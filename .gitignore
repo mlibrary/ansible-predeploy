@@ -4,5 +4,6 @@ external_roles/*
 # Ignore vagrant files
 .vagrant
 *.retry
+*.pyc
 
 .idea/

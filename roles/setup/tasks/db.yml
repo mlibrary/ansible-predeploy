@@ -2,6 +2,6 @@
 
 - set_fact:
     db_name: "{{app_name}}"
-    db_user_name: "{{app_name}}"
+    db_user_name: "{{ app_name | db_username_minify }}"
     db_user_home: "/var/local/{{app_name}}"
     db_deploy_users: "{{deploy_users}}"
