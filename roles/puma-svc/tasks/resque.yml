@@ -3,7 +3,7 @@
   become: yes
   template:
     src:   resque-pool@.service.j2 
-    dest:  /etc/systemd/system/resque-pool@{{puma_svc_app_name}}-{{puma_svc_app_stage}}.service
+    dest:  /etc/systemd/system/resque-pool@.service
     owner: root
     group: root
     mode:  u=rwx,g=rx,o=rx
@@ -11,14 +11,14 @@
 - name: Create resque-pool service config directory
   become: yes
   file:
-    path:  /etc/systemd/system/resque-pool@{{puma_svc_app_name}}-{{puma_svc_app_stage}}.service.d
+    path:  /etc/systemd/system/resque-pool@{{puma_svc_app_name}}.service.d
     state: directory
 
 - name: Install resque-pool service drop-in config
   become: yes
   template:
     src:   resque-pool@.service.d/drop-in.conf.j2 
-    dest:  /etc/systemd/system/resque-pool@{{puma_svc_app_name}}-{{puma_svc_app_stage}}.service.d/{{puma_svc_app_stage}}.conf
+    dest:  /etc/systemd/system/resque-pool@{{puma_svc_app_name}}.service.d/drop-in.conf
     owner: root
     group: root
     mode:  u=rwx,g=rx,o=rx

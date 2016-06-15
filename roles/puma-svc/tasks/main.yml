@@ -2,19 +2,15 @@
 - name: Check required varaibles
   assert: { that: "item is defined" }
   with_items:
-    - puma_svc_rbenv_home
+    - puma_svc_rbenv_root
     - puma_svc_deploy_dir
     - puma_svc_app_name
-    - puma_svc_app_stage
-
-- set_fact:
-    puma_svc_name: "{{puma_svc_app_name}}-{{puma_svc_app_stage}}"
 
 - name: Install puma service
   become: yes
   template:
     src:   app-puma@.service.j2 
-    dest:  /etc/systemd/system/app-puma@{{puma_svc_name}}.service
+    dest:  /etc/systemd/system/app-puma@.service
     owner: root
     group: root
     mode:  u=rwx,g=rx,o=rx
@@ -22,14 +18,14 @@
 - name: Create puma service config directory
   become: yes
   file:
-    path:  /etc/systemd/system/app-puma@{{puma_svc_name}}.service.d
+    path:  /etc/systemd/system/app-puma@{{puma_svc_app_name}}.service.d
     state: directory
 
 - name: Install puma service drop-in config
   become: yes
   template:
     src:   app-puma@.service.d/drop-in.conf.j2 
-    dest:  /etc/systemd/system/app-puma@{{puma_svc_name}}.service.d/{{puma_svc_app_stage}}.conf
+    dest:  /etc/systemd/system/app-puma@{{puma_svc_app_name}}.service.d/drop-in.conf
     owner: root
     group: root
     mode:  u=rwx,g=rx,o=rx
@@ -37,11 +33,15 @@
 - include: resque.yml
   when:  puma_svc_resque_dependency
 
+- name: Reload systemd service files
+  become: yes
+  shell: systemctl daemon-reload
+
 - name: Allow deploy user to restart the puma-app service
   become: yes
   lineinfile:
     dest: /etc/sudoers
     state: present
     insertafter: EOF
-    line: "%{{puma_svc_app_group}} ALL=(root) NOPASSWD: /bin/systemctl restart app-puma@{{puma_svc_name}}.service"
+    line: "%{{puma_svc_app_group}} ALL=(root) NOPASSWD: /bin/systemctl restart app-puma@{{puma_svc_app_name}}.service"
     validate: "visudo -cf %s"

@@ -1,14 +1,17 @@
 ---
-- name: Create dirs to mock the deploy root mount points
-  become: yes
-  file:
-    path:  /hydra
-    state: directory
-    mode: u=rwx,g=rwx,o=rwx
 
-- name: Create dirs to mock the deploy root mount points
+- include: dirs.yml
+- include: solr.yml
+
+- name: Install mysql server
   become: yes
-  file:
-    path:  /hydra-dev
-    state: directory
-    mode: u=rwx,g=rwx,o=rwx
+  package:
+    name: mysql-server
+    state: present
+
+- name: Install mysql client
+  become: yes
+  package:
+    name: mysql-client
+    state: present
+

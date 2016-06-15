@@ -16,16 +16,27 @@ assumed that this is intentional.
 ## User Role
 
 * app_name
-* user_uid
-* user_gid
+* app_user_uid
+* app_user_gid
 * deploy_users
 
 ## Puma Service Role
+
 * app_name
-* app_stage
 * dependency_resque
-* rbenv_home
+* rbenv_root
 * deploy_root
+
+## Ruby Version Role
+
+* ruby_version
+* rbenv_root
+
+## Solr Core Role
+
+* solr_core
+* solr_home
+* app_repo
 
 # Development
 

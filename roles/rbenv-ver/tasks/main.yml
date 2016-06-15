@@ -1,0 +1,16 @@
+---
+
+- name: check rbenv ruby {{rbenv_ver_ruby_version}}
+  shell: bash -c "RBENV_ROOT={{rbenv_ver_rbenv_root}} {{rbenv_ver_rbenv_root}}/bin/rbenv versions | grep {{rbenv_ver_ruby_version}}"
+  register: ruby_ver_installed
+  ignore_errors: yes
+  tags: 
+    - ruby
+
+- name: install rbenv ruby {{rbenv_ver_ruby_version}}
+  become: yes
+  shell: bash -c "RBENV_ROOT={{rbenv_ver_rbenv_root}} {{rbenv_ver_rbenv_root}}/bin/rbenv install {{rbenv_ver_ruby_version}}"
+  when: ruby_ver_installed|failed
+  tags: 
+    - ruby
+

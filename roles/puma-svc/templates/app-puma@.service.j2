@@ -1,15 +1,9 @@
 # Service template for applications run with Puma web server.
 # This template is not stand alone and instances will require a drop-in .conf file 
 # e.g. app-cc-puma@myapp-production.service.d/drop-in.conf
-
 [Unit]
 Description=%i Application
 After=network.target
-{# Require resque-pool service for apps that have it as a dependency #}
-{% if puma_svc_resque_dependency %} 
-Requires=resque-pool@%i.service 
-{% endif %}
-
 [Service]
 Type=simple
 
@@ -18,13 +12,11 @@ Type=simple
 # Group=overridme
 # WorkingDirectory=/override/or/fail
 # PIDFile=/override/or/fail/pidfile.pid
+# ExecStart=/override/or/fail/bin/rbenv exec bundle exec puma -C config/puma.rb
+# Environment="RBENV_ROOT=/override/or/fail"
 
 # Common ruby environment config
 Environment="RAILS_ENV=production"
-Environment="RBENV_ROOT={{ puma_svc_rbenv_home }}"
-Environment="REDIS_NS=%i"
-
-ExecStart={{ puma_svc_rbenv_home }}/bin/rbenv exec bundle exec puma -C config/puma.rb
 
 TimeoutStartSec=20
 Restart=on-failure

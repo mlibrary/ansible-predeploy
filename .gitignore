@@ -1,3 +1,8 @@
-.idea/
-*.retry
+# Ignore vendorized roles
+external_roles/*
+
+# Ignore vagrant files
 .vagrant
+*.retry
+
+.idea/

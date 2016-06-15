@@ -1,0 +1,7 @@
+---
+
+- set_fact:
+    solr_core_name: "{{ solr_core | basename | regex_replace('-','_') }}"
+    solr_core_path: "{{ solr_core }}"
+    solr_core_home: "{{ solr_home }}"
+    solr_core_repo: "{{ app_repo }}"
