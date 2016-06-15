@@ -29,6 +29,7 @@
   roles:
     - { role: setup }
     - { role: user }
+    - { role: db }
     - { role: puma-svc }
     - { role: rbenv-ver }
     - { role: solr-core }
@@ -56,6 +57,7 @@
   roles:
     - { role: setup }
     - { role: user }
+    - { role: db }
     - { role: puma-svc }
     - { role: rbenv-ver }
     - { role: solr-core }
