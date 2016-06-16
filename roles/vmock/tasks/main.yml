@@ -3,6 +3,11 @@
 - include: dirs.yml
 - include: solr.yml
 
+- name: Update package manager cache
+  become: yes
+  package:
+    update_cache: yes
+
 - name: Install mysql server
   become: yes
   package:
