@@ -42,13 +42,13 @@ database:
 
 
 ### Testing with Vagrant using virtual box provider
-1. install external ansible roles `ansible-galaxy install -r external_roles.yml`
+1. install external ansible roles `ansible-galaxy install -r dependencies.yml`
 1. install vagrant
 2. install virtual-box
 3. run `vagrant up` from project directory
-4. run `vagrant provision` to re-run ansible provisioning
-
-
-
+5. Manually provision vagrant host using:
+```bash
+ansible-playbook --private-key=.vagrant/machines/default/virtualbox/private_key -u vagrant -i inventory/vagrant playbook.predeploy.yml --extra-vars="config_file=./demo.yml"
+```
 
 

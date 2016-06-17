@@ -29,30 +29,9 @@ Vagrant.configure(2) do |config|
   config.vm.network "forwarded_port", guest: 8984, host: 8984, auto_correct: true
   config.vm.network "forwarded_port", guest: 3000, host: 3000, auto_correct: true
 
-  # Install the Ansible Galaxy roles as a prerequisite
-  # config.vm.provision "ansible" do |ansible|
-  #   ansible.playbook = "install_external_roles.yml"
-  # end
-
   config.vm.provider "virtualbox" do |vb|
     # Customize the amount of memory on the VM:
     vb.memory = "2048"
-  end
-
-  # Enable ansible provisioning to setup prerequites and dependencies for Hydra tutorials
-  config.vm.provision "ansible" do |ansible|
-    ansible.verbose = 'vvv'
-
-    ansible.groups = {
-      "vagrant" => ["default"]
-    }
-    
-    # Force override of rbenv_root at command line so rbenv install puts it in the specified location
-    ansible.extra_vars = {
-      rbenv_root: "/l/local/rbenv"
-    }
-
-    ansible.playbook = "playbook.vagrant.yml"
   end
 
   # Create a private network, which allows host-only access to the machine

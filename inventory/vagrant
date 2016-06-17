@@ -1,0 +1,14 @@
+# Inventory file for running playbook with vagrant target
+vagrant_host ansible_ssh_host=127.0.0.1 ansible_ssh_port=2222 
+
+[web]
+vagrant_host
+
+[app]
+vagrant_host
+
+[db]
+vagrant_host
+
+[solr]
+vagrant_host
