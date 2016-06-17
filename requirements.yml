@@ -1,3 +1,8 @@
+---
+# External Roles
+# To install run: ansible-galaxy install -r requirements.yml
+ 
+- src: zzet.rbenv
 - src: geerlingguy.mysql
   version: 2.2.1
 - src: kamaln7.swapfile
