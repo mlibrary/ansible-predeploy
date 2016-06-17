@@ -4,6 +4,7 @@
 # I prefer alphabetical.
 
 - include: db.yml
+- include: db-user.yml
 - include: puma-svc.yml
 - include: rbenv-ver.yml
 - include: solr-core.yml

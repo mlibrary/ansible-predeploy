@@ -13,6 +13,10 @@ assumed that this is intentional.
 * app_name
 * deploy_users
 
+## DB-User Role
+
+* app_name
+
 ## User Role
 
 * app_name

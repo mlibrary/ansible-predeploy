@@ -5,17 +5,6 @@
     name: "{{db_name}}"
     state: present
 
-- name: Generate DB password for app user
-  shell: openssl rand -base64 32 | tr -dc A-Za-z0-9
-  register: db_user_password
-
-- include: my.cnf.yml
-  vars:
-    cnf_app_user: "{{db_app_user}}"
-    cnf_db_user:  "{{db_user_name}}"
-    cnf_db_password: "{{db_user_password}}"
-    cnf_dest: "{{db_user_home}}/.my.cnf"
-    
 - name: Create the app DB user
   become: yes
   mysql_user:
