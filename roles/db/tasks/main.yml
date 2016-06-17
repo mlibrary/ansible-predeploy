@@ -1,5 +1,7 @@
 - name: Create the database
+  become: yes
   mysql_db:
+    encoding: utf8
     name: "{{db_name}}"
     state: present
 
@@ -9,21 +11,33 @@
 
 - include: my.cnf.yml
   vars:
-    user: "{{db_user_name}}"
-    password: "{{db_user_password}}"
-    dest: "{{db_user_home}}/.my.cnf"
+    cnf_app_user: "{{db_app_user}}"
+    cnf_db_user:  "{{db_user_name}}"
+    cnf_db_password: "{{db_user_password}}"
+    cnf_dest: "{{db_user_home}}/.my.cnf"
     
 - name: Create the app DB user
+  become: yes
   mysql_user:
     name: "{{db_user_name}}"
     password: "{{db_user_password}}"
     host: localhost
-    priv: "{{db_name}}.*:DELETE,EXECUTE,INSERT,LOCK_TABLES,SELECT,UPDATE"
+    priv: "{{db_name}}:LOCK_TABLES"
+
+- name: Grant table privs to the app DB user
+  become: yes
+  mysql_user:
+    name: "{{db_user_name}}"
+    password: "{{db_user_password}}"
+    append_privs: yes
+    host: localhost
+    priv: "{{db_name}}.*:DELETE,EXECUTE,INSERT,SELECT,UPDATE"
     
 - name: Grant privileges to deploy users
+  become: yes
   mysql_user:
     name: "{{item}}"
-    append_priv: yes
+    append_privs: yes
     priv: "{{db_name}}.*:ALL"
   with_items: "{{db_deploy_users}}"
 

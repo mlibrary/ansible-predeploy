@@ -1,7 +1,8 @@
 - name: Create the user's my.cnf
+  become: yes
   template:
-    src: my.cnf.j2
-    dest: "{{dest}}"
+    src:   my.cnf.j2
+    dest:  "{{cnf_dest}}"
     force: yes
-    owner: "{{user}}"
-    mode: 0600
+    owner: "{{cnf_app_user}}"
+    mode:  0600
