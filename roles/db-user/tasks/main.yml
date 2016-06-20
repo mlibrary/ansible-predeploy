@@ -3,8 +3,8 @@
 - name: Create the user's my.cnf
   template:
     src:   my.cnf.j2
-    dest:  "{{db-user_app_user_home}}/.my.cnf"
+    dest:  "{{db_user_app_user_home}}/.my.cnf"
     force: yes
-    owner: "{{db-user_app_user}}"
+    owner: "{{db_user_app_user}}"
     mode:  0600
 

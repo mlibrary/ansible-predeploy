@@ -9,9 +9,11 @@
 - name: Prepare host that will run the app.
   hosts: app
   roles:
-    - { role: user }
-    - { role: puma-svc }
-    - { role: rbenv-ver }
+    - role: user 
+    - role: db-user 
+      become: yes
+    - role: puma-svc 
+    - role: rbenv-ver 
 
 - name: Prepare MySQL host.
   hosts: db

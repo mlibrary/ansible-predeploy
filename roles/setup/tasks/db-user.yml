@@ -17,7 +17,7 @@
   when: setup_db_password is not defined
 
 - set_fact:
-    db-user_db_username:    "{{ app_name | db_username_minify }}"
-    db-user_db_password:    "{{ setup_db_password }}"
-    db-user_app_user:       "{{ app_name }}"
-    db-user_app_user_home:  "/var/local/{{ app_name }}"
+    db_user_db_username:    "{{ app_name | db_username_minify }}"
+    db_user_db_password:    "{{ setup_db_password }}"
+    db_user_app_user:       "{{ app_name }}"
+    db_user_app_user_home:  "/var/local/{{ app_name }}"
