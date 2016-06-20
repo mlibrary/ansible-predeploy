@@ -1,0 +1,16 @@
+---
+# Example config_file for pre-deploy setup of an application
+- app_name: example-staging
+- app_repo:  https://github.com/mlibrary/umrdr
+- app_user_gid:  123000
+- app_user_uid:  987000
+- deploy_root: /hydra-dev
+- deploy_users:
+  - alice
+  - bob
+  - kelly
+- dependency_resque: no
+- ruby_version: 2.3.1
+- rbenv_root: /l/local/rbenv
+- solr_core: /hydra-dev/solr/cores/example-staging
+- solr_home: /var/lib/solr/home

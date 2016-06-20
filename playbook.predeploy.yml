@@ -1,30 +1,30 @@
 ---
 - name: Load application specifics.
   hosts: all
-  vars:
-    contents: "{{ lookup('file', config_file) }}"
+  vars_files: 
+    - "{{ config_file }}"
   roles:
     - { role: setup }
 
-- name: Prepare Debian that will run the app.
-  hosts: app_hosts
+- name: Prepare host that will run the app.
+  hosts: app
   roles:
     - { role: user }
     - { role: puma-svc }
-    - { role: rbenv-version }
+    - { role: rbenv-ver }
 
 - name: Prepare MySQL host.
-  hosts: db_hosts
+  hosts: db
   roles:
     - { role: db }
 
 - name: Prepare Solr host.
-  hosts: solr_hosts
+  hosts: solr
   roles:
     - { role: solr-core }
 
 - name: Prepare Apache host.
-  hosts: apache_hosts
+  hosts: web
   roles:
     - { role: apache-config }
 

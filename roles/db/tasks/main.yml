@@ -22,7 +22,6 @@
     name: "{{db_user_name}}"
     password: "{{db_user_password}}"
     host: localhost
-    priv: "{{db_name}}:LOCK_TABLES"
 
 - name: Grant table privs to the app DB user
   become: yes

@@ -13,22 +13,20 @@ see `roles/setup/README.md`
 ```yaml
 ---
 # Application pre-deployment variables file
-app_name: myapp
-user_gid:  123456
-user_uid:  987654
-app_port: 30600
-deploy_users:
-  - user1
-  - user2
-dependency_mysql: no
-dependency_resque: no
-solr_core_path:
-solr_home:
-app_hosts:
-db_hosts:
-solr_host:
-apache_hosts:
-deploy_root: /hydra-dev
+- app_name: demo-testing
+- app_repo:  https://github.com/mlibrary/umrdr
+- app_user_gid:  123000
+- app_user_uid:  987000
+- deploy_root: /hydra-dev
+- deploy_users:
+  - alice
+  - bob
+  - kelly
+- dependency_resque: no
+- ruby_version: 2.3.1
+- rbenv_root: /l/local/rbenv
+- solr_core: /hydra-dev/solr/cores/demo-testing
+- solr_home: /var/lib/solr/home
 ```
 
 Get app gid and uid from ITS' UUID api/tool.
