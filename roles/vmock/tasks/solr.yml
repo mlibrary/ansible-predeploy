@@ -1,13 +1,11 @@
 ---
 
 - name: Create solr group
-  become: yes
   group: 
     name:  solr
     state: present
 
 - name: Create solr user
-  become: yes
   user:
     name:  solr
     home:  /var/solr

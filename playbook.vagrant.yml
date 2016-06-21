@@ -2,7 +2,10 @@
 - name: Minimal provisioning of Vagrant Box as testing target.
   hosts: vagrant
   remote_user: vagrant
+  become: yes
   roles:
-    - { role: vmock, tags: ["testing", "vagrant"] }
-    - { role: zzet.rbenv, tags: ["testing", "vagrant"] }
+    - role: vmock
+      tags: ["testing", "vagrant"]
+    - role: zzet.rbenv
+      tags: ["testing", "vagrant"]
 

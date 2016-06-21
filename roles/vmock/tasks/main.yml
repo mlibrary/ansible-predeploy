@@ -4,24 +4,20 @@
 - include: solr.yml
 
 - name: Update package manager cache
-  become: yes
   package:
     update_cache: yes
 
 - name: Install mysql server
-  become: yes
   package:
     name: mysql-server
     state: present
 
 - name: Install mysql client
-  become: yes
   package:
     name: mysql-client
     state: present
 
 - name: Install python-mysql package
-  become: yes
   package:
     name: python-mysqldb
     state: present
