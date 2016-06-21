@@ -9,4 +9,4 @@
 - include: rbenv-ver.yml
 - include: solr-core.yml
 - include: user.yml
-
+- include: target.yml

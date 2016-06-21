@@ -14,6 +14,7 @@
   roles:
     - role: user 
     - role: db-user 
+    - role: target
     - role: puma-svc 
     - role: rbenv-ver 
 

@@ -1,0 +1,7 @@
+- name: Create the deploy target
+  file: 
+    owner: "{{ target_owner }}"
+    group: "{{ target_group }}"
+    path: "{{ target_deploy_path }}"
+    state: directory
+    mode: 2775

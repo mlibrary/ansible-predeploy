@@ -42,6 +42,11 @@ assumed that this is intentional.
 * solr_home
 * app_repo
 
+## Target Role
+
+* app_name
+* deploy_root
+
 # Development
 
 1. Create a file `tasks/<rolename>.yml`
