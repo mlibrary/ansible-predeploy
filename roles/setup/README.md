@@ -47,6 +47,18 @@ assumed that this is intentional.
 * app_name
 * deploy_root
 
+## Apache Config Role
+* app_name
+* app_domain
+* app_url_root
+* app_domain_alias
+* app_whitelisted_ips
+* app_port
+* app_host_priv_ip
+* app_ssl_key_filename
+* app_ssl_crt_filename
+* app_cosign_deny_friend
+
 # Development
 
 1. Create a file `tasks/<rolename>.yml`
