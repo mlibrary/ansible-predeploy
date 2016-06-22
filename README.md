@@ -1,11 +1,10 @@
 Automates pre-deployment setup for ruby applications run with puma.
 
 Assumes the a functional and built out applicatin server as the target.
-Currently assumes running as root, but sudoers should allow use of `become: yes` in the future.
 
 ### Use:
-`ansible-playbook staging.yml --extra-vars="vars_file=someapp.staging.vars.yml"`
-`ansible-playbook staging.yml --extra-vars="vars_file=someapp.training.vars.yml"`
+`ansible-playbook staging.yml --extra-vars="config_file=someapp.staging.vars.yml"`
+`ansible-playbook staging.yml --extra-vars="config_file=someapp.training.vars.yml"`
 
 ### Required Information:
 see `roles/setup/README.md`
@@ -21,12 +20,21 @@ see `roles/setup/README.md`
 - deploy_users:
   - alice
   - bob
-  - kelly
+  - vagrant
 - dependency_resque: no
 - ruby_version: 2.3.1
 - rbenv_root: /l/local/rbenv
 - solr_core: /hydra-dev/solr/cores/demo-testing
 - solr_home: /var/lib/solr/home
+- app_domain: example-staging.hydra.lib.uni.edu
+- app_url_root: /
+- app_domain_alias:
+- app_whitelisted_ips:
+- app_port: 30999
+- app_host_priv_ip: 127.0.0.1
+- app_ssl_key_filename:   dev.lib.uni.edu.key
+- app_ssl_crt_filename:   dev.lib.uni.edu.crt
+- app_cosign_deny_friend: yes
 ```
 
 Get app gid and uid from ITS' UUID api/tool.
@@ -37,6 +45,10 @@ all:
 
 database:
 * python mysqldb module is required
+
+web:
+* apache
+* common umich apache macros
 
 
 ### Testing with Vagrant using virtual box provider

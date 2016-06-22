@@ -1,0 +1,91 @@
+### Access Macro.
+# Given a whitelist, will deny from all others
+# Given no whitelist, will use default allow non-bad robots
+<Macro access>
+  {% if apache_whitelisted_ips %}
+  <Location />
+    Order Deny,Allow
+    Deny from all
+    {% for ip in apache_whitelisted_ips %}
+    Allow from {{ ip }}
+    {% endfor %}
+  </Location>
+  {% else %}
+  Use access_nobaddies
+  Use access_all
+  {% endif %}
+</Macro>
+
+<VirtualHost *:80>
+  ServerName {{apache_domain}}
+  {% for apache_alias in apache_aliases %}
+  ServerAlias {{apache_alias}}
+  {% endfor %}
+
+  Use logging {{apache_app_name}}
+  LogLevel info
+
+  Use access
+
+  # Redirect all access to https
+  RewriteEngine on
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}$1 [L,R]
+</VirtualHost>
+
+<VirtualHost *:443>
+  ServerName {{apache_domain}}
+  {% for apache_alias in apache_aliases %}
+  ServerAlias $instance.{{apache_alias}}
+  {% endfor %}
+
+  Use logging {{apache_app_name}}
+  LogLevel info
+
+  Use access
+
+  Use ssl {{apache_ssl_key}} {{apache_ssl_crt}}
+
+  # Cosign is enabled by default.
+  # Entire site is public access save for one path
+  # This means the application will have to manage auth'd sessions.
+  Use cosign {{apache_domain}} {{apache_ssl_key}} {{apache_ssl_crt}}
+  CosignAllowPublicAccess On
+  
+  # Protect single path with cosign.  App should redirect here for auth needs.
+  <Location /data/login>
+    {% if apache_cosign_deny_friend %}
+    CosignRequireFactor {{apache_cosign_factor}} 
+    {% endif %}
+    CosignAllowPublicAccess Off
+  </Location>
+
+  # Set remote user header to allow app to use http header auth.
+  RequestHeader set X-Remote-User     "expr=%{REMOTE_USER}"
+  RequestHeader set X-Forwarded-Proto 'https'
+  RequestHeader unset X-Forwarded-For
+  
+  Header set "Strict-Transport-Security" "max-age=3600"
+
+  # Specify DocumentRoot to avoid using a default value.
+  DocumentRoot "{{apache_static_path}}"
+
+  # Directory for serving static files
+  <Directory "{{apache_static_path}}">
+    Options FollowSymlinks
+    AllowOverride None
+  </Directory>
+
+  RewriteEngine on
+
+  # Serve static assets through apache
+  RewriteCond {{apache_static_path}}/$1 -f
+  RewriteRule ^{{apache_url_root}}(.*)$  {{apache_static_path}}$1 [L]
+
+  # Reverse proxy application to app hostname and port
+  RewriteRule ^({{apache_url_root}}.*)$ http://{{apache_app_hostname}}:{{apache_port}}$1 [P]
+  ProxyPassReverse {{apache_url_root}} http://{{apache_app_hostname}}:{{apache_port}}/
+</VirtualHost>
+
+# Use UndefMacro directive so subsequent macros using the same name don't cause conflicts.
+UndefMacro access
+
