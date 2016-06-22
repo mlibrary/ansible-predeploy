@@ -29,3 +29,7 @@
     host: "%"
   with_items: "{{vmock_deploy_users}}"
 
+- name: Install apache2 package
+  package:
+    name: apache2
+    state: present

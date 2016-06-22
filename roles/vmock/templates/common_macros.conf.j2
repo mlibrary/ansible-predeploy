@@ -1,5 +1,5 @@
 # The following can be assumed to exist on the host.
-# They are reproduced here to serve as a reference.
+# They are reproduced here to serve as a reference and stubs for vagrant vms.
 
 ################################################################################################################
 # Public access macro
@@ -7,23 +7,8 @@
   <Location />
     Order Allow,Deny
     Allow from all
-    Deny from env=badrobot
   </Location>
 </Macro>
-
-
-################################################################################################################
-# Access whitelist macro
-<Macro access_whitelist>
-  <Location />
-    Order Deny,Allow
-    Deny from all
-    {% for ip in apache_whitelisted_ips %}
-    Allow from {{ ip }}
-    {% endfor %}
-  </Location>
-</Macro>
-
 
 ################################################################################################################
 # Macro to assign logging options
@@ -35,38 +20,16 @@
 
 
 ################################################################################################################
-# Common CoSign options
+# Stub macros.  
 <Macro cosign_common $cosign_service $ssl_key $ssl_crt>
-  CosignProtected               On
-  CosignHostname                weblogin.umich.edu
-  CosignValidReference          ^https?:\/\/[^/]+.umich\.edu(\/.*)?
-  CosignValidationErrorRedirect http://weblogin.umich.edu/cosign/validation_error.html
-  CosignCheckIP               never
-  CosignRedirect              https://weblogin.umich.edu/
-  CosignNoAppendRedirectPort  On
-  CosignPostErrorRedirect     https://weblogin.umich.edu/post_error.html
-  CosignService               $cosign_service
-  CosignCrypto                /etc/ssl/private/$ssl_key /etc/ssl/certs/$ssl_crt /etc/ssl/certs
-  
-  <Location /cosign/valid>
-    SetHandler cosign
-    CosignProtected Off
-    Allow from all
-    Satisfy any
-  </Location>
-  
-  <Location /robots.txt>
-    CosignProtected Off
-    Allow from all
-    Satisfy any
-  </Location>
-  
   # Do not rewrite cosign session initiation.
   RewriteEngine On
   RewriteCond   %{REQUEST_URI}  !^/cosign/valid
 </Macro>
-???? ansible breaks when you attempt to use an undefined variable, so we would need to
-????  only insert this if e.g. apache_uses_cosign=yes
-???? The above macro is common to all sites, at least on nectar.
 
+<Macro cosign $domain $ssl_key $ssl_crt>
+</Macro>
+
+<Macro access_nobadies>
+</Macro>
 

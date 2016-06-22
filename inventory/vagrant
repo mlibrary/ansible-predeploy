@@ -1,14 +1,18 @@
 # Inventory file for running playbook with vagrant target
-vagrant_host ansible_ssh_host=127.0.0.1 ansible_ssh_port=2222 
+# Mock multiple different hostnames. (allows use of --limit)
+vagrant_host_web  ansible_ssh_host=127.0.0.1 ansible_ssh_port=2222 
+vagrant_host_app  ansible_ssh_host=127.0.0.1 ansible_ssh_port=2222 
+vagrant_host_db   ansible_ssh_host=127.0.0.1 ansible_ssh_port=2222 
+vagrant_host_solr ansible_ssh_host=127.0.0.1 ansible_ssh_port=2222 
 
 [web]
-vagrant_host
+vagrant_host_web
 
 [app]
-vagrant_host
+vagrant_host_app
 
 [db]
-vagrant_host
+vagrant_host_db
 
 [solr]
-vagrant_host
+vagrant_host_solr
