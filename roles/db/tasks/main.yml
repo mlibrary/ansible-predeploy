@@ -15,12 +15,13 @@
     name: "{{db_user_name}}"
     password: "{{db_user_password}}"
     append_privs: yes
-    host: localhost
+    host: "%"
     priv: "{{db_name}}.*:DELETE,EXECUTE,INSERT,SELECT,UPDATE"
     
 - name: Grant privileges to deploy users
   mysql_user:
     name: "{{item}}"
+    host: "%"
     append_privs: yes
     priv: "{{db_name}}.*:ALL"
   with_items: "{{db_deploy_users}}"

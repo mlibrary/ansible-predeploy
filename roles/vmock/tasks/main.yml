@@ -22,3 +22,10 @@
     name: python-mysqldb
     state: present
 
+- name: Create db deploy_users
+  mysql_user:
+    name: "{{item}}"
+    password: x
+    host: "%"
+  with_items: "{{vmock_deploy_users}}"
+
