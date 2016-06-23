@@ -51,7 +51,7 @@ assumed that this is intentional.
 * app_name
 * app_domain
 * app_url_root
-* app_domain_alias
+* app_domain_aliases
 * app_whitelisted_ips
 * app_port
 * app_host_priv_ip

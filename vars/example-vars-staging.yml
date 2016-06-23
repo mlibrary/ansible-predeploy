@@ -16,10 +16,10 @@
 - solr_home: /var/lib/solr/home
 - app_domain: example-staging.hydra.lib.umich.edu
 - app_url_root: /
-- app_domain_alias:
+- app_domain_aliases:
 - app_whitelisted_ips:
 - app_port: 30999
-- app_host_priv_ip: 127.0.0.1
+- app_host_priv_ip: "127.0.0.1"
 - app_ssl_key_filename:   dev.lib.umich.edu.key
 - app_ssl_crt_filename:   dev.lib.umich.edu.crt
 - app_cosign_deny_friend: yes

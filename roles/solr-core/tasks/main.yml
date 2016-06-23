@@ -11,7 +11,7 @@
 - name: Configure temporary local directory
   set_fact:
     solr_core_tmp_path: /tmp/ansible-predeploy/{{9999|random(start=1000)}}/{{solr_core_name}}/solr/config
-
+      
 - name: Check out solr config locally
   become: no
   delegate_to: localhost

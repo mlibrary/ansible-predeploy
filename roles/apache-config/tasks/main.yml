@@ -1,0 +1,31 @@
+---
+
+- name: Add app host to hosts file.
+  lineinfile:
+    dest: /etc/hosts
+    state: present
+    insertafter: EOF
+    line: "{{ '%<15.15s %s'|format(apache_app_host_priv_ip,apache_app_hostname) }}"
+
+- name: Create logging directory for appliacation
+  file:
+    path: /var/log/apache2/{{apache_app_name}}
+    state: directory
+    owner: root
+    group: "{{apache_log_group}}"
+    mode: u=rw,g=rw,o=r
+
+- name: Add site config to apache sites.
+  template:
+    src:   site.conf.j2 
+    dest:  /etc/apache2/sites-available/{{apache_app_name}}.conf
+    owner: root
+    group: root
+    mode:  u=rwx,g=rx,o=rx
+    validate: apache2ctl configtest
+
+- name: Enable site config in apache.
+  command: a2ensite {{apache_app_name}}
+
+- name: Reload apache
+  command: systemctl reload apache2

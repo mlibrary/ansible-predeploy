@@ -3,6 +3,7 @@
 # These include statements must not rely on their order.
 # I prefer alphabetical.
 
+- include: apache.yml
 - include: db.yml
 - include: db-user.yml
 - include: puma-svc.yml
