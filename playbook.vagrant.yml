@@ -3,8 +3,11 @@
   hosts: vagrant
   remote_user: vagrant
   become: yes
+  vars_files: 
+    - "{{ config_file }}"
   roles:
     - role: vmock
+      vmock_deploy_users: "{{deploy_users}}"
       tags: ["testing", "vagrant"]
     - role: zzet.rbenv
       tags: ["testing", "vagrant"]
