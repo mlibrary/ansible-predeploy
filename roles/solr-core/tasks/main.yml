@@ -6,16 +6,28 @@
     state: directory
     owner: solr
     group: solr
+    mode: 2775
+
+- name: Configure temporary local directory
+  set_fact:
+    solr_core_tmp_path: /tmp/ansible-predeploy/{{9999|random(start=1000)}}/{{solr_core_name}}/solr/config
 
 - name: Check out solr config locally
-  local_action: "command /usr/bin/svn co {{solr_core_repo}}/trunk/solr/config /tmp/{{solr_core_name}}/solr/config"
-
+  become: no
+  delegate_to: localhost
+  subversion:
+    repo: "{{solr_core_repo}}/trunk/solr/config"
+    dest: "{{solr_core_tmp_path}}"
+    switch: no
+    force: yes
+    
 - name: Populate core conf 
   copy:
-    src:   "/tmp/{{solr_core_name}}/solr/config/"
+    src:   "{{solr_core_tmp_path}}"
     dest:  "{{solr_core_path}}/conf"
     owner: solr
     group: solr
+  become: yes
 
 - name: Create core.properties
   copy:
