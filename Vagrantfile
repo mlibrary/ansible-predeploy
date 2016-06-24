@@ -31,7 +31,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.provider "virtualbox" do |vb|
     # Customize the amount of memory on the VM:
-    vb.memory = "2048"
+    vb.memory = "512"
   end
 
   # Enable ansible provisioning to setup box prerequites that should be avaialbe on target machines
