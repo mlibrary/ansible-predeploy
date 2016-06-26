@@ -1,0 +1,16 @@
+---
+
+- name: Install mysql server
+  package:
+    name: mysql-server
+    state: present
+
+- name: Install mysql client
+  package:
+    name: mysql-client
+    state: present
+
+- name: Install python-mysql package
+  package:
+    name: python-mysqldb
+    state: present

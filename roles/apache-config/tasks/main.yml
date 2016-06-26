@@ -5,7 +5,7 @@
     dest: /etc/hosts
     state: present
     insertafter: EOF
-    line: "{{ '%<15.15s %s'|format(apache_app_host_priv_ip,apache_app_hostname) }}"
+    line: "{{apache_app_host_priv_ip}} {{apache_app_hostname}}"
 
 - name: Create logging directory for appliacation
   file:
@@ -22,7 +22,7 @@
     owner: root
     group: root
     mode:  u=rwx,g=rx,o=rx
-    validate: apache2ctl configtest
+    validate: apache2ctl -t -f %s
 
 - name: Enable site config in apache.
   command: a2ensite {{apache_app_name}}

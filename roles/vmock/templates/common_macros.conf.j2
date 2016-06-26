@@ -14,8 +14,8 @@
 # Macro to assign logging options
 # $instance is the instance name, e.g. "production" or "staging"  ????
 <Macro logging $instance>
-    ErrorLog              "| /usr/bin/rotatelogs ${APACHE_LOG_DIR}/$instance/error_log-%Y%m%d 86400 -300" 
-    CustomLog             "| /usr/bin/rotatelogs ${APACHE_LOG_DIR}/$instance/access_log-%Y%m%d 86400 -300" combined
+    ErrorLog  "| /usr/bin/rotatelogs ${APACHE_LOG_DIR}/$instance/error_log-%Y%m%d 86400 -300" 
+    CustomLog "| /usr/bin/rotatelogs ${APACHE_LOG_DIR}/$instance/access_log-%Y%m%d 86400 -300" combined
 </Macro>
 
 
@@ -28,8 +28,14 @@
 </Macro>
 
 <Macro cosign $domain $ssl_key $ssl_crt>
+  LogLevel info
 </Macro>
 
-<Macro access_nobadies>
+<Macro access_nobaddies>
+  LogLevel info
+</Macro>
+
+<Macro ssl $ssl_key $ssl_crt>
+  LogLevel info
 </Macro>
 

@@ -1,26 +1,13 @@
 ---
 
-- include: dirs.yml
-- include: solr.yml
-
 - name: Update package manager cache
   package:
     update_cache: yes
 
-- name: Install mysql server
-  package:
-    name: mysql-server
-    state: present
-
-- name: Install mysql client
-  package:
-    name: mysql-client
-    state: present
-
-- name: Install python-mysql package
-  package:
-    name: python-mysqldb
-    state: present
+- include: dirs.yml
+- include: solr.yml
+- include: apache.yml
+- include: mysql.yml
 
 - name: Create db deploy_users
   mysql_user:
@@ -28,8 +15,3 @@
     password: x
     host: "%"
   with_items: "{{vmock_deploy_users}}"
-
-- name: Install apache2 package
-  package:
-    name: apache2
-    state: present

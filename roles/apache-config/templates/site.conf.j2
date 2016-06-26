@@ -2,18 +2,18 @@
 # Given a whitelist, will deny from all others
 # Given no whitelist, will use default allow non-bad robots
 <Macro access>
-  {% if apache_whitelisted_ips %}
+{% if apache_whitelisted_ips %}
   <Location />
     Order Deny,Allow
     Deny from all
-    {% for ip in apache_whitelisted_ips %}
+  {% for ip in apache_whitelisted_ips %}
     Allow from {{ ip }}
-    {% endfor %}
+  {% endfor %}
   </Location>
-  {% else %}
+{% else %}
   Use access_nobaddies
   Use access_all
-  {% endif %}
+{% endif %}
 </Macro>
 
 <VirtualHost *:80>
@@ -35,7 +35,7 @@
 <VirtualHost *:443>
   ServerName {{apache_domain}}
   {% for apache_alias in apache_aliases %}
-  ServerAlias $instance.{{apache_alias}}
+  ServerAlias {{apache_alias}}
   {% endfor %}
 
   Use logging {{apache_app_name}}

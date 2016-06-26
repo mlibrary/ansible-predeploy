@@ -1,0 +1,48 @@
+---
+
+- name: Install apache2 package
+  package:
+    name: apache2
+    state: present
+
+- name: Copy over mod_cosign 
+  copy:
+    src:   "lib/mod_cosign.so"
+    dest:  "/usr/lib/apache2/modules/mod_cosign.so"
+    owner: root
+    group: root
+
+- name: Add cosign to mods avaialble
+  copy: 
+    content: "LoadModule cosign_module      /usr/lib/apache2/modules/mod_cosign.so"
+    dest: "/etc/apache2/mods-available/cosign.load"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+
+- name: Enable required apache mods
+  apache2_module:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - macro
+    - rewrite
+    - headers
+    - proxy
+    - cosign
+
+- name: Copy common macros stubs
+  template:
+    src:   common_macros.conf.j2 
+    dest:  /etc/apache2/conf-available/common_macros.conf
+    owner: root
+    group: root
+    mode:  u=rwx,g=rx,o=rx
+
+- name: Enable common macros
+  command: a2enconf common_macros
+
+- name: restart apache2
+  service: 
+    name: apache2
+    state: restarted
