@@ -22,7 +22,6 @@
     owner: root
     group: root
     mode:  u=rwx,g=rx,o=rx
-    validate: apache2ctl -t -f %s
 
 - name: Enable site config in apache.
   command: a2ensite {{apache_app_name}}
