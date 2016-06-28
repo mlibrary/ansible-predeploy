@@ -5,3 +5,10 @@
     path: "{{ target_deploy_path }}"
     state: directory
     mode: 2775
+
+- name: Add database host alias to hosts file
+  lineinfile:
+    dest: /etc/hosts
+    state: present
+    insertafter: EOF
+    line: "{{target_db_host_priv_ip}} {{target_db_hostname}}"

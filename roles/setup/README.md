@@ -46,6 +46,7 @@ assumed that this is intentional.
 
 * app_name
 * deploy_root
+* db_host_priv_ip
 
 ## Apache Config Role
 * app_name

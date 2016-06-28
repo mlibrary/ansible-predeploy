@@ -26,12 +26,13 @@ see `roles/setup/README.md`
 - rbenv_root: /l/local/rbenv
 - solr_core: /hydra-dev/solr/cores/demo-testing
 - solr_home: /var/lib/solr/home
+- db_host_priv_ip:  "127.0.0.1"
+- app_host_priv_ip: "127.0.0.1"
+- app_port: 30099
 - app_domain: example-staging.hydra.lib.uni.edu
 - app_url_root: /
 - app_domain_alias:
 - app_whitelisted_ips:
-- app_port: 30999
-- app_host_priv_ip: 127.0.0.1
 - app_ssl_key_filename:   dev.lib.uni.edu.key
 - app_ssl_crt_filename:   dev.lib.uni.edu.crt
 - app_cosign_deny_friend: yes
