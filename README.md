@@ -37,6 +37,9 @@ see `roles/setup/README.md`
 - app_cosign_deny_friend: yes
 ```
 
+Each deployment stage or target of a project is its own application, should have it's own pre-deploy config file, and needs to be named uniquely.  The convention here is to use the project name with the stage or target separated by dashes.  For example, demo-staging and demo-testing.  The app name is used for naming the system for the app, the solr core (with `-` replaced by `_`), database name, and the database user name.  The database user name is a special case and needs to be 16 characters or fewer. The transform is the app name with all vowels after the first character removed and truncated to 16 characters.  
+
+
 Get app gid and uid from ITS' UUID api/tool.
 
 ## Expected support existing on targer deployment machines.
