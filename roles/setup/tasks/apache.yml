@@ -9,7 +9,7 @@
     apache_port:              "{{app_port}}"
     apache_static_path:       "{{deploy_root}}/{{app_name}}/shared/public"
     apache_app_host_priv_ip:  "{{app_host_priv_ip}}"
-    apache_app_hostname:      "{{app_name}}"
+    apache_app_hostname:      "app-{{app_name}}"
     apache_ssl_key:           "{{app_ssl_key_filename}}"
     apache_ssl_crt:           "{{app_ssl_crt_filename}}"
     apache_log_group:         "{{ apache_logs_group | default('root') }}"
