@@ -2,4 +2,4 @@
 - set_fact:
     target_owner: "{{app_name}}"
     target_group: "{{app_name}}"
-    target_deploy_path: "{{deploy_root}}/{{app_name}}/app"
+    target_deploy_path: "{{deploy_root}}/{{app_name}}"

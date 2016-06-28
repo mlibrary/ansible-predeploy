@@ -3,7 +3,7 @@
 [Service]
 User=umrdr
 Group=umrdr
-WorkingDirectory=/hydra-dev/umrdr-staging/app/current
-PIDFile=/hydra-dev/umrdr-staging/app/shared/log/resque-pool.pid
+WorkingDirectory=/hydra-dev/umrdr-staging/current
+PIDFile=/hydra-dev/umrdr-staging/shared/log/resque-pool.pid
 
-ExecStart=/l/local/rbenv/bin/rbenv exec bundle exec resque-pool --daemon -p /hydra-dev/umrdr-staging/app/shared/log/resque-pool.pid --environment production
+ExecStart=/l/local/rbenv/bin/rbenv exec bundle exec resque-pool --daemon -p /hydra-dev/umrdr-staging/shared/log/resque-pool.pid --environment production
