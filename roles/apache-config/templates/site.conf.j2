@@ -2,17 +2,17 @@
 # Given a whitelist, will deny from all others
 # Given no whitelist, will use default allow non-bad robots
 <Macro access>
-{% if apache_whitelisted_ips %}
   <Location />
+{% if apache_whitelisted_ips %}
     Order Deny,Allow
     Deny from all
   {% for ip in apache_whitelisted_ips %}
     Allow from {{ ip }}
   {% endfor %}
-  </Location>
 {% else %}
-  Use access_nobaddies
+    Use access_nobaddies
 {% endif %}
+  </Location>
 </Macro>
 
 <VirtualHost *:80>
@@ -23,6 +23,8 @@
 
   Use logging {{apache_app_name}}
   LogLevel info
+
+  Use access
 
   # Redirect all access to https
   RewriteEngine on
@@ -40,6 +42,8 @@
 
   Use ssl {{apache_ssl_key}} {{apache_ssl_crt}}
 
+  Use access
+
   # Cosign is enabled by default.
   # Entire site is public access save for one path
   # This means the application will have to manage auth'd sessions.
@@ -52,7 +56,6 @@
     CosignRequireFactor {{apache_cosign_factor}} 
     {% endif %}
     CosignAllowPublicAccess Off
-    Use access
   </Location>
 
   # Set remote user header to allow app to use http header auth.
@@ -69,7 +72,6 @@
   <Directory "{{apache_static_path}}">
     Options FollowSymlinks
     AllowOverride None
-    Use access
   </Directory>
 
   RewriteEngine on
