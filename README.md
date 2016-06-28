@@ -61,7 +61,12 @@ web:
 3. run `vagrant up` from project directory
 5. Manually provision vagrant host using:
 ```bash
-ansible-playbook --private-key=.vagrant/machines/default/virtualbox/private_key -u vagrant -i inventory/vagrant playbook.predeploy.yml --extra-vars="config_file=./demo.yml"
+# Run the full playbook
+ansible-playbook playbook.predeploy.yml --private-key=.vagrant/machines/default/virtualbox/private_key -u vagrant -i inventory/vagrant --extra-vars="config_file=./vars/example-vars-staging.yml"
+
+# Limit to just the tasks for the web servers
+ansible-playbook playbook.predeploy.yml --private-key=.vagrant/machines/default/virtualbox/private_key -u vagrant -i inventory/vagrant --extra-vars="config_file=./vars/example-vars-staging.yml" -l web
+
 ```
 
 
