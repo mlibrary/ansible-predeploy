@@ -20,4 +20,5 @@
     db_user_db_username:    "{{ app_name | db_username_minify }}"
     db_user_db_password:    "{{ setup_db_password }}"
     db_user_app_user:       "{{ app_name }}"
+    db_user_app_group:      "{{ app_name }}"
     db_user_app_user_home:  "/var/local/{{ app_name }}"

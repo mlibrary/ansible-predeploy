@@ -6,7 +6,7 @@
     state: directory
     owner: solr
     group: solr
-    mode: 2775
+    mode: 0664
 
 - name: Configure temporary local directory
   set_fact:
@@ -27,6 +27,7 @@
     dest:  "{{solr_core_path}}/conf"
     owner: solr
     group: solr
+    mode: 0664
   become: yes
 
 - name: Create core.properties
@@ -35,6 +36,16 @@
     dest:    "{{solr_core_path}}/core.properties"
     owner:   solr
     group:   solr
+    mode:    0664
+
+- name: Recursively correct solr core perms
+  file:
+    mode: 0664
+    owner: solr
+    group: solr
+    recurse: yes
+    path: "{{solr_core_path}}"
+    state: directory
 
 - name: Create link to core directory in solr home
   file:

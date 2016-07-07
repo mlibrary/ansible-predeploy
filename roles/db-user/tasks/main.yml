@@ -6,5 +6,6 @@
     dest:  "{{db_user_app_user_home}}/.my.cnf"
     force: yes
     owner: "{{db_user_app_user}}"
-    mode:  0600
+    group: "{{db_user_app_group}}"
+    mode:  u=rw,g=r
 
