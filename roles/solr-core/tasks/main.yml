@@ -23,7 +23,7 @@
     
 - name: Populate core conf 
   copy:
-    src:   "{{solr_core_tmp_path}}"
+    src:   "{{solr_core_tmp_path}}/"
     dest:  "{{solr_core_path}}/conf"
     owner: solr
     group: solr
