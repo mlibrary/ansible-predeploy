@@ -4,7 +4,7 @@
     group: "{{ target_group }}"
     path: "{{ target_deploy_path }}"
     state: directory
-    mode: '2775'
+    mode: "2775"
 
 - name: Add database host alias to hosts file
   lineinfile:
@@ -12,3 +12,12 @@
     state: present
     insertafter: EOF
     line: "{{target_db_host_priv_ip}} {{target_db_hostname}}"
+
+  # - name: Recursively correct deploy target permissions
+  #   file:
+  #     mode:  "2775"
+  #     owner: "{{ target_owner }}"
+  #     group: "{{ target_group }}"
+  #     path:  "{{ target_deploy_path }}"
+  #     recurse: yes
+  #     state: directory

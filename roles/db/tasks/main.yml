@@ -16,7 +16,7 @@
     password: "{{db_user_password}}"
     append_privs: yes
     host: "%"
-    priv: "{{db_name}}.*:CREATE,DROP,DELETE,EXECUTE,INSERT,SELECT,UPDATE"
+    priv: "{{db_name}}.*:ALL"
     
 - name: Grant privileges to deploy users
   mysql_user:
