@@ -6,7 +6,7 @@
     state: directory
     owner: solr
     group: solr
-    mode: 0664
+    mode: '2775'
 
 - name: Configure temporary local directory
   set_fact:
@@ -23,7 +23,7 @@
     
 - name: Populate core conf 
   copy:
-    src:   "{{solr_core_tmp_path}}"
+    src:   "{{solr_core_tmp_path}}/"
     dest:  "{{solr_core_path}}/conf"
     owner: solr
     group: solr
@@ -36,11 +36,11 @@
     dest:    "{{solr_core_path}}/core.properties"
     owner:   solr
     group:   solr
-    mode:    0664
+    mode:    '2775'
 
 - name: Recursively correct solr core perms
   file:
-    mode: 0664
+    mode: '2775'
     owner: solr
     group: solr
     recurse: yes
