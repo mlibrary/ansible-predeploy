@@ -18,6 +18,9 @@ Type=simple
 # Common ruby environment config
 Environment="RAILS_ENV=production"
 
+# Set UMASK to allow group access to application created files.
+UMASK=0002
+
 TimeoutStartSec=20
 Restart=on-failure
 RestartSec=5
