@@ -3,8 +3,29 @@ Automates pre-deployment setup for ruby applications run with puma.
 Assumes the a functional and built out applicatin server as the target.
 
 ### Use:
-`ansible-playbook staging.yml --extra-vars="config_file=someapp.staging.vars.yml"`
-`ansible-playbook staging.yml --extra-vars="config_file=someapp.training.vars.yml"`
+Checkout repo into local directory
+```
+git@github.com:mlibrary/ansible-predeploy.git
+cd ansible-predeploy
+```
+Run playbook supplying the inventory and config file
+`ansible-playbook staging.yml -i /path/to/inventory/file --extra-vars="config_file=someapp.staging.vars.yml"`
+
+### Testing with Vagrant using virtual box provider
+1. install external ansible roles `ansible-galaxy install -r dependencies.yml`
+1. install vagrant
+2. install virtual-box
+3. run `vagrant up` from project directory
+5. provision vagrant host using:
+
+```bash
+# Run the full playbook
+ansible-playbook playbook.predeploy.yml --private-key=.vagrant/machines/default/virtualbox/private_key -u vagrant -i inventory/vagrant --extra-vars="config_file=./vars/example-vars-staging.yml"
+
+# Limit to just the tasks for the web servers
+ansible-playbook playbook.predeploy.yml --private-key=.vagrant/machines/default/virtualbox/private_key -u vagrant -i inventory/vagrant --extra-vars="config_file=./vars/example-vars-staging.yml" -l web
+
+```
 
 ### Required Information:
 see `roles/setup/README.md`
@@ -53,21 +74,5 @@ database:
 web:
 * apache
 * common umich apache macros
-
-
-### Testing with Vagrant using virtual box provider
-1. install external ansible roles `ansible-galaxy install -r dependencies.yml`
-1. install vagrant
-2. install virtual-box
-3. run `vagrant up` from project directory
-5. Manually provision vagrant host using:
-```bash
-# Run the full playbook
-ansible-playbook playbook.predeploy.yml --private-key=.vagrant/machines/default/virtualbox/private_key -u vagrant -i inventory/vagrant --extra-vars="config_file=./vars/example-vars-staging.yml"
-
-# Limit to just the tasks for the web servers
-ansible-playbook playbook.predeploy.yml --private-key=.vagrant/machines/default/virtualbox/private_key -u vagrant -i inventory/vagrant --extra-vars="config_file=./vars/example-vars-staging.yml" -l web
-
-```
 
 
