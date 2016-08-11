@@ -20,6 +20,10 @@ Type=forking
 
 Environment="RAILS_ENV=production"
 
+# Settings to allow resque workers to clean up after themselves.
+Environment="RUN_AT_EXIT_HOOKS=true"
+Environment="TERM_CHILD=1"
+
 # Using --hot-swap is what we ideally want, but it does not seem to be in the stable branch yet?
 #ExecStart=/usr/local/rbenv/bin/rbenv exec bundle exec resque-pool --daemon --hot-swap --environment production
 #ExecReload=/usr/local/rbenv/bin/rbenv exec bundle exec resque-pool --daemon --hot-swap --environment production
