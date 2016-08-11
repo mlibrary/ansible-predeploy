@@ -4,7 +4,7 @@
     group: "{{ target_group }}"
     path: "{{ target_deploy_path }}"
     state: directory
-    mode: 2775
+    mode: "2775"
 
 - name: Add database host alias to hosts file
   lineinfile:

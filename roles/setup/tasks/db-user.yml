@@ -3,7 +3,7 @@
 - name: Search for setup_db_password from group vars
   set_fact:
     setup_db_password: "{{ host_vars[item]['setup_db_password'] }}"
-  with_items: groups['db']
+  with_items: "{{ groups['db'] }}"
   when: host_vars[item]['setup_db_password'] is defined
   
 - name: Mint a new password if one is not found
@@ -20,4 +20,5 @@
     db_user_db_username:    "{{ app_name | db_username_minify }}"
     db_user_db_password:    "{{ setup_db_password }}"
     db_user_app_user:       "{{ app_name }}"
+    db_user_app_group:      "{{ app_name }}"
     db_user_app_user_home:  "/var/local/{{ app_name }}"
