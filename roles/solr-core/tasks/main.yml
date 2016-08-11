@@ -27,7 +27,7 @@
     dest:  "{{solr_core_path}}/conf"
     owner: solr
     group: solr
-    mode: 0664
+    mode: '2775'
   become: yes
 
 - name: Create core.properties
