@@ -35,8 +35,6 @@ see `roles/setup/README.md`
 # Application pre-deployment variables file
 - app_name: demo-testing
 - app_repo:  https://github.com/mlibrary/umrdr
-- app_user_gid:  123000
-- app_user_uid:  987000
 - deploy_root: /hydra-dev
 - deploy_users:
   - alice
@@ -46,17 +44,21 @@ see `roles/setup/README.md`
 - ruby_version: 2.3.1
 - rbenv_root: /l/local/rbenv
 - solr_core: /hydra-dev/solr/cores/demo-testing
-- solr_home: /var/lib/solr/home
-- db_host_priv_ip:  "127.0.0.1"
-- app_host_priv_ip: "127.0.0.1"
-- app_port: 30099
 - app_domain: example-staging.hydra.lib.uni.edu
 - app_url_root: /
 - app_domain_alias:
 - app_whitelisted_ips:
+- app_cosign_deny_friend: yes
+
+# Sysadmin/CoreServices provided:
+- app_user_gid:  123000
+- app_user_uid:  987000
+- app_port: 30099
+- db_host_priv_ip:  "127.0.0.1"
+- app_host_priv_ip: "127.0.0.1"
+- solr_home: /var/lib/solr/home
 - app_ssl_key_filename:   dev.lib.uni.edu.key
 - app_ssl_crt_filename:   dev.lib.uni.edu.crt
-- app_cosign_deny_friend: yes
 ```
 
 Each deployment stage or target of a project is its own application, should have it's own pre-deploy config file, and needs to be named uniquely.  The convention here is to use the project name with the stage or target separated by dashes.  For example, demo-staging and demo-testing.  The app name is used for naming the system for the app, the solr core (with `-` replaced by `_`), database name, and the database user name.  The database user name is a special case and needs to be 16 characters or fewer. The transform is the app name with all vowels after the first character removed and truncated to 16 characters.  
