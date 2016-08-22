@@ -1,0 +1,10 @@
+---
+
+user_group: app_name
+user_name: app_name
+user_home:
+  global: app_name
+  output: File.join("/", "var", "local", app_name)
+user_uid: app_user_uid
+user_gid: app_user_gid
+user_deploy_users: deploy_users

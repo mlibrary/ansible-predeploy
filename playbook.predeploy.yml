@@ -1,16 +1,11 @@
 ---
-- name: Load application specifics.
-  become: no
-  hosts: all
-  vars_files: 
-    - "{{ config_file }}"
-  roles:
-    - role: setup
 
 - name: Prepare host that will run the app.
   hosts: app
   become: yes
   become_method: sudo
+  vars_files:
+    - "{{ config_file }}"
   roles:
     - role: user 
     - role: db-user 
@@ -22,6 +17,8 @@
   hosts: db
   become: yes
   become_method: sudo
+  vars_files:
+    - "{{ config_file }}"
   roles:
     - role: db
 
@@ -29,6 +26,8 @@
   hosts: solr
   become: yes
   become_method: sudo
+  vars_files:
+    - "{{ config_file }}"
   roles:
     - role: solr-core
     
@@ -36,6 +35,8 @@
   hosts: web
   become: yes
   become_method: sudo
+  vars_files:
+    - "{{ config_file }}"
   roles:
     - role: apache-config
 
