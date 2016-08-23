@@ -1,9 +1,0 @@
-# Production config for resque-pool supporting umrdr app.
-# %i should be umrdr-staging
-[Service]
-User=umrdr
-Group=umrdr
-WorkingDirectory=/hydra-dev/umrdr-staging/current
-PIDFile=/hydra-dev/umrdr-staging/shared/log/resque-pool.pid
-
-ExecStart=/l/local/rbenv/bin/rbenv exec bundle exec resque-pool --daemon -p /hydra-dev/umrdr-staging/shared/log/resque-pool.pid --environment production
