@@ -1,3 +1,9 @@
+
+- stat:
+    path: "{{ target_deploy_path }}"
+  register: t
+
+
 - name: Create the deploy target
   file: 
     owner: "{{ target_owner }}"
@@ -5,6 +11,14 @@
     path: "{{ target_deploy_path }}"
     state: directory
     mode: "2775"
+  when: not (
+        (t.stat.exists) and
+        (t.stat.isdir) and
+        (t.stat.pw_name == "{{target_owner}}") and
+        (t.stat.gr_name == "{{target_group}}") and
+        (t.stat.mode == "2775")
+        )
+
 
 - name: Add database host alias to hosts file
   lineinfile:
