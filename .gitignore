@@ -1,5 +1,6 @@
 # Ignore vendorized roles
 external_roles/*
+vars/**
 
 # Ignore vagrant files
 .vagrant
