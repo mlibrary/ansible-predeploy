@@ -15,3 +15,4 @@
     apache_log_group:         "{{ apache_logs_group | default('root') }}"
     apache_cosign_deny_friend:     "{{ app_cosign_deny_friend | default('no') }}"
     apache_cosign_factor:     "UMICH.EDU"
+    apache_terminate_ssl:      "{{ apache_terminate_ssl | default('yes') }}"

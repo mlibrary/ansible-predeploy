@@ -39,8 +39,9 @@
 
   Use logging {{apache_app_name}}
   LogLevel info
-
+{% if apache_terminate_ssl %}
   Use ssl {{apache_ssl_key}} {{apache_ssl_crt}}
+{% endif %}
 
   Use access
 
