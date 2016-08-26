@@ -70,6 +70,9 @@ see `roles/setup/README.md`
 - solr_core: /hydra-dev/solr/cores/demo-testing
 - app_ssl_key_filename:   dev.lib.uni.edu.key
 - app_ssl_crt_filename:   dev.lib.uni.edu.crt
+# If the apache host will be the terminus of the ssl connection use yes.
+# If the load balancer will terminate the ssl connection, use no.
+- apache_terminate_ssl:   yes
 ```
 
 Each deployment stage or target of a project is its own application, should have it's own pre-deploy config file, and needs to be named uniquely.  The convention here is to use the project name with the stage or target separated by dashes.  For example, demo-staging and demo-testing.  The app name is used for naming the system for the app, the solr core (with `-` replaced by `_`), database name, and the database user name.  The database user name is a special case and needs to be 16 characters or fewer. The transform is the app name with all vowels after the first character removed and truncated to 16 characters.  

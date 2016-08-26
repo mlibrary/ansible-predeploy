@@ -39,8 +39,9 @@
 
   Use logging {{apache_app_name}}
   LogLevel info
-
+{% if apache_terminate_ssl %}
   Use ssl {{apache_ssl_key}} {{apache_ssl_crt}}
+{% endif %}
 
   Use access
 
@@ -78,7 +79,11 @@
 
   # Serve static assets through apache
   RewriteCond {{apache_static_path}}/$1 -f
+{% if apache_url_root == '/' %}
+  RewriteRule ^{{apache_url_root}}(.*)$  {{apache_static_path}}/$1 [L]
+{% else %}
   RewriteRule ^{{apache_url_root}}(.*)$  {{apache_static_path}}$1 [L]
+{% endif %}
 
   # Reverse proxy application to app hostname and port
   RewriteRule ^({{apache_url_root}}.*)$ http://{{apache_app_hostname}}:{{apache_port}}$1 [P]
