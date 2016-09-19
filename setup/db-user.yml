@@ -1,0 +1,11 @@
+---
+db_user_db_username:
+  global: app_name
+  output: (app_name[0]+app_name[1..-1].gsub(/[aeiou]/i,'')).slice(0..15)
+db_user_db_password:
+  output: DB_USER_PASSWORD ||= `openssl rand -base64 32 | tr -dc A-Za-z0-9`
+db_user_app_user: app_name
+db_user_app_group: app_name
+db_user_app_user_home:
+  global: app_name
+  output: File.join("/", "var", "local", app_name)

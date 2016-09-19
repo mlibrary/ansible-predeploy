@@ -1,5 +1,0 @@
----
-
-- set_fact:
-    rbenv_ver_ruby_version: "{{ruby_version}}"
-    rbenv_ver_rbenv_root:   "{{rbenv_root}}"

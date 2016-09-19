@@ -1,0 +1,45 @@
+#!/usr/bin/env ruby
+
+require_relative "../lib/setup/setup"
+require "optparse"
+SETUP_DIR = File.expand_path(File.join(File.dirname(__FILE__), "..", "setup"))
+
+def setup_ansible(dir, complete_vars_file, excluded_roles)
+  requirements = build_requirements(dir, excluded_roles)
+  ansible_setup_yaml(build_ansible_setup(requirements, complete_vars_file))
+end
+
+
+options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage setup_ansible [options] > output_file.yml"
+  opts.on("-h", "--help", "Prints this help") do
+    puts opts
+    exit
+  end
+
+  options[:excluded_roles] = []
+  opts.on("-xROLE", "--exclude=ROLE", "Exclude a role.",
+    "Can be specified multiple times.", String) do |role|
+    options[:excluded_roles] << role
+  end
+
+  options[:configdir] = SETUP_DIR
+  opts.on("-cCONFIGDIR", "--configdir=CONFIGDIR",
+    "Directory that contains the yaml configuration files.",
+    "Default: #{options[:configdir]}") do |dir|
+    options[:configdir] = dir
+  end
+
+  opts.on("-vVARSFILE", "--completed-vars=VARSFILE",
+    "The completed vars file.", String) do |file|
+    options[:completed_vars] = file
+  end
+end.parse!
+
+raise ArgumentError, "--completed-vars is required" unless options[:completed_vars]
+
+requirements = build_requirements(options[:configdir], options[:excluded_roles])
+ansible_setup = build_ansible_setup(requirements, options[:completed_vars])
+puts ansible_setup_yaml(ansible_setup)
+puts ""

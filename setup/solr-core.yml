@@ -1,0 +1,8 @@
+---
+
+solr_core_name:
+  global: solr_core
+  output: File.basename(solr_core).gsub("-", "_")
+solr_core_path: solr_core
+solr_core_home: solr_home
+solr_core_repo: app_repo

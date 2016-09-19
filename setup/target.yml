@@ -1,0 +1,10 @@
+---
+target_owner:               app_name
+target_group:               app_name
+target_deploy_path:
+  global:                   deploy_root
+  output:                   File.join(deploy_root, app_name)
+target_db_host_priv_ip:     db_host_priv_ip
+target_db_hostname:
+  global: app_name
+  output: String("db-#{app_name}")

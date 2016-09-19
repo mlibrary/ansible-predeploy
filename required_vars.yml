@@ -1,0 +1,39 @@
+---
+# Application pre-deployment variables file
+# 'code name' for the app (e.g. umrdr-testing, heliotrope-staging)
+- app_name: demo-testing
+- app_repo:  https://github.com/mlibrary/umrdr
+# Directory under which application dir will be created.
+- deploy_root: /hydra-dev
+# Users allowed to deploy the application
+- deploy_users:
+  - alice
+  - bob
+  - vagrant
+# Does the project require resque or solr? (yes|no)
+- dependency_resque: no
+- dependency_solr: yes
+# Whate version of ruby does the application require?
+- ruby_version: 2.3.1
+# The FQDN for the application.
+- app_domain: example-staging.hydra.lib.uni.edu
+# Alternate domains for the application
+- app_domain_alias:
+# Path under domain at which the application will be served.
+- app_url_root: /
+# Specifically allowed IPs for the application; leave blank to allow anyone.
+- app_whitelisted_ips:
+# Deny friend accounts for cosign authentication?
+- app_cosign_deny_friend: yes
+
+# Sysadmin/CoreServices provided:
+- rbenv_root: /l/local/rbenv
+- app_user_gid:  123000
+- app_user_uid:  987000
+- app_port: 30099
+- db_host_priv_ip:  "127.0.0.1"
+- app_host_priv_ip: "127.0.0.1"
+- solr_home: /var/lib/solr/home
+- solr_core: /hydra-dev/solr/cores/demo-testing
+- app_ssl_key_filename:   dev.lib.uni.edu.key
+- app_ssl_crt_filename:   dev.lib.uni.edu.crt
