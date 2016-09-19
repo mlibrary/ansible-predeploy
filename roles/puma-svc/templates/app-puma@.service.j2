@@ -4,6 +4,7 @@
 [Unit]
 Description=%i Application
 After=network.target
+
 [Service]
 Type=simple
 
@@ -12,11 +13,12 @@ Type=simple
 # Group=overridme
 # WorkingDirectory=/override/or/fail
 # PIDFile=/override/or/fail/pidfile.pid
-# ExecStart=/override/or/fail/bin/rbenv exec bundle exec puma -C config/puma.rb
-# Environment="RBENV_ROOT=/override/or/fail"
 
 # Common ruby environment config
 Environment="RAILS_ENV=production"
+Environment="RBENV_ROOT={{puma_svc_rbenv_root}}"
+ExecStart={{puma_svc_rbenv_root}}/bin/rbenv exec bundle exec puma -C config/puma.rb
+ExecReload={{puma_svc_rbenv_root}}/bin/rbenv exec bundle exec pumactl restart
 
 # Set UMASK to allow group access to application created files.
 UMask=0002

@@ -1,8 +1,6 @@
 # Drop in configuration for resque pool service
 # %i should be appname-target e.g. umdr-staging or heliotrope-production
 [Service]
-Environment="RBENV_ROOT={{ puma_svc_rbenv_root }}"
-
 User={{ puma_svc_app_name }}
 Group={{ puma_svc_app_name }}
 
