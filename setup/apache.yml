@@ -27,3 +27,7 @@ apache_cosign_factor:     "default=UMICH.EDU"
 apache_terminate_ssl:
   global: apache_terminate_ssl
   default: yes
+
+apache_static_directories:
+  global: apache_static_directories
+  default: no

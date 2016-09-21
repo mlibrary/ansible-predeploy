@@ -78,6 +78,9 @@
   RewriteEngine on
 
   # Serve static assets through apache
+{% if apache_static_directories %}
+  RewriteCond {{apache_static_path}}/$1 -d [OR]
+{% endif %}
   RewriteCond {{apache_static_path}}/$1 -f
 {% if apache_url_root == '/' %}
   RewriteRule ^{{apache_url_root}}(.*)$  {{apache_static_path}}/$1 [L]
@@ -88,6 +91,7 @@
   # Reverse proxy application to app hostname and port
   RewriteRule ^({{apache_url_root}}.*)$ http://{{apache_app_hostname}}:{{apache_port}}$1 [P]
   ProxyPassReverse {{apache_url_root}} http://{{apache_app_hostname}}:{{apache_port}}/
+
 </VirtualHost>
 
 # Use UndefMacro directive so subsequent macros using the same name don't cause conflicts.
