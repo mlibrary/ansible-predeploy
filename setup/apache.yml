@@ -31,3 +31,11 @@ apache_terminate_ssl:
 apache_static_directories:
   global: apache_static_directories
   default: no
+
+apache_mod_xsendfile:
+  global: apache_mod_xsendfile
+  default: no
+
+apache_derivatives_path:
+  global: deploy_root
+  output: File.join(deploy_root, app_name, "current", "tmp", "derivatives")

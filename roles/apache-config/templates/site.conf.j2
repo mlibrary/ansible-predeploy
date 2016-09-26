@@ -92,6 +92,12 @@
   RewriteRule ^({{apache_url_root}}.*)$ http://{{apache_app_hostname}}:{{apache_port}}$1 [P]
   ProxyPassReverse {{apache_url_root}} http://{{apache_app_hostname}}:{{apache_port}}/
 
+{% if apache_mod_xsendfile %}
+  XSendFile On
+  RequestHeader Set X-Sendfile-Type X-Sendfile
+  XSendFilePath {{apache_derivatives_path}}
+{% endif %}
+
 </VirtualHost>
 
 # Use UndefMacro directive so subsequent macros using the same name don't cause conflicts.
