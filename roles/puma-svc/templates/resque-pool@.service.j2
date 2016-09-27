@@ -19,6 +19,8 @@ Type=forking
 
 # Set UMASK to allow group access to application created files.
 UMask=0002
+# Don't clobber everything else with derivatives creation.
+Nice=19
 
 Environment="RAILS_ENV=production"
 Environment="RBENV_ROOT={{puma_svc_rbenv_root}}"
