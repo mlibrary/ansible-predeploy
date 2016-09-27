@@ -19,10 +19,14 @@ class VariableResolver
     # We eval everything except things we set the default on
     # We only set the default if global is false and default isn't nil
 
-    unless @completed_globals[variable_declaration.global_name]
+    unless @completed_globals.has_key?(variable_declaration.global_name)
       value = variable_declaration.default
     end
-    value ||= eval variable_declaration.output_rb, @binding
+
+    if value.nil?
+      value = eval variable_declaration.output_rb, @binding
+    end
+
     return variable_declaration.role_name, value
   end
 end

@@ -38,7 +38,7 @@ class VariableDeclaration
     @tag = tag
     @role_name = role_name
     @global_name = global_name
-    @default = default || nil
+    @default = default
     @output_rb = output_rb || @global_name
   end
   attr_reader :tag, :role_name, :global_name, :default, :output_rb
