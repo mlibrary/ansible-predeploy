@@ -7,7 +7,7 @@
     - "{{ config_file }}"
   roles:
     - role: vmock
-      vmock_deploy_users: "{{deploy_users}}"
+      vmock_deploy_users: "{{db_deploy_users}}"
       tags: ["testing", "vagrant"]
     - role: zzet.rbenv
       tags: ["testing", "vagrant"]
