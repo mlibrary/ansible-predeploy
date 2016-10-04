@@ -7,10 +7,12 @@
     owner: solr
     group: solr
     mode: '2775'
+  when: solr
 
 - name: Configure temporary local directory
   set_fact:
     solr_core_tmp_path: /tmp/ansible-predeploy/{{9999|random(start=1000)}}/{{solr_core_name}}/solr/config
+  when: solr
       
 - name: Check out solr config locally
   become: no
@@ -20,6 +22,7 @@
     dest: "{{solr_core_tmp_path}}"
     switch: no
     force: yes
+  when: solr
     
 - name: Populate core conf 
   copy:
@@ -29,6 +32,7 @@
     group: solr
     mode: '2775'
   become: yes
+  when: solr
 
 - name: Create core.properties
   copy:
@@ -37,6 +41,7 @@
     owner:   solr
     group:   solr
     mode:    '2775'
+  when: solr
 
 - name: Recursively correct solr core perms
   file:
@@ -46,9 +51,11 @@
     recurse: yes
     path: "{{solr_core_path}}"
     state: directory
+  when: solr
 
 - name: Create link to core directory in solr home
   file:
     path:  "{{solr_core_home}}/{{ solr_core_name }}"
     src:   "{{solr_core_path}}"
     state: link
+  when: solr
