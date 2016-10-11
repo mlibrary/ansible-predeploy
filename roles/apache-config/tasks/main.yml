@@ -1,6 +1,7 @@
 ---
 
 - name: Add app host to hosts file.
+  hosts: web
   lineinfile:
     dest: /etc/hosts
     state: present
@@ -8,6 +9,7 @@
     line: "{{apache_app_host_priv_ip}} {{apache_app_hostname}}"
 
 - name: Create logging directory for appliacation
+  hosts: web
   file:
     path: /var/log/apache2/{{apache_app_name}}
     state: directory
@@ -15,16 +17,18 @@
     group: "{{apache_log_group}}"
     mode: u=rw,g=rw,o=r
 
-- name: Add site config to apache sites.
+- name: Add site config to apache config staging area
+  hosts: web_staging
   template:
     src:   site.conf.j2 
-    dest:  /etc/apache2/sites-available/{{apache_app_name}}.conf
+    dest:  "{{apache_staging_prefix}}/etc/apache2/sites-available/{{apache_app_name}}.conf"
     owner: root
     group: root
     mode:  u=rwx,g=rx,o=rx
 
-- name: Enable site config in apache.
-  command: a2ensite {{apache_app_name}}
-
-- name: Reload apache
-  command: systemctl reload apache2
+- name: Enable site config in apache config staging area
+  hosts: web_staging
+  file:
+    state: link
+    src: "../sites-available/{{apache_app_name}}.conf"
+    dest: "{{apache_staging_prefix}}/etc/apache2/sites-enabled/{{apache_app_name}}.conf"
