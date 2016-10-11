@@ -32,7 +32,7 @@
     - role: solr-core
     
 - name: Prepare Apache host.
-  hosts: web
+  hosts: web:web_staging
   become: yes
   become_method: sudo
   vars_files:
