@@ -18,7 +18,6 @@
     mode: u=rwx,g=rwx,o=rx
 
 - name: Add site config to apache config staging area
-  hosts: web_staging
   template:
     src:   site.conf.j2 
     dest:  "{{apache_staging_prefix}}/etc/apache2/sites-available/{{apache_app_name}}.conf"
@@ -27,7 +26,6 @@
     mode:  u=rw,g=r,o=r
 
 - name: Enable site config in apache config staging area
-  hosts: web_staging
   file:
     state: link
     src: "../sites-available/{{apache_app_name}}.conf"
