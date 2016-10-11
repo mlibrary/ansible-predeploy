@@ -1,0 +1,16 @@
+---
+
+- name: Add app host to hosts file.
+  lineinfile:
+    dest: /etc/hosts
+    state: present
+    insertafter: EOF
+    line: "{{apache_app_host_priv_ip}} {{apache_app_hostname}}"
+
+- name: Create logging directory for appliacation
+  file:
+    path: /var/log/apache2/{{apache_app_name}}
+    state: directory
+    owner: root
+    group: "{{apache_log_group}}"
+    mode: u=rw,g=rw,o=r
