@@ -1,0 +1,33 @@
+---
+
+- name: Prepare host that will run the app.
+  hosts: app
+  become: yes
+  become_method: sudo
+  vars_files:
+    - "{{ config_file }}"
+  roles:
+    - role: user
+    - role: db-user
+    - role: target
+    - role: puma-svc
+    - role: rbenv-ver
+
+- name: Prepare MySQL host.
+  hosts: db
+  become: yes
+  become_method: sudo
+  vars_files:
+    - "{{ config_file }}"
+  roles:
+    - role: db
+
+- name: Prepare Apache host.
+  hosts: web
+  become: yes
+  become_method: sudo
+  vars_files:
+    - "{{ config_file }}"
+  roles:
+    - role: apache-config
+
