@@ -91,11 +91,9 @@ web:
 5. provision vagrant host using:
 
 ```bash
-# Run the full playbook
-ansible-playbook playbook.predeploy.yml --private-key=.vagrant/machines/default/virtualbox/private_key -u vagrant -i inventory/vagrant --extra-vars="config_file=./vars/example-vars-staging.yml"
+# Run the vagrant provisioner to create the db_deploy_users
+playbook=playbook.vagrant.yml config_file=appname_expanded_vars.yml vagrant provision
 
-# Limit to just the tasks for the web servers
-ansible-playbook playbook.predeploy.yml --private-key=.vagrant/machines/default/virtualbox/private_key -u vagrant -i inventory/vagrant --extra-vars="config_file=./vars/example-vars-staging.yml" -l web
-
+# Run the full provisioner
+playbook=playbook.predeploy.yml config_file=appname_expanded_vars.yml vagrant provision
 ```
-

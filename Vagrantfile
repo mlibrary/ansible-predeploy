@@ -12,7 +12,7 @@ Vagrant.configure(2) do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "box-cutter/debian82"
+  config.vm.box = "box-cutter/debian8"
 
   # Set the VM hostname
   config.vm.hostname = "gross-hockey"
@@ -40,16 +40,22 @@ Vagrant.configure(2) do |config|
     ansible.verbose = 'v'
 
     ansible.groups = {
-      "vagrant" => ["default"]
+      "vagrant" => ["default"],
+      "web" => ["default"],
+      "app" => ["default"],
+      "db" => ["default"],
+      "solr" => ["default"]
     }
     
     # Force override of rbenv_root at command line so rbenv install puts it in the specified location
     ansible.extra_vars = {
+      ansible_shell_type: 'sh',
       rbenv_root: "/l/local/rbenv",
-      config_file: "vars/example-vars-staging.yml"
+      rbenv_group: 'root',
+      config_file: ENV['config_file'] || "vars/example-vars-staging.yml"
     }
 
-    ansible.playbook = "playbook.vagrant.yml"
+    ansible.playbook = ENV['playbook'] || "playbook.vagrant.yml"
   end
 
   # Create a private network, which allows host-only access to the machine

@@ -5,7 +5,7 @@
 - app_user_gid:  123000
 - app_user_uid:  987000
 - deploy_root: /hydra-dev
-- deploy_users:
+- db_deploy_users:
   - alice
   - bob
   - vagrant
