@@ -30,6 +30,8 @@
     - headers
     - proxy
     - cosign
+    - ssl
+    - proxy_http
 
 - name: Copy common macros stubs
   template:
@@ -53,3 +55,12 @@
   service: 
     name: apache2
     state: restarted
+
+- name: Add front end host to hosts file
+  lineinfile:
+    dest: /etc/hosts
+    state: present
+    insertafter: EOF
+    line: "127.0.0.1 {{ apache_domain }}"
+
+

@@ -91,17 +91,25 @@ web:
 # Testing
 ### Testing with Vagrant using virtual box provider
 1. install external ansible roles `ansible-galaxy install -r dependencies.yml`
-1. install vagrant
-2. install virtual-box
-3. run `vagrant up` from project directory
-5. provision vagrant host using:
+2. install vagrant
+3. install virtual-box
+4. expand variables: `./bin/setup_ansible -v appname_vars.yml > appname_expanded_vars.yml`
+5. run `vagrant up` from project directory
+6. provision vagrant host using:
 
 ```bash
 # Run the full playbook
-ansible-playbook playbook.predeploy.yml --private-key=.vagrant/machines/default/virtualbox/private_key -u vagrant -i inventory/vagrant --extra-vars="config_file=./vars/example-vars-staging.yml"
+ansible-playbook playbook.predeploy.yml --private-key=.vagrant/machines/default/virtualbox/private_key -u vagrant -i inventory/vagrant --extra-vars="config_file=./vars/example-vars-staging-expanded.yml"
 
 # Limit to just the tasks for the web servers
-ansible-playbook playbook.predeploy.yml --private-key=.vagrant/machines/default/virtualbox/private_key -u vagrant -i inventory/vagrant --extra-vars="config_file=./vars/example-vars-staging.yml" -l web
+ansible-playbook playbook.predeploy.yml --private-key=.vagrant/machines/default/virtualbox/private_key -u vagrant -i inventory/vagrant --extra-vars="config_file=./vars/example-vars-staging-expanded.yml" -l web
 
 ```
+
+7. test setup using:
+
+```bash
+ansible-playbook playbook.test.yml --private-key=.vagrant/machines/default/virtualbox/private_key -u vagrant -i inventory/vagrant --extra-vars="config_file=./vars/example-vars-staging-expanded.yml"
+```
+
 
