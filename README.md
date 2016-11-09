@@ -68,6 +68,12 @@ is idempotent, so re-running if there is an problem is not an
 issue.
 
 # Infrastructure Requirements
+
+deployment host:
+* ansible >= ??
+* subversion (for checking out solr config)
+* git
+
 all:
 * python
 * passwordless ssh as root
