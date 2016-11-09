@@ -8,3 +8,4 @@
 - include: solr.yml
 - include: apache.yml
 - include: mysql.yml
+- include: ruby-app.yml

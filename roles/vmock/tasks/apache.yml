@@ -41,6 +41,13 @@
 
 - name: Enable common macros
   command: a2enconf common_macros
+  args:
+    creates: /etc/apache2/conf-enabled/common_macros.conf
+
+- name: generate self-signed ssl certificates
+  command: openssl req -new -nodes -x509 -subj "/C=US/ST=Michigan/L=Ann Arbor/O=Library IT/CN={{ apache_domain }}" -keyout  /etc/ssl/private/{{ apache_ssl_key }} -out /etc/ssl/certs/{{ apache_ssl_crt }} -days 365
+  args:
+    creates: /etc/ssl/certs/{{ apache_ssl_crt }}
 
 - name: restart apache2
   service: 
