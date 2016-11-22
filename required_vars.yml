@@ -39,3 +39,8 @@ solr_home: /var/lib/solr/home
 solr_core: /hydra-dev/solr/cores/demo-testing
 app_ssl_key_filename:   dev.lib.uni.edu.key
 app_ssl_crt_filename:   dev.lib.uni.edu.crt
+# Deploy and enable the Apache configuration? Normally 'yes' for
+# development/staging, 'no' for production
+apache_deploy_config: no
+# Create symlink from sites-available to sites-enabled?
+apache_enable_site: no

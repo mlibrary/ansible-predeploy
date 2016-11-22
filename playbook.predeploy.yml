@@ -40,3 +40,11 @@
   roles:
     - role: apache-config
 
+- name: Stage Apache configuration.
+  hosts: web_staging
+  become: yes
+  become_method: sudo
+  vars_files:
+    - "{{ config_file }}"
+  roles:
+    - role: apache-stage-config

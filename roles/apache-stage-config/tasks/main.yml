@@ -1,0 +1,16 @@
+---
+
+- name: Add site config to apache config staging area
+  template:
+    src:   site.conf.j2 
+    dest:  "{{apache_staging_prefix}}/etc/apache2/sites-available/{{apache_app_name}}.conf"
+    owner: root
+    group: root
+    mode:  u=rwx,g=rx,o=rx
+
+- name: Enable site config in apache config staging area
+  file:
+    state: link
+    src: "../sites-available/{{apache_app_name}}.conf"
+    dest: "{{apache_staging_prefix}}/etc/apache2/sites-enabled/{{apache_app_name}}.conf"
+    when: apache_enable_site

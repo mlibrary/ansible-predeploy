@@ -23,3 +23,5 @@ app_url_root: /
 app_ssl_key_filename:   dev.lib.umich.edu.key
 app_ssl_crt_filename:   dev.lib.umich.edu.crt
 app_cosign_deny_friend: yes
+apache_deploy_config: yes
+apache_enable_site: yes

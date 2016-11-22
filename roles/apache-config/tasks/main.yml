@@ -22,9 +22,16 @@
     owner: root
     group: root
     mode:  u=rwx,g=rx,o=rx
+  when: apache_deploy_config
 
 - name: Enable site config in apache.
   command: a2ensite {{apache_app_name}}
+  when: 
+    - apache_deploy_config
+    - apache_enable_site
 
 - name: Reload apache
   command: systemctl reload apache2
+  when: 
+    - apache_deploy_config
+    - apache_enable_site

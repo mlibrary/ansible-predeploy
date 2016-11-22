@@ -39,3 +39,15 @@ apache_mod_xsendfile:
 apache_derivatives_path:
   global: deploy_root
   output: File.join(deploy_root, app_name, "current", "tmp", "derivatives")
+
+apache_deploy_config:
+  global: apache_deploy_config
+  default: no
+
+apache_enable_site:
+  global: apache_enable_site
+  default: no
+
+apache_staging_prefix:
+  global: apache_staging_prefix
+  default: /sysadmin/dist-www
