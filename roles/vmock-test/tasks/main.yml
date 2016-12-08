@@ -1,0 +1,12 @@
+---
+
+- name: put test harness in place
+  template: 
+    src: testit.sh.j2
+    dest: /home/vagrant/testit.sh
+    mode: 0755
+
+- name: run test harness
+  shell: /home/vagrant/testit.sh
+  become_user: vagrant
+

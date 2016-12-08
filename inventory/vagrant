@@ -4,6 +4,7 @@ vagrant_host_web  ansible_ssh_host=127.0.0.1 ansible_ssh_port=2222
 vagrant_host_app  ansible_ssh_host=127.0.0.1 ansible_ssh_port=2222 
 vagrant_host_db   ansible_ssh_host=127.0.0.1 ansible_ssh_port=2222 
 vagrant_host_solr ansible_ssh_host=127.0.0.1 ansible_ssh_port=2222 
+vagrant_host_test ansible_ssh_host=127.0.0.1 ansible_ssh_port=2222 
 
 [web]
 vagrant_host_web
@@ -16,3 +17,6 @@ vagrant_host_db
 
 [solr]
 vagrant_host_solr
+
+[test]
+vagrant_host_test

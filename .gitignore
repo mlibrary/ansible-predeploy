@@ -8,3 +8,4 @@ vars/**
 *.pyc
 
 .idea/
+*~

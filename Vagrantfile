@@ -12,10 +12,10 @@ Vagrant.configure(2) do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "box-cutter/debian82"
+  config.vm.box = "box-cutter/debian8"
 
   # Set the VM hostname
-  config.vm.hostname = "gross-hockey"
+  config.vm.hostname = "predeploy-test"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -46,7 +46,7 @@ Vagrant.configure(2) do |config|
     # Force override of rbenv_root at command line so rbenv install puts it in the specified location
     ansible.extra_vars = {
       rbenv_root: "/l/local/rbenv",
-      config_file: "vars/example-vars-staging.yml"
+      config_file: "vars/example-vars-staging-expanded.yml"
     }
 
     ansible.playbook = "playbook.vagrant.yml"

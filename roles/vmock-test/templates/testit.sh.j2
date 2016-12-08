@@ -1,0 +1,17 @@
+#!/bin/bash
+
+export ROLESPEC_HOME=/home/vagrant/rolespec
+export ROLESPEC_LIB=$ROLESPEC_HOME/lib
+if [ ! -e $ROLESPEC_HOME ]; then
+  git clone https://github.com/nickjj/rolespec $ROLESPEC_HOME
+fi
+. "${ROLESPEC_LIB}/main"
+
+# sinatra app
+assert_url 'https://example-staging.hydra.lib.umich.edu/' 200
+assert_permission '/hydra-dev/solr/cores/example-staging' 2775
+# "eval" necessary here to properly interpret quotes.
+assert_exit_code 'eval mysql -h localhost -u exmpl-stgng --password="{{ db_user_db_password }}" example-staging -e "show tables"' 0
+assert_user_in_group 'vagrant' 'example-staging'
+assert_path '/etc/systemd/system/app-puma@.service'
+assert_path '/etc/systemd/system/app-puma@example-staging.service.d/drop-in.conf'

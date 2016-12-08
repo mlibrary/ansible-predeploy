@@ -6,9 +6,9 @@
   vars_files: 
     - "{{ config_file }}"
   roles:
-    - role: vmock
-      vmock_deploy_users: "{{deploy_users}}"
-      tags: ["testing", "vagrant"]
     - role: zzet.rbenv
+      tags: ["testing", "vagrant"]
+    - role: vmock
+      vmock_deploy_users: "{{user_deploy_users}}"
       tags: ["testing", "vagrant"]
 

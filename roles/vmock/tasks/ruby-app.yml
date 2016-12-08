@@ -1,0 +1,32 @@
+---
+
+- name: Copy over hello world sinatra app
+  copy:
+    src:   ruby-app/
+    dest:  /tmp/ruby-app/
+
+- name: Set permissions on vagrant app dir
+  file:
+    path: /tmp/ruby-app
+    owner: vagrant
+    group: vagrant
+    recurse: yes
+
+- name: Install bundler
+  shell: "bash -lc 'gem install bundler'"
+  args:
+    creates: /l/local/rbenv/shims/bundler
+
+- name: Install bundle
+  shell: "bash -lc 'cd /tmp/ruby-app; bundle install --path .vendor'"
+  become: true
+  become_user: vagrant
+  args:
+    creates: /tmp/ruby-app/.vendor
+
+- name: Start ruby-app
+  shell: "bash -lc 'cd /tmp/ruby-app; bundle exec puma -p {{ apache_port }} --pidfile /tmp/ruby-app/puma.pid -d'"
+  become: true
+  become_user: vagrant
+  args:
+    creates: /tmp/ruby-app/puma.pid
