@@ -28,6 +28,10 @@ apache_terminate_ssl:
   global: apache_terminate_ssl
   default: yes
 
+apache_staging_prefix:
+  global: apache_staging_prefix
+  default: /sysadmin/dist-www
+
 apache_static_directories:
   global: apache_static_directories
   default: no
