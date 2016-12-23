@@ -37,7 +37,7 @@ cd ansible-predeploy
 cp inventory/vagrant appname_inventory
 # A&E fills out appname_inventory
 cp required_vars.yml appname_vars.yml
-# A&E and the developer fills out appname_vars.yml (not doesn't matter)
+# A&E and the developer fills out appname_vars.yml (name doesn't matter)
 ./bin/setup_ansible -v appname_vars.yml > appname_expanded_vars.yml
 ansible-playbook playbook.predeploy.yml -i appname_inventory -e "config_file=appname_expanded_vars.yml"
 ```
