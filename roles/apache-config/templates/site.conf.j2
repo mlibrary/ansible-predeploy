@@ -28,7 +28,7 @@
 
   # Redirect all access to https
   RewriteEngine on
-  RewriteRule ^(.*)$ https://%{HTTP_HOST}$1 [L,R]
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}$1 [L,R,NE]
 </VirtualHost>
 
 <VirtualHost *:443>

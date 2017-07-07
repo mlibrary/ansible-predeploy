@@ -1,7 +1,7 @@
 ---
 - name: Install resque-pool service
   template:
-    src:   resque-pool@.service.j2 
+    src:   resque-pool@.service
     dest:  /etc/systemd/system/resque-pool@.service
     owner: root
     group: root

@@ -16,15 +16,13 @@ Type=forking
 # WorkingDirectory=/override/or/fail
 # PIDFile=/override/or/fail/pidfile.pid
 # ExecStart=/override/or/fail
+# Environment="RBENV_ROOT=/override/or/fail"
 
 # Set UMASK to allow group access to application created files.
 UMask=0002
-# Don't clobber everything else with derivatives creation.
 Nice=19
 
 Environment="RAILS_ENV=production"
-Environment="RBENV_ROOT={{puma_svc_rbenv_root}}"
-
 
 # Settings to allow resque workers to clean up after themselves.
 Environment="RUN_AT_EXIT_HOOKS=true"
