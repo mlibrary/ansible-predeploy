@@ -33,10 +33,10 @@
 - name: Reload systemd service files
   shell: systemctl daemon-reload
 
-- name: Allow deploy user to restart the puma-app service
-  lineinfile:
-    dest: /etc/sudoers
-    state: present
-    insertafter: EOF
-    line: "%{{puma_svc_app_group}} ALL=(root) NOPASSWD: /bin/systemctl restart app-puma@{{puma_svc_app_name}}.service"
-    validate: "visudo -cf %s"
+- name: Install sudoers.d template for app-puma service mgmt
+  template:
+    src:   sudoers.d.j2
+    dest: /etc/sudoers.d/app-puma-{{puma_svc_app_name}}
+    owner: group
+    group: root
+    mode: u=r,g=r
