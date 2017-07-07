@@ -1,7 +1,0 @@
-- name: Create the user's my.cnf
-  template:
-    src: my.cnf.j2
-    dest: "{{dest}}"
-    force: yes
-    owner: "{{user}}"
-    mode: 0600
