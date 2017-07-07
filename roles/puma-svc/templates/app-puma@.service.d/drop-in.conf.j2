@@ -4,11 +4,9 @@
 [Unit]
 {% if puma_svc_resque_dependency %}
 Requires=resque-pool@%i.service
-PropagatesReloadTo=resque-pool@%i.service
 {% endif %}
 {% if puma_svc_resque_scheduler_dependency %}
 Requires=resque-scheduler@%i.service
-PropagatesReloadTo=resque-scheduler@%i.service
 {% endif %}
 
 
@@ -16,10 +14,12 @@ PropagatesReloadTo=resque-scheduler@%i.service
 {% if puma_svc_resque_dependency %}
 Environment="REDIS_NS=%i"
 {% endif %}
+Environment="RBENV_ROOT={{puma_svc_rbenv_root}}"
 
 User={{ puma_svc_app_name }}
 Group={{ puma_svc_app_name }}
 
+ExecStart={{puma_svc_rbenv_root}}/bin/rbenv exec bundle exec puma -C config/puma.rb
 
 WorkingDirectory={{ puma_svc_deploy_dir }}/current
 PIDFile={{ puma_svc_deploy_dir }}/shared/log/{{ puma_svc_app_name }}-puma.pid

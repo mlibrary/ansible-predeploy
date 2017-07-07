@@ -8,11 +8,11 @@
 
 - name: Install puma service
   template:
-    src:   app-puma@.service.j2 
+    src:   app-puma@.service
     dest:  /etc/systemd/system/app-puma@.service
     owner: root
     group: root
-    mode:  u=rwx,g=rx,o=rx
+    mode:  u=rw,g=r,o=r
 
 - name: Create puma service config directory
   file:
