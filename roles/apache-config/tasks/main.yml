@@ -13,7 +13,7 @@
     state: directory
     owner: root
     group: "{{apache_log_group}}"
-    mode: u=rw,g=rw,o=r
+    mode: u=rwx,g=rwx,o=rx
 
 - name: Add site config to apache sites.
   template:
@@ -21,7 +21,7 @@
     dest:  /etc/apache2/sites-available/{{apache_app_name}}.conf
     owner: root
     group: root
-    mode:  u=rwx,g=rx,o=rx
+    mode:  u=rw,g=r,o=r
 
 - name: Enable site config in apache.
   command: a2ensite {{apache_app_name}}
