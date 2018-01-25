@@ -38,6 +38,7 @@
   vars_files:
     - "{{ config_file }}"
   roles:
+    - role: apache-config
     - role: apache-host-config
 
 - name: Prepare Apache configuration.
