@@ -26,4 +26,8 @@
     state: present
   with_items: "{{ user_deploy_users }}"
 
-
+- name: Install the user's public ssh key
+  authorized_key:
+    user: "{{ user_name }}"
+    state: present
+    key: "{{ user_ssh_key }}"

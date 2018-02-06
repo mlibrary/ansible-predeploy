@@ -8,3 +8,4 @@ user_home:
 user_uid: app_user_uid
 user_gid: app_user_gid
 user_deploy_users: deploy_users
+user_ssh_key: app_ssh_key

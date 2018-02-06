@@ -93,7 +93,7 @@ web:
 1. install external ansible roles `ansible-galaxy install -r dependencies.yml`
 2. install vagrant
 3. install virtual-box
-4. expand variables: `./bin/setup_ansible -v appname_vars.yml > appname_expanded_vars.yml`
+4. expand variables: `./bin/setup_ansible -v required_vars.yml > ./vars/example-vars-staging-expanded.yml`
 5. run `vagrant up` from project directory
 6. provision vagrant host using:
 
@@ -106,7 +106,9 @@ ansible-playbook playbook.predeploy.yml --private-key=.vagrant/machines/default/
 
 ```
 
-7. test setup using:
+7. deploy application (out of scope - see fauxpaas)
+
+8. test setup using:
 
 ```bash
 ansible-playbook playbook.test.yml --private-key=.vagrant/machines/default/virtualbox/private_key -u vagrant -i inventory/vagrant --extra-vars="config_file=./vars/example-vars-staging-expanded.yml"
