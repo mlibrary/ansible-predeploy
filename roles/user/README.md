@@ -6,6 +6,7 @@
 * user_uid: User's uid
 * user_home: User's home, which will be created.
 * user_deploy_users: list of users that will be part of this group
+* user_pubkey: Public ssh key for the user, to add to authorized_keys
 
 
 ## Example usage

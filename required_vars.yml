@@ -16,7 +16,7 @@ dependency_resque: no
 dependency_solr: yes
 dependency_resque_scheduler: no
 # Whate version of ruby does the application require?
-ruby_version: 2.3.1
+ruby_version: 2.4
 # The FQDN for the application.
 app_domain: example-staging.hydra.lib.uni.edu
 # Alternate domains for the application
@@ -39,3 +39,5 @@ solr_home: /var/lib/solr/home
 solr_core: /hydra-dev/solr/cores/demo-testing
 app_ssl_key_filename:   dev.lib.uni.edu.key
 app_ssl_crt_filename:   dev.lib.uni.edu.crt
+# public ssh key to allow for the app user
+app_ssh_key: "{{ lookup('file', '/path/to/id_rsa.pub') }}"
