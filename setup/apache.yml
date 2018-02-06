@@ -6,24 +6,40 @@ apache_app_host_priv_ip:  app_host_priv_ip
 apache_ssl_key:           app_ssl_key_filename
 apache_ssl_crt:           app_ssl_crt_filename
 
-apache_url_root:          "global=app_url_root default=/"
+apache_url_root:
+  global: app_url_root
+  default:
+
 apache_aliases:
   global:                 app_domain_aliases
   default:                []
+
 apache_whitelisted_ips:
   global:                 app_whitelisted_ips
   default:                []
-apache_log_group:         "global=apache_logs_group default=root"
-apache_cosign_deny_friend:     "global=app_cosign_deny_friend default=no"
+  
+apache_log_group:
+  global: apache_logs_group
+  default: root
+
+apache_use_cosign:
+  global: app_use_cosign
+  default: yes
+
+apache_cosign_deny_friend:
+  global: app_cosign_deny_friend
+  default: no
 
 apache_static_path:
   global: deploy_root
   output: File.join(deploy_root, app_name, "current", "public")
+
 apache_app_hostname:
   global: app_name
   output: '"app-#{app_name}"'
 
 apache_cosign_factor:     "default=UMICH.EDU"
+
 apache_terminate_ssl:
   global: apache_terminate_ssl
   default: yes

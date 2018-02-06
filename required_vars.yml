@@ -20,7 +20,9 @@ app_domain_alias:
 app_url_root: /
 # Specifically allowed IPs for the application; leave blank to allow anyone.
 app_whitelisted_ips:
-# Deny friend accounts for cosign authentication?
+# Should passive auth via cosign be enabled?
+app_use_cosign: no
+# Deny friend accounts for cosign authentication? (n/a if cosign is not in use)
 app_cosign_deny_friend: yes
 
 # Sysadmin/CoreServices provided:
