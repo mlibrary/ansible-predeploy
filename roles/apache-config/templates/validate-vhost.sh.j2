@@ -1,0 +1,8 @@
+bash -c 'TMPFILE=`mktemp /tmp/apache.conf.XXXXXXXXXX` && {
+  grep -v sites-enabled {{ apache_main_config }} > $TMPFILE
+  echo "Include %s" >> $TMPFILE
+  sudo apachectl -t -f $TMPFILE
+  VALID=$?
+  rm $TMPFILE
+}
+exit $VALID'
