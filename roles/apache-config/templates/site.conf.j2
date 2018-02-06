@@ -66,6 +66,7 @@
 {% endif %}
 
   RequestHeader set X-Forwarded-Proto 'https'
+
   RequestHeader unset X-Forwarded-For
   
   Header set "Strict-Transport-Security" "max-age=3600"
@@ -106,4 +107,3 @@
 
 # Use UndefMacro directive so subsequent macros using the same name don't cause conflicts.
 UndefMacro access
-
