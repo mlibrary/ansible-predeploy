@@ -5,11 +5,6 @@ app_name: demo-testing
 app_repo:  https://github.com/mlibrary/umrdr
 # Directory under which application dir will be created.
 deploy_root: /hydra-dev
-# Users allowed to deploy the application
-deploy_users:
-  - alice
-  - bob
-  - vagrant
 # Does the project require resque or solr? (yes|no)
 # Does the project require resque-scheduler?  
 dependency_resque: no

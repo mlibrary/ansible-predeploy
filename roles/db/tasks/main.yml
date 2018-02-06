@@ -17,13 +17,3 @@
     append_privs: yes
     host: "%"
     priv: "{{db_name}}.*:ALL"
-    
-- name: Grant privileges to deploy users
-  mysql_user:
-    name: "{{item}}"
-    host: "%"
-    append_privs: yes
-    priv: "{{db_name}}.*:ALL"
-  with_items: "{{db_deploy_users}}"
-
-    
