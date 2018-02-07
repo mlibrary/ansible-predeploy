@@ -28,7 +28,7 @@ end
 
 # Build requirements from a set of configs
 def build_requirements(config_dir, excluded_roles)
-  raw_configs = import_files File.join config_dir, "*"
+  raw_configs = import_files(File.join(config_dir, "*.yml"))
   Requirements.new(raw_configs, excluded_roles)
 end
 
