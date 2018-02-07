@@ -5,14 +5,23 @@ require "optparse"
 
 SETUP_DIR = File.expand_path(File.join(File.dirname(__FILE__), "..", "setup"))
 
-def setup_vars(dir, excluded_roles)
+def required_vars(dir, excluded_roles)
   requirements_yaml(build_requirements(dir, excluded_roles))
 end
 
 
 options = {}
 OptionParser.new do |opts|
-  opts.banner = "Usage setup_vars [options] > output_file.yml"
+  opts.banner = <<-USAGE
+  #{$PROGRAM_NAME}: lists required variables which need to be filled out by
+  developer & sysadmin as well as their defaults in each context they're used,
+  if any.  Use the filled-out template as the input for setup_ansible.
+
+  Usage: #{$PROGRAM_NAME} [options] > required_vars.yml
+  USAGE
+
+  opts.separator ""
+
   opts.on("-h", "--help", "Prints this help") do
     puts opts
     exit
@@ -31,6 +40,5 @@ OptionParser.new do |opts|
   end
 end.parse!
 
-requirements = build_requirements(options[:configdir], options[:excluded_roles])
-puts requirements_yaml(requirements)
+puts required_vars(options[:configdir], options[:excluded_roles])
 puts ""

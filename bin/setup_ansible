@@ -12,7 +12,13 @@ end
 
 options = {}
 OptionParser.new do |opts|
-  opts.banner = "Usage setup_ansible [options] > output_file.yml"
+  opts.banner = <<-USAGE
+    #{$PROGRAM_NAME}: expands developer & sysadmin supplied variables into the variables required by Ansible.
+    Usage: #{$PROGRAM_NAME} [options] > instance_expanded_vars.yml
+  USAGE
+
+  opts.separator ""
+
   opts.on("-h", "--help", "Prints this help") do
     puts opts
     exit
@@ -32,14 +38,12 @@ OptionParser.new do |opts|
   end
 
   opts.on("-vVARSFILE", "--completed-vars=VARSFILE",
-    "The completed vars file.", String) do |file|
+    "The completed file containing all required variables.", String) do |file|
     options[:completed_vars] = file
   end
 end.parse!
 
 raise ArgumentError, "--completed-vars is required" unless options[:completed_vars]
 
-requirements = build_requirements(options[:configdir], options[:excluded_roles])
-ansible_setup = build_ansible_setup(requirements, options[:completed_vars])
-puts ansible_setup_yaml(ansible_setup)
+puts setup_ansible(options[:configdir], options[:completed_vars], options[:excluded_roles])
 puts ""
