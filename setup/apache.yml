@@ -38,7 +38,8 @@ apache_app_hostname:
   global: app_name
   output: '"app-#{app_name}"'
 
-apache_cosign_factor:     "default=UMICH.EDU"
+apache_cosign_factor:
+  default: "UMICH.EDU"
 
 apache_terminate_ssl:
   global: apache_terminate_ssl
