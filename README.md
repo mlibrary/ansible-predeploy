@@ -1,7 +1,7 @@
 # Overview
 
-This project automates the pre-deployment setup for ruby applications 
-run with puma.  
+This project automates the pre-deployment setup for *named instances*
+consisting of ruby applications run with puma.
 
 It assumes a functional application, web, and database tier is already
 in place.
@@ -9,20 +9,20 @@ in place.
 # Paradigm
 
 The predeployment offered by this project is intended to be configured
-and run once, resulting in full preparation for deployment to the web, 
-app, and db tiers.  Actual deployment of the application is up to the developer(s), 
-as is the configuration of their application's deployment.  
+and run once, resulting in full preparation for deployment to the web,
+app, and db tiers.  Actual deployment of the named instance is up to the developer(s),
+as is the configuration of their named instance's deployment.
 
-Each deployment stage (or target) of a project is its own, self-contained 
-application.  I.e., `umrdr-staging` and `umrdr-production` are two 
-separate applications.  
+Each deployment stage (or target) of a project is its own, self-contained
+named instance.  I.e., `umrdr-staging` and `umrdr-production` are two
+separate named instance.
 
-Each application is associated with its own application user and group.
-Developers with deployment permission are added to the application 
-group.  Thus, this project provisions the necessary file and sudo 
-permissions to allow them to deploy and restart the application.
+Each named instance is associated with its own named instance user and group.
+Developers with deployment permission are added to the named instance's
+group.  Thus, this project provisions the necessary file and sudo
+permissions to allow them to deploy and restart the named instance.
 
-Each application should have its own:
+Each named instance should have its own:
 * unique name, preferably of the form appname-stagename
 * predeploy configuration file
 * inventory file
@@ -47,17 +47,17 @@ ansible-playbook playbook.predeploy.yml -i appname_inventory -e "config_file=app
 
 1. Minimally, the developer provides an application name and stagename.
    By convention, stage names should be one of `production`, `staging`,
-   or `testing`.  
-2. Get application gid and uid from ITS's UUID api/tool, passing the 
+   or `testing`.
+2. Get named instance gid and uid from ITS's UUID api/tool, passing the
    application name and stage into the foreign key or other field.
-3. Identify the hosts to which the application will be deployed.  
+3. Identify the hosts to which the named instance will be deployed.
 4. Create a appname-stagename-inventory file, following the example
    in inventory.example.
 5. A&E and the developer(s) fill out a copy of `required_vars.yml`
 6. Run `bin/setup_ansible -v /file/from/previous/step` to convert the
-   file we just created into the form that ansible will use.  There is 
-   no need to edit the resulting file.  However, it does contain some useful 
-   information, such as the passwords generated for the deploy and the 
+   file we just created into the form that ansible will use.  There is
+   no need to edit the resulting file.  However, it does contain some useful
+   information, such as the passwords generated for the deploy and the
    final database user name.
 7. Run the appropriate ansible playbook, as below:
 
@@ -106,7 +106,7 @@ ansible-playbook playbook.predeploy.yml --private-key=.vagrant/machines/default/
 
 ```
 
-7. deploy application (out of scope - see fauxpaas)
+7. deploy named instance (out of scope - see fauxpaas)
 
 8. test setup using:
 
