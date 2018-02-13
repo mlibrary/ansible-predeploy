@@ -5,6 +5,9 @@ apache_port:              app_port
 apache_app_host_priv_ip:  app_host_priv_ip
 apache_ssl_key:           app_ssl_key_filename
 apache_ssl_crt:           app_ssl_crt_filename
+apache_extra_config:
+  global: apache_extra_config
+  default:  ""
 
 apache_url_root:
   global: app_url_root
@@ -48,11 +51,3 @@ apache_terminate_ssl:
 apache_static_directories:
   global: apache_static_directories
   default: no
-
-apache_mod_xsendfile:
-  global: apache_mod_xsendfile
-  default: no
-
-apache_derivatives_path:
-  global: deploy_root
-  output: File.join(deploy_root, app_name, "current", "tmp", "derivatives")

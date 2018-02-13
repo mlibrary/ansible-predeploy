@@ -38,3 +38,14 @@ app_ssl_key_filename:   dev.lib.uni.edu.key
 app_ssl_crt_filename:   dev.lib.uni.edu.crt
 # public ssh key to allow for the app user
 app_ssh_key: "{{ lookup('file', '/path/to/id_rsa.pub') }}"
+
+# Optional:
+#
+# apache_extra_config: |
+#   # Apache configuration supplied here will be appended to the end of the
+#   # generated virtual host configuration. It can include jinja2 expressions,
+#   # which will be expanded. For example:
+# 
+#   XSendFile On
+#   RequestHeader Set X-Sendfile-Type X-Sendfile
+#   XSendFilePath {{ target_deploy_path }}/current/tmp/derivatives
