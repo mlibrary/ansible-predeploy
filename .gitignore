@@ -1,6 +1,7 @@
 # Ignore vendorized roles
 external_roles/*
 vars/**
+.ansible
 
 # Ignore vagrant files
 .vagrant
