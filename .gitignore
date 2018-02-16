@@ -10,3 +10,7 @@ vars/**
 
 .idea/
 *~
+
+
+# Ignore instances/data
+instances/

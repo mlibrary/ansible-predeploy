@@ -1,0 +1,210 @@
+#!/usr/bin/env ruby
+
+require "ostruct"
+require "optparse"
+require "fileutils"
+
+class Options < OpenStruct
+  def initialize
+    super({
+      root: File.expand_path(File.join(File.dirname(__FILE__), ".."))
+    })
+  end
+
+  def parse(args)
+    parser.parse!(args)
+    self
+  end
+  alias_method :parse!, :parse
+
+  private
+
+  def parser
+    @parser = OptionParser.new do |opts|
+      opts.banner =  "" \
+        "Usage:\n" \
+        "#{File.basename(__FILE__)} [options]"
+      opts.separator ""
+      opts.separator "Specific options:"
+
+      opts.on("-i", "--initialize", "Run the initialize command") do |i|
+        self.initialize = i
+      end
+
+      opts.on("-s", "--setup", "Run the setup command") do |s|
+        self.setup = s
+      end
+
+      opts.on("-a", "--ansible", "Run the ansible command") do |a|
+        self.ansible = a
+      end
+
+      opts.on("-n", "--name APP-STAGE", "The name of the instance") do |n|
+        self.name = n
+      end
+
+      opts.on("-h", "--help", "Print this help") do
+        puts opts
+        exit
+      end
+    end
+  end
+end
+
+
+class Command
+  def initialize(opts)
+    @opts = opts
+  end
+
+  def execute
+    raise NotImplementedError
+  end
+
+  def keys
+    []
+  end
+
+  def missing
+    keys.select{|k| opts.send(k).nil? }
+  end
+
+  def valid?
+    missing.empty?
+  end
+
+  def validate!
+    unless valid?
+      raise KeyError, "Missing keys:\n\t#{missing.join(" :")}"
+    end
+    self
+  end
+
+  private
+  attr_reader :opts
+end
+
+class InitCommand < Command
+  def keys
+    [:root, :name]
+  end
+
+  def execute
+    Dir.chdir opts.root do
+      puts "Initializing..."
+
+      unless File.exist?(inventory_path)
+        puts "\t#{inventory_path}"
+        FileUtils.mkdir_p File.dirname(inventory_path)
+        FileUtils.cp "inventory/vagrant", inventory_path
+      end
+
+      unless File.exist?(vars_path)
+        puts "\t#{vars_path}"
+        FileUtils.mkdir_p File.dirname(vars_path)
+        FileUtils.cp "required_vars.yml", vars_path
+      end
+    end
+
+    puts "You'll need to fill these out files by hand"
+  end
+
+  private
+
+  def inventory_path
+    "instances/#{opts.name}/inventory"
+  end
+
+  def vars_path
+    "instances/#{opts.name}/required_vars.yml"
+  end
+end
+
+
+class SetupCommand < Command
+  def keys
+    [:root, :name]
+  end
+
+  def execute
+    Dir.chdir opts.root do
+      raise ArgumentError, "Please initialize first" unless File.exist?(vars_path)
+      return if File.exist?(new_vars_path)
+
+      puts "Converting vars..."
+      puts "\t#{new_vars_path}"
+      puts "./bin/setup_ansible -v #{vars_path} > #{new_vars_path}"
+      `./bin/setup_ansible -v #{vars_path} > #{new_vars_path}`
+    end
+  end
+
+  private
+
+  def vars_path
+    "instances/#{opts.name}/required_vars.yml"
+  end
+
+  def new_vars_path
+    "instances/#{opts.name}/computed_vars.yml"
+  end
+end
+
+
+class AnsibleCommand < Command
+  def keys
+    [:root, :name]
+  end
+
+  def execute
+    Dir.chdir opts.root do
+      raise ArgumentError, "Please initialize first" unless File.exist?(inventory_path)
+      raise ArgumentError, "Please setup first" unless File.exist?(new_vars_path)
+
+      puts "Running ansible..."
+      puts command
+      # exec(command)
+    end
+  end
+
+  private
+
+  def command
+    "ansible-playbook playbook.predeploy.yml -i #{inventory_path} -e 'config_file=#{new_vars_path}'"
+  end
+
+  def inventory_path
+    "instances/#{opts.name}/inventory"
+  end
+
+  def new_vars_path
+    "instances/#{opts.name}/computed_vars.yml"
+  end
+end
+
+options = Options.new.parse(ARGV)
+commands = []
+if options.initialize
+  InitCommand.new(options).validate!.execute
+end
+
+if options.setup
+  SetupCommand.new(options).validate!.execute
+end
+
+if options.ansible
+  AnsibleCommand.new(options).validate!.execute
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
