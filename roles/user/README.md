@@ -5,7 +5,7 @@
 * user_name: User's name
 * user_uid: User's uid
 * user_home: User's home, which will be created.
-* user_pubkey: Public ssh key for the user, to add to authorized_keys
+* user_ssh_key: Public ssh key for the user, to add to authorized_keys
 
 
 ## Example usage

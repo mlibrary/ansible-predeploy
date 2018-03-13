@@ -7,4 +7,3 @@ user_home:
   output: File.join("/", "var", "local", app_name)
 user_uid: app_user_uid
 user_gid: app_user_gid
-user_ssh_key: app_ssh_key
