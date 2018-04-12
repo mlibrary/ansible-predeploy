@@ -6,7 +6,7 @@ app_repo:  https://github.com/mlibrary/umrdr
 # Directory under which application dir will be created.
 deploy_root: /hydra-dev
 # Does the project require resque or solr? (yes|no)
-# Does the project require resque-scheduler?  
+# Does the project require resque-scheduler?
 dependency_resque: no
 dependency_solr: yes
 dependency_resque_scheduler: no
@@ -36,8 +36,6 @@ solr_home: /var/lib/solr/home
 solr_core: /hydra-dev/solr/cores/demo-testing
 app_ssl_key_filename:   dev.lib.uni.edu.key
 app_ssl_crt_filename:   dev.lib.uni.edu.crt
-# public ssh key to allow for the app user
-app_ssh_key: "{{ lookup('file', '/path/to/id_rsa.pub') }}"
 
 # Optional:
 #
@@ -45,7 +43,7 @@ app_ssh_key: "{{ lookup('file', '/path/to/id_rsa.pub') }}"
 #   # Apache configuration supplied here will be appended to the end of the
 #   # generated virtual host configuration. It can include jinja2 expressions,
 #   # which will be expanded. For example:
-# 
+#
 #   XSendFile On
 #   RequestHeader Set X-Sendfile-Type X-Sendfile
 #   XSendFilePath {{ target_deploy_path }}/current/tmp/derivatives
