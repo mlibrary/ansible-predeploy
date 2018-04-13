@@ -13,7 +13,7 @@ Type=simple
 # Group=overridme
 # WorkingDirectory=/override/or/fail
 # PIDFile=/override/or/fail/pidfile.pid
-# ExecStart=/override/or/fail/bin/rbenv exec puma -C config/puma.rb
+# ExecStart=/override/or/fail/bin/rbenv exec puma -C config/fauxpaas_puma.rb
 # Environment="RBENV_ROOT=/override/or/fail"
 
 # Common ruby environment config
