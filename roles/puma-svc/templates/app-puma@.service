@@ -1,5 +1,5 @@
 # Service template for applications run with Puma web server.
-# This template is not stand alone and instances will require a drop-in .conf file 
+# This template is not stand alone and instances will require a drop-in .conf file
 # e.g. app-cc-puma@myapp-production.service.d/drop-in.conf
 [Unit]
 Description=%i Application
@@ -13,7 +13,7 @@ Type=simple
 # Group=overridme
 # WorkingDirectory=/override/or/fail
 # PIDFile=/override/or/fail/pidfile.pid
-# ExecStart=/override/or/fail/bin/rbenv exec bundle exec puma -C config/puma.rb
+# ExecStart=/override/or/fail/bin/rbenv exec puma -C config/puma.rb
 # Environment="RBENV_ROOT=/override/or/fail"
 
 # Common ruby environment config

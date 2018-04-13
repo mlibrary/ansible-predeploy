@@ -19,7 +19,7 @@ Environment="RBENV_ROOT={{puma_svc_rbenv_root}}"
 User={{ puma_svc_app_name }}
 Group={{ puma_svc_app_name }}
 
-ExecStart={{puma_svc_rbenv_root}}/bin/rbenv exec bundle exec puma -C config/puma.rb
+ExecStart={{puma_svc_rbenv_root}}/bin/rbenv exec puma -C config/puma.rb
 
 WorkingDirectory={{ puma_svc_deploy_dir }}/current
 PIDFile={{ puma_svc_deploy_dir }}/shared/log/{{ puma_svc_app_name }}-puma.pid
