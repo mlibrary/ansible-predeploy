@@ -6,37 +6,38 @@
     - puma_svc_deploy_dir
     - puma_svc_app_name
 
+- name: Install application target
+  template:
+    src: instance.target.j2
+    dest: /etc/systemd/system/{{puma_svc_app_name}}.target
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+
 - name: Install puma service
   template:
-    src:   app-puma@.service
-    dest:  /etc/systemd/system/app-puma@.service
+    src:   puma@instance.service.j2
+    dest:  /etc/systemd/system/puma@{{puma_svc_app_name}}.service
     owner: root
     group: root
     mode:  u=rw,g=r,o=r
 
-- name: Create puma service config directory
-  file:
-    path:  /etc/systemd/system/app-puma@{{puma_svc_app_name}}.service.d
-    state: directory
-
-- name: Install puma service drop-in config
+- name: Install all of the subservice templates
   template:
-    src:   app-puma@.service.d/drop-in.conf.j2 
-    dest:  /etc/systemd/system/app-puma@{{puma_svc_app_name}}.service.d/drop-in.conf
+    src: subservice@instance.service.j2
+    dest: /etc/systemd/system/{{item}}@{{puma_svc_app_name}}.service
     owner: root
     group: root
-    mode:  u=rwx,g=rx,o=rx
-
-- include: resque.yml
-  when:  puma_svc_resque_dependency
-
-- name: Reload systemd service files
-  shell: systemctl daemon-reload
+    mode: u=rw,g=r,o=r
+  with_items: "{{puma_svc_subservices}}"
 
 - name: Install sudoers.d template for app-puma service mgmt
   template:
     src:   sudoers.d.j2
-    dest: /etc/sudoers.d/app-puma-{{puma_svc_app_name}}
+    dest: /etc/sudoers.d/{{puma_svc_app_name}}
     owner: root
     group: root
-    mode: u=r,g=r
+    mode: u=rx,g=r
+
+- name: Reload systemd service files
+  shell: systemctl daemon-reload

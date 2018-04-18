@@ -1,5 +1,5 @@
-%{{puma_svc_app_group}} ALL=(root) NOPASSWD: /bin/systemctl stop app-puma@{{puma_svc_app_name}}.service
-%{{puma_svc_app_group}} ALL=(root) NOPASSWD: /bin/systemctl start app-puma@{{puma_svc_app_name}}.service
-%{{puma_svc_app_group}} ALL=(root) NOPASSWD: /bin/systemctl restart app-puma@{{puma_svc_app_name}}.service
-%{{puma_svc_app_group}} ALL=(root) NOPASSWD: /bin/systemctl status app-puma@{{puma_svc_app_name}}.service
-%{{puma_svc_app_group}} ALL=(root) NOPASSWD: /bin/journalctl
+%{{puma_svc_app_name}} ALL=(root) NOPASSWD: /bin/systemctl stop {{puma_svc_app_name}}.target
+%{{puma_svc_app_name}} ALL=(root) NOPASSWD: /bin/systemctl start {{puma_svc_app_name}}.target
+%{{puma_svc_app_name}} ALL=(root) NOPASSWD: /bin/systemctl restart {{puma_svc_app_name}}.target
+%{{puma_svc_app_name}} ALL=(root) NOPASSWD: /bin/systemctl status {{puma_svc_app_name}}.target
+%{{puma_svc_app_name}} ALL=(root) NOPASSWD: /bin/journalctl

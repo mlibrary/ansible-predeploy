@@ -1,0 +1,9 @@
+[Unit]
+Description={{puma_svc_app_name}} application
+After=network.target
+{% for service in puma_svc_subservices %}
+Requires={{service}}@{{puma_svc_app_name}}.service
+{% endfor %}
+
+[Install]
+WantedBy=multi-user.target

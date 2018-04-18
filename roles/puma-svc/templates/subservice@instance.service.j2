@@ -1,0 +1,20 @@
+[Unit]
+Description={{item}} subservice for {{puma_svc_app_name}}
+PartOf=app-puma@{{puma_svc_app_name}}.service
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+Type=simple
+UMASK=0002
+User={{puma_svc_app_name}}
+Group={{puma_svc_app_name}}
+Environment="RBENV_ROOT={{ puma_svc_rbenv_root }}"
+Environment="RAILS_ENV=production"
+WorkingDirectory={{puma_svc_deploy_dir}}/current
+ExecStart={{puma_svc_rbenv_root}}/bin/rbenv exec bundle exec bin/{{item}}
+
+TimeoutStartSec=20
+Restart=on-failure
+RestartSec=5

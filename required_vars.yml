@@ -5,11 +5,14 @@ app_name: demo-testing
 app_repo:  https://github.com/mlibrary/umrdr
 # Directory under which application dir will be created.
 deploy_root: /hydra-dev
-# Does the project require resque or solr? (yes|no)
-# Does the project require resque-scheduler?
-dependency_resque: no
+# Does the project require solr? (yes|no)
 dependency_solr: yes
-dependency_resque_scheduler: no
+# List any background services you'd like systemd to run
+# These are expected to be defined in your bin directory
+subservices:
+  - resque-pool
+  - resque-scheduler
+  - mailman
 # Whate version of ruby does the application require?
 ruby_version: 2.4
 # The FQDN for the application.
