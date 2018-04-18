@@ -7,11 +7,10 @@
   vars_files:
     - "{{ config_file }}"
   roles:
-    - role: user 
-    - role: db-user 
+    - role: user
+    - role: db-user
     - role: target
-    - role: puma-svc 
-    - role: rbenv-ver 
+    - role: puma-svc
 
 - name: Prepare MySQL host.
   hosts: db
@@ -30,7 +29,7 @@
     - "{{ config_file }}"
   roles:
     - role: solr-core
-    
+
 - name: Prepare Apache host.
   hosts: web
   become: yes

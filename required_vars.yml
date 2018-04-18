@@ -13,8 +13,6 @@ subservices:
   - resque-pool
   - resque-scheduler
   - mailman
-# Whate version of ruby does the application require?
-ruby_version: 2.4
 # The FQDN for the application.
 app_domain: example-staging.hydra.lib.uni.edu
 # Alternate domains for the application
