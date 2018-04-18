@@ -12,7 +12,7 @@ Vagrant.configure(2) do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "box-cutter/debian8"
+  config.vm.box = "debian/jessie64"
 
   # Set the VM hostname
   config.vm.hostname = "predeploy-test"
@@ -42,7 +42,7 @@ Vagrant.configure(2) do |config|
     ansible.groups = {
       "vagrant" => ["default"]
     }
-    
+
     # Force override of rbenv_root at command line so rbenv install puts it in the specified location
     ansible.extra_vars = {
       rbenv_root: "/l/local/rbenv",
