@@ -34,12 +34,11 @@ Each named instance should have its own:
 ```
 git clone git@github.com:mlibrary/ansible-predeploy.git
 cd ansible-predeploy
-cp inventory/vagrant appname_inventory
-# A&E fills out appname_inventory
-cp required_vars.yml appname_vars.yml
-# A&E and the developer fills out appname_vars.yml (name doesn't matter)
-./bin/setup_ansible -v appname_vars.yml > appname_expanded_vars.yml
-ansible-playbook playbook.predeploy.yml -i appname_inventory -e "config_file=appname_expanded_vars.yml"
+./bin/predeploy --initialize -n myapp-mystage
+# A&E fills out instances/myapp-mystage/inventory
+# A&E and the developer fills out instances/myapp-mystage/required_vars.yml
+./bin/predeploy --setup -n myapp-mystage
+./bin/predeploy --ansible -n myapp-mystage
 ```
 
 ## Full Version
@@ -48,20 +47,14 @@ ansible-playbook playbook.predeploy.yml -i appname_inventory -e "config_file=app
 1. Minimally, the developer provides an application name and stagename.
    By convention, stage names should be one of `production`, `staging`,
    or `testing`.
-2. Get named instance gid and uid from ITS's UUID api/tool, passing the
-   application name and stage into the foreign key or other field.
-3. Identify the hosts to which the named instance will be deployed.
-4. Create a appname-stagename-inventory file, following the example
-   in inventory.example.
-5. A&E and the developer(s) fill out a copy of `required_vars.yml`
-6. Run `bin/setup_ansible -v /file/from/previous/step` to convert the
+2. Fill out the files created by `./bin/predeploy -i -n myapp-mystage`
+3. Run `bin/predeploy -s -n myapp-mystage` to convert the
    file we just created into the form that ansible will use.  There is
    no need to edit the resulting file.  However, it does contain some useful
    information, such as the passwords generated for the deploy and the
    final database user name.
-7. Run the appropriate ansible playbook, as below:
-
-`ansible-playbook playbook.predeploy.yml -i /file/from/step/4 -e "config_file=/file/from/step/6"`
+4. Run the ansible playbook with `./bin/predeploy --ansible -n myapp-mystage`
+5. Run the appropriate ansible playbook, as below:
 
 From here, the playbook should run without issue.  The playbook
 is idempotent, so re-running if there is an problem is not an
