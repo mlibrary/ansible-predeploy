@@ -1,6 +1,7 @@
 [Unit]
 Description={{puma_svc_app_name}} application
 After=network.target
+Requires=puma@{{puma_svc_app_name}}.service
 {% for service in puma_svc_subservices %}
 Requires={{service}}@{{puma_svc_app_name}}.service
 {% endfor %}
