@@ -23,4 +23,3 @@
     user: "{{ user_name }}"
     state: present
     key: "{{ user_ssh_key }}"
-  when: "user_ssh_key is defined"

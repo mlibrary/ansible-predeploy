@@ -5,7 +5,8 @@
 * user_name: User's name
 * user_uid: User's uid
 * user_home: User's home, which will be created.
-* user_ssh_key: Public ssh key for the user, to add to authorized_keys
+* user_ssh_key: Public ssh key for the user, to add to authorized_keys.
+  A lookup invocation is allowed--it will be treated like a string.
 
 
 ## Example usage

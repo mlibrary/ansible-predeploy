@@ -1,4 +1,0 @@
-all:
-  vars:
-    user_ssh_key: "{{ lookup('file', 'files/ssh/id_rsa-fauxpaas.pub') }}"
-
