@@ -41,3 +41,7 @@
 
 - name: Reload systemd service files
   shell: systemctl daemon-reload
+
+- name: Print a reminder
+  debug:
+    msg: "Please note that systemd services are not enabled (on boot) by default."
