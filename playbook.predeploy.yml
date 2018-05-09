@@ -29,7 +29,7 @@
     - "{{ config_file }}"
   roles:
     - role: solr-core
-      when: dependency_solr
+      when: dependency_solr is defined and dependency_solr
 
 - name: Prepare Apache host.
   hosts: web
