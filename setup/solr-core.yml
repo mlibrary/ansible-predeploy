@@ -6,3 +6,9 @@ solr_core_name:
 solr_core_path: solr_core
 solr_core_home: solr_home
 solr_core_repo: app_repo
+solr_core_host:
+  global: solr_host
+  default: localhost
+solr_core_port:
+  global: solr_port
+  default: 8082
