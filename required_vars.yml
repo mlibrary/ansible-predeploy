@@ -2,7 +2,6 @@
 # Application pre-deployment variables file
 # 'code name' for the app (e.g. umrdr-testing, heliotrope-staging)
 app_name: demo-testing
-app_repo:  https://github.com/mlibrary/umrdr
 # Directory under which application dir will be created.
 deploy_root: /hydra-dev
 # Does the project require solr? (yes|no)
@@ -35,6 +34,7 @@ db_host_priv_ip:  "127.0.0.1"
 app_host_priv_ip: "127.0.0.1"
 solr_home: /var/lib/solr/home
 solr_core: /hydra-dev/solr/cores/demo-testing
+solr_config_svn_url:  https://github.com/mlibrary/umrdr/trunk/solr/config
 app_ssl_key_filename:   dev.lib.uni.edu.key
 app_ssl_crt_filename:   dev.lib.uni.edu.crt
 
