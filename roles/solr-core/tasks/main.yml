@@ -16,7 +16,7 @@
   become: no
   delegate_to: localhost
   subversion:
-    repo: "{{solr_core_svn_url}}"
+    repo: "{{solr_config_svn_url}}"
     dest: "{{solr_core_tmp_path}}"
     switch: no
     force: yes
