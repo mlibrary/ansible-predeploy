@@ -10,7 +10,9 @@ solr_core_path:
 solr_core_home:
   global: solr_home
   default: unused
-solr_core_repo: app_repo
+solr_config_svn_url: 
+  global: solr_config_svn_url
+  default: unused
 solr_core_host:
   global: solr_host
   default: localhost
