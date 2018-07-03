@@ -157,12 +157,12 @@ class AnsibleCommand < Command
 
   def execute
     Dir.chdir opts.root do
-      raise ArgumentError, "Please initialize first" unless File.exist?(inventory_path)
-      raise ArgumentError, "Please setup first" unless File.exist?(new_vars_path)
+      raise ArgumentError, "#{inventory_path} missing. Please initialize first" unless File.exist?(inventory_path)
+      raise ArgumentError, "#{new_vars_path} missing. Please setup first" unless File.exist?(new_vars_path)
 
       puts "Running ansible..."
       puts command
-      # exec(command)
+      exec(command)
     end
   end
 
