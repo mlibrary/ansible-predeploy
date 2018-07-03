@@ -145,7 +145,7 @@ class SetupCommand < Command
   end
 
   def new_vars_path
-    "instances/#{opts.name}/computed_vars.yml"
+    "instances/#{opts.name}/extended_vars.yml"
   end
 end
 
@@ -177,7 +177,7 @@ class AnsibleCommand < Command
   end
 
   def new_vars_path
-    "instances/#{opts.name}/computed_vars.yml"
+    "instances/#{opts.name}/extended_vars.yml"
   end
 end
 
