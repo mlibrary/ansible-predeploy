@@ -1,5 +1,4 @@
 ---
-
 - name: Prepare host that will run the app.
   hosts: app
   become: yes
@@ -7,10 +6,8 @@
   vars_files:
     - "{{ config_file }}"
   roles:
-    - role: user
     - role: db-user
     - role: target
-    - role: puma-svc
 
 - name: Prepare MySQL host.
   hosts: db
